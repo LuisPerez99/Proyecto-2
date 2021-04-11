@@ -2,7 +2,13 @@ from flask import Flask,request,jsonify
 from flask_cors import CORS
 import json
 
-lista_pacientes = []
+nombre = []
+apellido = []
+nacimiento = []
+genero = []
+usuario = []
+password = []
+telefono = []
 
 app = Flask(__name__)
 CORS(app)
@@ -11,17 +17,35 @@ CORS(app)
 def index():
     return jsonify('Pagina')
 
-@app.route('/asignarnombres', methods=['POST'])
+@app.route('/creardatos', methods=['POST'])
 def asignarnombres():
     data = request.get_json(force=True)
     nombres = data["nombre"]
-    lista_pacientes.append(nombres)
-    print(lista_pacientes)
+    apellidos = data["apellido"]
+    f_nacimiento = data["fecha de nacimiento"]
+    sexo = data["sexo"]
+    nombre_usuario = data["nombre de usuario"]
+    contraseña = data["contraseña"]
+    n_telefono = data["telefono"]
+    nombre.append(nombres)
+    apellido.append(apellidos)
+    nacimiento.append(f_nacimiento)
+    genero.append(sexo)
+    usuario.append(nombre_usuario)
+    password.append(contraseña)
+    telefono.append(n_telefono)
+    print(nombre)
+    print(apellido)
+    print(nacimiento)
+    print(genero)
+    print(usuario)
+    print(password)
+    print(telefono)
     return jsonify("ingresado")
 
-@app.route('/obtenernombres')
+@app.route('/obtenerdatos')
 def obtenernombres():
-    return jsonify(lista_pacientes)
+    return jsonify(nombre,apellido,nacimiento,genero,usuario,password,telefono)
 
 if __name__ == '__main__':
     app.run("0.0.0.0",port=4041)
