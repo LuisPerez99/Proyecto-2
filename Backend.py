@@ -30,6 +30,8 @@ def getNombre(datos_usuario):
         return jsonify({"datos": nombreHallado[0]})
     return jsonify({"mensaje":"Usuario no encontrado"})
     
+@app.rou
+
 
 @app.route('/success/<name>')
 def success(name):
