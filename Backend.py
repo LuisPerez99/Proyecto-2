@@ -9,7 +9,7 @@ CORS(app)
 
 @app.route('/')
 def index():
-    return jsonify('Pagina')
+    return jsonify('Proyecto 2')
 
 @app.route('/creardatos', methods=['POST'])
 def asignarnombres():
