@@ -1,4 +1,4 @@
-from flask import Flask,request,jsonify
+from flask import Flask,request,jsonify,url_for,redirect
 from flask_cors import CORS
 import json
 
@@ -47,15 +47,18 @@ def asignarnombres():
 def obtenernombres():
     return jsonify(nombre,apellido,nacimiento,genero,usuario,password,telefono)
 
-@app.route('/ingresar', methods=['POST'])
-def ingresar():
-    data = request.get_json(force=True)
-    nombre_usuario = data["nombre de usuario"]
-    password = data["contraseña"]
-    for i in range (len(nombre)):
-        if nombre_usuario == nombre[i] and contraseña == password[i]:
-            return jsonify(nombre[i]+" ha ingresado")
-    return jsonify("ingresado")
+@app.route('/success/<name>')
+def success(name):
+   return 'Bienvenido %s' % name
+
+@app.route('/login',methods = ['POST', 'GET'])
+def login():
+   if request.method == 'POST':
+      user = request.form['nm']
+      return redirect(url_for('success',name = user))
+   else:
+      user = request.args.get('nm')
+      return redirect(url_for('success',name = user))
 
 if __name__ == '__main__':
-    app.run("0.0.0.0",port=4041)
+    app.run(debug=True,port=4041)
