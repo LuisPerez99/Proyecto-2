@@ -47,5 +47,15 @@ def asignarnombres():
 def obtenernombres():
     return jsonify(nombre,apellido,nacimiento,genero,usuario,password,telefono)
 
+@app.route('/ingresar', methods=['POST'])
+def ingresar():
+    data = request.get_json(force=True)
+    nombre_usuario = data["nombre de usuario"]
+    password = data["contraseña"]
+    for i in range (len(nombre)):
+        if nombre_usuario == nombre[i] and contraseña == password[i]:
+            return jsonify(nombre[i]+" ha ingresado")
+    return jsonify("ingresado")
+
 if __name__ == '__main__':
     app.run("0.0.0.0",port=4041)
