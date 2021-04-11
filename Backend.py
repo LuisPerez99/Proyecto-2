@@ -2,13 +2,7 @@ from flask import Flask,request,jsonify,url_for,redirect
 from flask_cors import CORS
 import json
 
-nombre = []
-apellido = []
-nacimiento = []
-genero = []
-usuario = []
-password = []
-telefono = []
+datos_usuarios = []
 
 app = Flask(__name__)
 CORS(app)
@@ -20,32 +14,22 @@ def index():
 @app.route('/creardatos', methods=['POST'])
 def asignarnombres():
     data = request.get_json(force=True)
-    nombres = data["nombre"]
-    apellidos = data["apellido"]
-    f_nacimiento = data["fecha de nacimiento"]
-    sexo = data["sexo"]
-    nombre_usuario = data["nombre de usuario"]
-    contraseña = data["contraseña"]
-    n_telefono = data["telefono"]
-    nombre.append(nombres)
-    apellido.append(apellidos)
-    nacimiento.append(f_nacimiento)
-    genero.append(sexo)
-    usuario.append(nombre_usuario)
-    password.append(contraseña)
-    telefono.append(n_telefono)
-    print(nombre)
-    print(apellido)
-    print(nacimiento)
-    print(genero)
-    print(usuario)
-    print(password)
-    print(telefono)
+    datos_usuarios.append(data)
+    print(datos_usuarios)
     return jsonify("ingresado")
 
-@app.route('/obtenerdatos')
+@app.route('/datos')
 def obtenernombres():
-    return jsonify(nombre,apellido,nacimiento,genero,usuario,password,telefono)
+    return jsonify({"usuarios": datos_usuarios, "titulo": "Lista de usuarios"})
+
+@app.route('/datos/<string:datos_usuario>')
+def getNombre(datos_usuario):
+    print(datos_usuario)
+    nombreHallado = [usuarios for usuarios in datos_usuarios if usuarios['usuario'] == datos_usuario]
+    if (len(nombreHallado) > 0):
+        return jsonify({"datos": nombreHallado[0]})
+    return jsonify({"mensaje":"Usuario no encontrado"})
+    
 
 @app.route('/success/<name>')
 def success(name):
