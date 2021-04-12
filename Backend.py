@@ -27,15 +27,7 @@ def login():
     usuario = request.get_json(force=True)
     for i in range(len(datos_usuarios)):
         if usuario["usuario"] == datos_usuarios[i]["nombre de usuario"] and usuario["contraseña"] == datos_usuarios[i]["password"]:
-            return jsonify({"mensaje":"Bienvenido "+datos_usuarios[i]["nombre"]+" "+datos_usuarios[i]["apellido"], "datos": datos_usuarios[i]})
-    return jsonify({"mensaje":"Usuario no encontrado"})
-
-@app.route('/datos/<string:datos_usuario>')
-def getNombre(datos_usuario):
-    print(datos_usuario)
-    usuario = [usuarios for usuarios in datos_usuarios if usuarios['nombre de usuario'] == datos_usuario]
-    if (len(usuario) > 0):
-        return jsonify({"datos": usuario[0]})
+            return jsonify({"mensaje":"Bienvenido "+datos_usuarios[i]["nombre"]+" "+datos_usuarios[i]["apellido"], "datos del usuario":datos_usuarios[i]})
     return jsonify({"mensaje":"Usuario no encontrado"})
 
 if __name__ == '__main__':
