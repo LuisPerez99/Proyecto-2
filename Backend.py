@@ -27,7 +27,7 @@ def login():
     usuario = request.get_json(force=True)
     for i in range(len(datos_usuarios)):
         if usuario["usuario"] == datos_usuarios[i]["nombre de usuario"] and usuario["contraseña"] == datos_usuarios[i]["password"]:
-            return jsonify({"mensaje":"Ingresado "+usuario["usuario"]})
+            return jsonify({"mensaje":"Bienvenido "+datos_usuarios[i]["nombre"]+" "+datos_usuarios[i]["apellido"], "datos": datos_usuarios[i]})
     return jsonify({"mensaje":"Usuario no encontrado"})
 
 @app.route('/datos/<string:datos_usuario>')
