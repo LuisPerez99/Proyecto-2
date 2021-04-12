@@ -22,11 +22,12 @@ def asignarnombres():
 def obtenernombres():
     return jsonify({"usuarios": datos_usuarios, "titulo": "Lista de usuarios"})
 
-@app.route('/login', methods = ['POST','GET'])
+@app.route('/login', methods = ['POST'])
 def login():
-    if request.method == 'POST':
-        usuario = request.get_json(force=True)
-        return jsonify({"mensaje":"Ingresado "+usuario["usuario"]})
+    usuario = request.get_json(force=True)
+    for i in range(len(datos_usuarios)):
+        if usuario["usuario"] == datos_usuarios[i]["nombre de usuario"] and usuario["contraseña"] == datos_usuarios[i]["password"]:
+            return jsonify({"mensaje":"Ingresado "+usuario["usuario"]})
     return jsonify({"mensaje":"Usuario no encontrado"})
 
 @app.route('/datos/<string:datos_usuario>')
