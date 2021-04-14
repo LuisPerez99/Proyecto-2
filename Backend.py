@@ -6,7 +6,6 @@ datos_pacientes = []
 datos_doctores = []
 datos_enfermeros = []
 nombres_usuarios = []
-existe = True
 
 app = Flask(__name__)
 CORS(app)
@@ -28,12 +27,10 @@ def registro_doctores():
     if data["nombre de usuario"] in nombres_usuarios:
         print("Nombre de usuario existente")
     else:
-        existe=False
         datos_doctores.append(data)
         nombres_usuarios.append(data["nombre de usuario"])
         print(datos_doctores)
         print(nombres_usuarios)
-        print(existe)
         return jsonify({"mensaje":"datos ingresados"})
     return jsonify({"mensaje":"El nombre de usuario ya existe"})
 
@@ -50,8 +47,6 @@ def registro_pacientes():
     if data["nombre de usuario"] in nombres_usuarios:
         print("Nombre de usuario existente")
     else:
-        existe = False
-        print(existe)
         datos_pacientes.append(data)
         nombres_usuarios.append(data["nombre de usuario"])
         print(datos_pacientes)
@@ -72,8 +67,6 @@ def registro_enfermeros():
     if data["nombre de usuario"] in nombres_usuarios:
         print("Nombre de usuario existente")
     else:
-        existe = False
-        print(existe)
         datos_enfermeros.append(data)
         nombres_usuarios.append(data["nombre de usuario"])
         print(datos_enfermeros)
@@ -99,6 +92,14 @@ def login():
     for i in range(len(datos_pacientes)):
         if usuario["usuario"] == datos_pacientes[i]["nombre de usuario"] and usuario["contraseña"] == datos_pacientes[i]["password"]:
             return jsonify({"mensaje":"Bienvenido "+datos_pacientes[i]["nombre"]+" "+datos_pacientes[i]["apellido"], "datos del usuario":datos_pacientes[i]})
+
+    for i in range(len(datos_doctores)):
+        if usuario["usuario"] == datos_doctores[i]["nombre de usuario"] and usuario["contraseña"] == datos_doctores[i]["password"]:
+            return jsonify({"mensaje":"Bienvenido "+datos_doctores[i]["nombre"]+" "+datos_doctores[i]["apellido"], "datos del usuario":datos_doctores[i]})
+
+    for i in range(len(datos_enfermeros)):
+        if usuario["usuario"] == datos_enfermeros[i]["nombre de usuario"] and usuario["contraseña"] == datos_enfermeros[i]["password"]:
+            return jsonify({"mensaje":"Bienvenido "+datos_enfermeros[i]["nombre"]+" "+datos_enfermeros[i]["apellido"], "datos del usuario":datos_enfermeros[i]})
     return jsonify({"mensaje":"Usuario no encontrado"})
 
 if __name__ == '__main__':
