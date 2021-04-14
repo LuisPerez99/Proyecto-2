@@ -5,6 +5,8 @@ import json
 datos_pacientes = []
 datos_doctores = []
 datos_enfermeros = []
+nombres_usuarios = []
+existe = True
 
 app = Flask(__name__)
 CORS(app)
@@ -18,57 +20,21 @@ def registro_doctores():
     data = request.get_json(force=True)
     if not datos_doctores and not datos_enfermeros and not datos_pacientes:
         datos_doctores.append(data)
+        nombres_usuarios.append(data["nombre de usuario"])
         print(datos_doctores)
+        print(nombres_usuarios)
         return jsonify({"mensaje":"datos ingresados"})
 
-    if not datos_doctores and not datos_enfermeros:
-        for i in range (len(datos_pacientes)):
-             if data["nombre de usuario"] != datos_pacientes[i]["nombre de usuario"]:
-                 datos_doctores.append(data)
-                 print(datos_doctores)
-                 return jsonify({"mensaje":"datos ingresados"})
-    if not datos_pacientes and not datos_enfermeros:
-        for i in range (len(datos_doctores)):
-             if data["nombre de usuario"] != datos_doctores[i]["nombre de usuario"]:
-                 datos_doctores.append(data)
-                 print(datos_doctores)
-                 return jsonify({"mensaje":"datos ingresados"})
-    if not datos_pacientes and not datos_doctores:
-        for i in range (len(datos_enfermeros)):
-             if data["nombre de usuario"] != datos_enfermeros[i]["nombre de usuario"]:
-                 datos_doctores.append(data)
-                 print(datos_doctores)
-                 return jsonify({"mensaje":"datos ingresados"})
-
-    if not datos_pacientes:
-        for i in range (len(datos_enfermeros)):
-            for j in range (len(datos_doctores)):
-                if data["nombre de usuario"] != datos_enfermeros[i]["nombre de usuario"] and data["nombre de usuario"] != datos_doctores[j]["nombre de usuario"]:
-                    datos_doctores.append(data)
-                    print(datos_doctores)
-                    return jsonify({"mensaje":"datos ingresados"})
-    if not datos_doctores:
-        for i in range (len(datos_enfermeros)):
-            for j in range (len(datos_pacientes)):
-                if data["nombre de usuario"] != datos_enfermeros[i]["nombre de usuario"] and data["nombre de usuario"] != datos_pacientes[j]["nombre de usuario"]:
-                    datos_doctores.append(data)
-                    print(datos_doctores)
-                    return jsonify({"mensaje":"datos ingresados"})
-    if not datos_enfermeros:
-        for i in range (len(datos_pacientes)):
-            for j in range (len(datos_doctores)):
-                if data["nombre de usuario"] != datos_pacientes[i]["nombre de usuario"] and data["nombre de usuario"] != datos_doctores[j]["nombre de usuario"]:
-                    datos_doctores.append(data)
-                    print(datos_doctores)
-                    return jsonify({"mensaje":"datos ingresados"})
-
-    for i in range (len(datos_pacientes)):
-        for j in range (len(datos_doctores)):
-            for k in range (len(datos_enfermeros)):
-                if data["nombre de usuario"] != datos_pacientes[i]["nombre de usuario"] and data["nombre de usuario"] != datos_doctores[j]["nombre de usuario"] and data["nombre de usuario"] != datos_enfermeros[k]["nombre de usuario"]:
-                    datos_doctores.append(data)
-                    print(datos_doctores)
-                    return jsonify({"mensaje":"datos ingresados"})
+    if data["nombre de usuario"] in nombres_usuarios:
+        print("Nombre de usuario existente")
+    else:
+        existe=False
+        datos_doctores.append(data)
+        nombres_usuarios.append(data["nombre de usuario"])
+        print(datos_doctores)
+        print(nombres_usuarios)
+        print(existe)
+        return jsonify({"mensaje":"datos ingresados"})
     return jsonify({"mensaje":"El nombre de usuario ya existe"})
 
 @app.route('/registropacientes', methods=['POST'])
@@ -76,57 +42,21 @@ def registro_pacientes():
     data = request.get_json(force=True)
     if not datos_doctores and not datos_enfermeros and not datos_pacientes:
         datos_pacientes.append(data)
+        nombres_usuarios.append(data["nombre de usuario"])
         print(datos_pacientes)
+        print(nombres_usuarios)
         return jsonify({"mensaje":"datos ingresados"})
 
-    if not datos_doctores and not datos_enfermeros:
-        for i in range (len(datos_pacientes)):
-             if data["nombre de usuario"] != datos_pacientes[i]["nombre de usuario"]:
-                 datos_pacientes.append(data)
-                 print(datos_pacientes)
-                 return jsonify({"mensaje":"datos ingresados"})
-    if not datos_pacientes and not datos_enfermeros:
-        for i in range (len(datos_doctores)):
-             if data["nombre de usuario"] != datos_doctores[i]["nombre de usuario"]:
-                 datos_pacientes.append(data)
-                 print(datos_pacientes)
-                 return jsonify({"mensaje":"datos ingresados"})
-    if not datos_pacientes and not datos_doctores:
-        for i in range (len(datos_enfermeros)):
-             if data["nombre de usuario"] != datos_enfermeros[i]["nombre de usuario"]:
-                 datos_pacientes.append(data)
-                 print(datos_pacientes)
-                 return jsonify({"mensaje":"datos ingresados"})
-
-    if not datos_pacientes:
-        for i in range (len(datos_enfermeros)):
-            for j in range (len(datos_doctores)):
-                if data["nombre de usuario"] != datos_enfermeros[i]["nombre de usuario"] and data["nombre de usuario"] != datos_doctores[j]["nombre de usuario"]:
-                    datos_pacientes.append(data)
-                    print(datos_pacientes)
-                    return jsonify({"mensaje":"datos ingresados"})
-    if not datos_doctores:
-        for i in range (len(datos_enfermeros)):
-            for j in range (len(datos_pacientes)):
-                if data["nombre de usuario"] != datos_enfermeros[i]["nombre de usuario"] and data["nombre de usuario"] != datos_pacientes[j]["nombre de usuario"]:
-                    datos_pacientes.append(data)
-                    print(datos_pacientes)
-                    return jsonify({"mensaje":"datos ingresados"})
-    if not datos_enfermeros:
-        for i in range (len(datos_pacientes)):
-            for j in range (len(datos_doctores)):
-                if data["nombre de usuario"] != datos_pacientes[i]["nombre de usuario"] and data["nombre de usuario"] != datos_doctores[j]["nombre de usuario"]:
-                    datos_pacientes.append(data)
-                    print(datos_pacientes)
-                    return jsonify({"mensaje":"datos ingresados"})
-
-    for i in range (len(datos_pacientes)):
-        for j in range (len(datos_doctores)):
-            for k in range (len(datos_enfermeros)):
-                if data["nombre de usuario"] != datos_pacientes[i]["nombre de usuario"] and data["nombre de usuario"] != datos_doctores[j]["nombre de usuario"] and data["nombre de usuario"] != datos_enfermeros[k]["nombre de usuario"]:
-                    datos_pacientes.append(data)
-                    print(datos_pacientes)
-                    return jsonify({"mensaje":"datos ingresados"})
+    if data["nombre de usuario"] in nombres_usuarios:
+        print("Nombre de usuario existente")
+    else:
+        existe = False
+        print(existe)
+        datos_pacientes.append(data)
+        nombres_usuarios.append(data["nombre de usuario"])
+        print(datos_pacientes)
+        print(nombres_usuarios)
+        return jsonify({"mensaje":"datos ingresados"})
     return jsonify({"mensaje":"El nombre de usuario ya existe"})
 
 @app.route('/registroenfermeros', methods=['POST'])
@@ -134,57 +64,21 @@ def registro_enfermeros():
     data = request.get_json(force=True)
     if not datos_doctores and not datos_enfermeros and not datos_pacientes:
         datos_enfermeros.append(data)
+        nombres_usuarios.append(data["nombre de usuario"])
         print(datos_enfermeros)
+        print(nombres_usuarios)
         return jsonify({"mensaje":"datos ingresados"})
 
-    if not datos_doctores and not datos_enfermeros:
-        for i in range (len(datos_pacientes)):
-             if data["nombre de usuario"] != datos_pacientes[i]["nombre de usuario"]:
-                 datos_enfermeros.append(data)
-                 print(datos_enfermeros)
-                 return jsonify({"mensaje":"datos ingresados"})
-    if not datos_pacientes and not datos_enfermeros:
-        for i in range (len(datos_doctores)):
-             if data["nombre de usuario"] != datos_doctores[i]["nombre de usuario"]:
-                 datos_enfermeros.append(data)
-                 print(datos_enfermeros)
-                 return jsonify({"mensaje":"datos ingresados"})
-    if not datos_pacientes and not datos_doctores:
-        for i in range (len(datos_enfermeros)):
-             if data["nombre de usuario"] != datos_enfermeros[i]["nombre de usuario"]:
-                 datos_enfermeros.append(data)
-                 print(datos_enfermeros)
-                 return jsonify({"mensaje":"datos ingresados"})
-
-    if not datos_pacientes:
-        for i in range (len(datos_enfermeros)):
-            for j in range (len(datos_doctores)):
-                if data["nombre de usuario"] != datos_enfermeros[i]["nombre de usuario"] and data["nombre de usuario"] != datos_doctores[j]["nombre de usuario"]:
-                    datos_enfermeros.append(data)
-                    print(datos_enfermeros)
-                    return jsonify({"mensaje":"datos ingresados"})
-    if not datos_doctores:
-        for i in range (len(datos_enfermeros)):
-            for j in range (len(datos_pacientes)):
-                if data["nombre de usuario"] != datos_enfermeros[i]["nombre de usuario"] and data["nombre de usuario"] != datos_pacientes[j]["nombre de usuario"]:
-                    datos_enfermeros.append(data)
-                    print(datos_enfermeros)
-                    return jsonify({"mensaje":"datos ingresados"})
-    if not datos_enfermeros:
-        for i in range (len(datos_pacientes)):
-            for j in range (len(datos_doctores)):
-                if data["nombre de usuario"] != datos_pacientes[i]["nombre de usuario"] and data["nombre de usuario"] != datos_doctores[j]["nombre de usuario"]:
-                    datos_enfermeros.append(data)
-                    print(datos_enfermeros)
-                    return jsonify({"mensaje":"datos ingresados"})
-
-    for i in range (len(datos_pacientes)):
-        for j in range (len(datos_doctores)):
-            for k in range (len(datos_enfermeros)):
-                if data["nombre de usuario"] != datos_pacientes[i]["nombre de usuario"] and data["nombre de usuario"] != datos_doctores[j]["nombre de usuario"] and data["nombre de usuario"] != datos_enfermeros[k]["nombre de usuario"]:
-                    datos_enfermeros.append(data)
-                    print(datos_enfermeros)
-                    return jsonify({"mensaje":"datos ingresados"})
+    if data["nombre de usuario"] in nombres_usuarios:
+        print("Nombre de usuario existente")
+    else:
+        existe = False
+        print(existe)
+        datos_enfermeros.append(data)
+        nombres_usuarios.append(data["nombre de usuario"])
+        print(datos_enfermeros)
+        print(nombres_usuarios)
+        return jsonify({"mensaje":"datos ingresados"})
     return jsonify({"mensaje":"El nombre de usuario ya existe"})
 
 @app.route('/datospacientes')
