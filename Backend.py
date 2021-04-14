@@ -21,16 +21,14 @@ def registro_doctores():
         datos_doctores.append(data)
         nombres_usuarios.append(data["nombre de usuario"])
         print(datos_doctores)
-        print(nombres_usuarios)
         return jsonify({"mensaje":"datos ingresados"})
 
     if data["nombre de usuario"] in nombres_usuarios:
-        print("Nombre de usuario existente")
+        return jsonify({"error":"El nombre de usuario ya existe"})
     else:
         datos_doctores.append(data)
         nombres_usuarios.append(data["nombre de usuario"])
         print(datos_doctores)
-        print(nombres_usuarios)
         return jsonify({"mensaje":"datos ingresados"})
     return jsonify({"mensaje":"El nombre de usuario ya existe"})
 
@@ -45,12 +43,11 @@ def registro_pacientes():
         return jsonify({"mensaje":"datos ingresados"})
 
     if data["nombre de usuario"] in nombres_usuarios:
-        print("Nombre de usuario existente")
+        return jsonify({"error":"El nombre de usuario ya existe"})
     else:
         datos_pacientes.append(data)
         nombres_usuarios.append(data["nombre de usuario"])
         print(datos_pacientes)
-        print(nombres_usuarios)
         return jsonify({"mensaje":"datos ingresados"})
     return jsonify({"mensaje":"El nombre de usuario ya existe"})
 
@@ -61,16 +58,14 @@ def registro_enfermeros():
         datos_enfermeros.append(data)
         nombres_usuarios.append(data["nombre de usuario"])
         print(datos_enfermeros)
-        print(nombres_usuarios)
         return jsonify({"mensaje":"datos ingresados"})
 
     if data["nombre de usuario"] in nombres_usuarios:
-        print("Nombre de usuario existente")
+        return jsonify({"error":"El nombre de usuario ya existe"})
     else:
         datos_enfermeros.append(data)
         nombres_usuarios.append(data["nombre de usuario"])
         print(datos_enfermeros)
-        print(nombres_usuarios)
         return jsonify({"mensaje":"datos ingresados"})
     return jsonify({"mensaje":"El nombre de usuario ya existe"})
 
@@ -101,6 +96,23 @@ def login():
         if usuario["usuario"] == datos_enfermeros[i]["nombre de usuario"] and usuario["contraseña"] == datos_enfermeros[i]["password"]:
             return jsonify({"mensaje":"Bienvenido "+datos_enfermeros[i]["nombre"]+" "+datos_enfermeros[i]["apellido"], "datos del usuario":datos_enfermeros[i]})
     return jsonify({"mensaje":"Usuario no encontrado"})
+
+@app.route('/datospacientes/<string:usuarios_nombredeusuario>', methods=['PUT'])
+def mod_paciente(usuarios_nombredeusuario):
+    usuario = [usuarios for usuarios in datos_pacientes if usuarios['nombre de usuario'] == usuarios_nombredeusuario]
+    data = request.get_json(force=True)
+    if data['nombre de usuario'] in nombres_usuarios:
+        return jsonify({"mensaje":"El nombre de usuario ya existe"})
+    else :
+        if (len(usuario) > 0):
+            usuario[0]['nombre'] = data['nombre']
+            usuario[0]['apellido'] = data['apellido']
+            usuario[0]['fecha de nacimiento'] = data['fecha de nacimiento']
+            usuario[0]['nombre de usuario'] = data['nombre de usuario']
+            usuario[0]['password'] = data['contraseña']
+            usuario[0]['telefono'] = data['telefono']
+            return jsonify({"mensaje": "Datos Actualizados"})           
+    return jsonify({"mensaje":"No se pudieron modificar los datos"})
 
 if __name__ == '__main__':
     app.run(debug=True,port=4041)
