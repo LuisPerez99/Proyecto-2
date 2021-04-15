@@ -5,7 +5,9 @@ import json
 datos_pacientes = []
 datos_doctores = []
 datos_enfermeros = []
+datos_medicamentos = []
 nombres_usuarios = []
+nombres_medicamentos = []
 
 app = Flask(__name__)
 CORS(app)
@@ -39,7 +41,6 @@ def registro_pacientes():
         datos_pacientes.append(data)
         nombres_usuarios.append(data["nombre de usuario"])
         print(datos_pacientes)
-        print(nombres_usuarios)
         return jsonify({"mensaje":"datos ingresados"})
 
     if data["nombre de usuario"] in nombres_usuarios:
@@ -69,6 +70,14 @@ def registro_enfermeros():
         return jsonify({"mensaje":"datos ingresados"})
     return jsonify({"mensaje":"El nombre de usuario ya existe"})
 
+@app.route('/agregarmedicamentos', methods = ['POST'])
+def agregar_medicamentos():
+    data = request.get_json(force=True)
+    datos_medicamentos.append(data)
+    nombres_medicamentos.append(data['nombre'])
+    print(datos_medicamentos)
+    return jsonify({"mensaje":"datos ingresados"})
+
 @app.route('/datospacientes')
 def pacientes():
     return jsonify({"usuarios": datos_pacientes, "titulo": "Lista de pacientes"})
@@ -80,6 +89,10 @@ def doctores():
 @app.route('/datosenfermeros')
 def enfermeros():
     return jsonify({"usuarios": datos_enfermeros, "titulo":"Lista de enfermeros"})
+
+@app.route('/datosmedicamentos')
+def medicamentos():
+    return jsonify({"medicamentos": datos_medicamentos, "titulo": "Lista de medicamentos"})
 
 @app.route('/login', methods = ['POST'])
 def login():
@@ -148,6 +161,19 @@ def mod_enfermero(usuarios_nombredeusuario):
             return jsonify({"mensaje": "Datos Actualizados"})           
     return jsonify({"mensaje":"No se pudieron modificar los datos"})
 
+@app.route('/datosmedicamentos/<string:medicamentos_nombre>', methods=['PUT'])
+def mod_medicamento(medicamentos_nombre):
+    medicamento = [medicamentos for medicamentos in datos_medicamentos if medicamentos['nombre'] == medicamentos_nombre]
+    data = request.get_json(force=True)
+
+    if (len(medicamento) > 0):
+        medicamento[0]['nombre'] = data['nombre']
+        medicamento[0]['precio'] = data['precio']
+        medicamento[0]['descripcion'] = data['descripcion']
+        medicamento[0]['cantidad'] = data['cantidad']
+        return jsonify({"mensaje": "Datos Actualizados"})           
+    return jsonify({"mensaje":"No se pudieron modificar los datos"})
+
 @app.route('/eliminarusuario', methods=['DELETE'])
 def eliminarUsuario():
     data = request.get_json(force=True)
@@ -178,6 +204,19 @@ def eliminarUsuario():
                del datos_doctores[i], nombres_usuarios[i]
             return jsonify({"mensaje":"Usuario eliminado"}) 
     return jsonify({"mensaje":"No se ha podido eliminar al usuario"})
+
+@app.route('/eliminarmedicamento', methods=['DELETE'])
+def eliminarMedicamento():
+    data = request.get_json(force=True)
+    if data['nombre'] not in nombres_medicamentos:
+        return jsonify({"mensaje":"Medicamento no encontrado."})
+    else:
+        for i in range(len(datos_medicamentos)):
+            if data['nombre'] == datos_medicamentos[i]['nombre'] and data['nombre'] == nombres_medicamentos[i]:
+               print(datos_medicamentos[i])
+               del datos_medicamentos[i], nombres_medicamentos[i]
+            return jsonify({"mensaje":"Medicamento eliminado"})  
+    return jsonify({"mensaje":"No se ha podido eliminar el medicamento"})
 
 if __name__ == '__main__':
     app.run(debug=True,port=4041)
