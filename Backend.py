@@ -156,7 +156,8 @@ def eliminarUsuario():
     else:
         for i in range(len(datos_enfermeros)):
             if data['nombre de usuario'] == datos_enfermeros[i]['nombre de usuario'] and data['nombre de usuario'] == nombres_usuarios[i]:
-                del datos_enfermeros[i], nombres_usuarios[i]
+               print(datos_enfermeros[i])
+               del datos_enfermeros[i], nombres_usuarios[i]
             return jsonify({"mensaje":"Usuario eliminado"})  
     
     if data['nombre de usuario'] not in nombres_usuarios:
@@ -164,6 +165,7 @@ def eliminarUsuario():
     else:
         for i in range(len(datos_pacientes)):
             if data['nombre de usuario'] == datos_pacientes[i]['nombre de usuario'] and data['nombre de usuario'] == nombres_usuarios[i]:
+                print(datos_pacientes[i])
                 del datos_pacientes[i], nombres_usuarios[i]
             return jsonify({"mensaje":"Usuario eliminado"}) 
 
@@ -172,7 +174,8 @@ def eliminarUsuario():
     else:
         for i in range(len(datos_doctores)):
             if data['nombre de usuario'] == datos_doctores[i]['nombre de usuario'] and data['nombre de usuario'] == nombres_usuarios[i]:
-                del datos_doctores[i], nombres_usuarios[i]
+               print(datos_doctores[i])
+               del datos_doctores[i], nombres_usuarios[i]
             return jsonify({"mensaje":"Usuario eliminado"}) 
     return jsonify({"mensaje":"No se ha podido eliminar al usuario"})
 
