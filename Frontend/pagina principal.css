@@ -7,3 +7,21 @@
     background-size: cover;
     background-attachment: fixed;
 }
+
+#titulo{
+    text-align: center;
+}
+
+#contenido{
+    width:auto;
+    margin:auto;
+    padding:50px;
+    padding-top:0px;
+}
+
+#mision{
+    border:double;
+    border-radius:10px;
+    border-width:5px;
+    padding-left:10px
+}
