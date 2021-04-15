@@ -90,7 +90,7 @@ def login():
 
     for i in range(len(datos_doctores)):
         if usuario["usuario"] == datos_doctores[i]["nombre de usuario"] and usuario["contraseña"] == datos_doctores[i]["password"]:
-            return jsonify({"mensaje":"Bienvenido "+datos_doctores[i]["nombre"]+" "+datos_doctores[i]["apellido"], "datos del usuario":datos_doctores[i]})
+            return jsonify({"mensaje":"Bienvenido Dr. "+datos_doctores[i]["nombre"]+" "+datos_doctores[i]["apellido"], "datos del usuario":datos_doctores[i]})
 
     for i in range(len(datos_enfermeros)):
         if usuario["usuario"] == datos_enfermeros[i]["nombre de usuario"] and usuario["contraseña"] == datos_enfermeros[i]["password"]:
@@ -147,6 +147,34 @@ def mod_enfermero(usuarios_nombredeusuario):
             usuario[0]['telefono'] = data['telefono']
             return jsonify({"mensaje": "Datos Actualizados"})           
     return jsonify({"mensaje":"No se pudieron modificar los datos"})
+
+@app.route('/eliminarusuario', methods=['DELETE'])
+def eliminarUsuario():
+    data = request.get_json(force=True)
+    if data['nombre de usuario'] not in nombres_usuarios:
+        return jsonify({"mensaje":"Usuario no encontrado."})
+    else:
+        for i in range(len(datos_enfermeros)):
+            if data['nombre de usuario'] == datos_enfermeros[i]['nombre de usuario'] and data['nombre de usuario'] == nombres_usuarios[i]:
+                del datos_enfermeros[i], nombres_usuarios[i]
+            return jsonify({"mensaje":"Usuario eliminado"})  
+    
+    if data['nombre de usuario'] not in nombres_usuarios:
+        return jsonify({"mensaje":"Usuario no encontrado."})
+    else:
+        for i in range(len(datos_pacientes)):
+            if data['nombre de usuario'] == datos_pacientes[i]['nombre de usuario'] and data['nombre de usuario'] == nombres_usuarios[i]:
+                del datos_pacientes[i], nombres_usuarios[i]
+            return jsonify({"mensaje":"Usuario eliminado"}) 
+
+    if data['nombre de usuario'] not in nombres_usuarios:
+        return jsonify({"mensaje":"Usuario no encontrado."})
+    else:
+        for i in range(len(datos_doctores)):
+            if data['nombre de usuario'] == datos_doctores[i]['nombre de usuario'] and data['nombre de usuario'] == nombres_usuarios[i]:
+                del datos_doctores[i], nombres_usuarios[i]
+            return jsonify({"mensaje":"Usuario eliminado"}) 
+    return jsonify({"mensaje":"No se ha podido eliminar al usuario"})
 
 if __name__ == '__main__':
     app.run(debug=True,port=4041)
