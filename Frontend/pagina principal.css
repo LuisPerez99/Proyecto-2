@@ -13,7 +13,12 @@ h2{
 }
 
 #titulo{
-    text-align: center;
+    text-align: left;
+    padding-left:50px
+}
+
+#uhospital{
+    text-align:center;
 }
 
 #texto{
@@ -25,6 +30,48 @@ h2{
 
 p{
     font-size:18px;
+}
+
+#login {
+    background: #5db7f8;
+    border-color: #5db7f8;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 5px;
+    border-radius:10px;
+}
+
+#registrarse {
+    background: #5db7f8;
+    border-color: #5db7f8;
+    color: #ffffff; 
+    font-size:15px;
+    font-weight:bold;
+    padding:5px;
+    border-radius:10px;
+}
+
+#login:hover{
+    animation: botones;
+    animation-duration: 5s;
+    animation-iteration-count: infinite
+}
+
+#registrarse:hover {
+    animation: botones;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes botones{
+    0%{background-color:#5db7f8;}
+    50%{background-color:#ffffff;}
+    100% {background-color: #5db7f8;}
+
+    0% {color: #ffffff;}
+    50% {color: #5db7f8;}
+    100% {color: #ffffff;}
 }
 
 #contenido{
