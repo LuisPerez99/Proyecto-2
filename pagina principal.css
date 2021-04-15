@@ -1,0 +1,9 @@
+﻿html {
+    font-family: Bahnschrift, sans-serif;
+    font-weight: bold;
+    background: linear-gradient(#00ffff,#0094ff);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+}
