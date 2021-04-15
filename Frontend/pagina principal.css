@@ -7,3 +7,13 @@
     background-size: cover;
     background-attachment: fixed;
 }
+
+#titulo{
+    text-align: center;
+}
+
+#contenido{
+    width:auto;
+    margin:auto;
+    padding:50px;
+}
