@@ -8,6 +8,14 @@
     background-attachment: fixed;
 }
 
+button:focus{
+    outline:0;
+}
+
+button {
+    text-shadow: 0 2px 2px #2f2e2e;
+}
+
 h2{
     text-decoration:underline;
 }
@@ -39,7 +47,7 @@ p{
     font-size: 15px;
     font-weight: bold;
     padding: 5px;
-    border-radius:10px;
+    border-radius: 10px;
 }
 
 #registrarse {
@@ -72,6 +80,10 @@ p{
     0% {color: #ffffff;}
     50% {color: #0045b1;}
     100% {color: #ffffff;}
+
+    0% {text-shadow: 0 2px 2px #2f2e2e;}
+    50% {text-shadow: 0 2px 2px #ffffff;}
+    100% {text-shadow: 0 2px 2px #2f2e2e;}
 }
 
 #contenido{
