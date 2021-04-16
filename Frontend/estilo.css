@@ -8,13 +8,33 @@
     background-attachment: fixed;
 }
 
+a:focus{
+    outline:0;
+}
+
+a:active {
+    border: inset;
+    border-width: 2px;
+}
+
+a {
+    text-shadow: 0 2px 2px #2f2e2e;
+    padding: 8px;
+    text-decoration:none;
+    border:solid;
+    border-color:#000000;
+    border:2px;
+    margin:10px
+}
+
 h2{
     text-decoration:underline;
 }
 
 #titulo{
     text-align: left;
-    padding-left:50px
+    padding-left:45px;
+    padding-top:20px
 }
 
 #uhospital{
@@ -34,22 +54,18 @@ p{
 
 #login {
     background: #5db7f8;
-    border-color: #5db7f8;
     color: #ffffff;
     font-size: 15px;
     font-weight: bold;
-    padding: 5px;
-    border-radius:10px;
+    border-radius: 10px;
 }
 
 #registrarse {
     background: #5db7f8;
-    border-color: #5db7f8;
-    color: #ffffff; 
-    font-size:15px;
-    font-weight:bold;
-    padding:5px;
-    border-radius:10px;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 10px;
 }
 
 #login:hover{
@@ -72,6 +88,10 @@ p{
     0% {color: #ffffff;}
     50% {color: #0045b1;}
     100% {color: #ffffff;}
+
+    0% {text-shadow: 0 2px 2px #2f2e2e;}
+    50% {text-shadow: 0 2px 2px #ffffff;}
+    100% {text-shadow: 0 2px 2px #2f2e2e;}
 }
 
 #contenido{
@@ -79,4 +99,24 @@ p{
     border-radius:10px;
     border-width:5px;
     padding-left:10px;
+}
+
+form{
+    background:#ffffff;
+    width:50%;
+    height:auto;
+    text-align:center;
+    position:center;
+    padding:50px;
+    padding-top:1px;
+    margin:auto;
+    border-radius:25px;
+    box-shadow: 4px 4px 4px #2f2e2e;
+}
+
+#registro/login{
+    width:auto;
+    margin:0 auto;
+    height:auto;
+    margin-top:50px;
 }
