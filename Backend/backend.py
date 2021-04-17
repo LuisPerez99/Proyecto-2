@@ -98,7 +98,7 @@ def medicamentos():
 def login():
     usuario = request.get_json(force=True)
     for i in range(len(datos_pacientes)):
-        if usuario["usuario"] == datos_pacientes[i]["nombre de usuario"] and usuario["contraseña"] == datos_pacientes[i]["password"]:
+        if usuario["usuario"] == datos_pacientes[i]["nombre de usuario"] and usuario["password"] == datos_pacientes[i]["password"]:
             return jsonify({"mensaje":"Bienvenido "+datos_pacientes[i]["nombre"]+" "+datos_pacientes[i]["apellido"], "datos del usuario":datos_pacientes[i]})
 
     for i in range(len(datos_doctores)):
@@ -122,7 +122,7 @@ def mod_paciente(usuarios_nombredeusuario):
             usuario[0]['apellido'] = data['apellido']
             usuario[0]['fecha de nacimiento'] = data['fecha de nacimiento']
             usuario[0]['nombre de usuario'] = data['nombre de usuario']
-            usuario[0]['password'] = data['contraseña']
+            usuario[0]['password'] = data['password']
             usuario[0]['telefono'] = data['telefono']
             return jsonify({"mensaje": "Datos Actualizados"})           
     return jsonify({"mensaje":"No se pudieron modificar los datos"})
@@ -139,7 +139,7 @@ def mod_doctor(usuarios_nombredeusuario):
             usuario[0]['apellido'] = data['apellido']
             usuario[0]['fecha de nacimiento'] = data['fecha de nacimiento']
             usuario[0]['nombre de usuario'] = data['nombre de usuario']
-            usuario[0]['password'] = data['contraseña']
+            usuario[0]['password'] = data['password']
             usuario[0]['telefono'] = data['telefono']
             return jsonify({"mensaje": "Datos Actualizados"})           
     return jsonify({"mensaje":"No se pudieron modificar los datos"})
@@ -156,7 +156,7 @@ def mod_enfermero(usuarios_nombredeusuario):
             usuario[0]['apellido'] = data['apellido']
             usuario[0]['fecha de nacimiento'] = data['fecha de nacimiento']
             usuario[0]['nombre de usuario'] = data['nombre de usuario']
-            usuario[0]['password'] = data['contraseña']
+            usuario[0]['password'] = data['password']
             usuario[0]['telefono'] = data['telefono']
             return jsonify({"mensaje": "Datos Actualizados"})           
     return jsonify({"mensaje":"No se pudieron modificar los datos"})
@@ -219,4 +219,4 @@ def eliminarMedicamento():
     return jsonify({"mensaje":"No se ha podido eliminar el medicamento"})
 
 if __name__ == '__main__':
-    app.run(debug=True,port=4041)
+    app.run("0.0.0.0",port=4041)

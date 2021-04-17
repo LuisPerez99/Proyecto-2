@@ -131,7 +131,7 @@ input:focus{
     outline:0;
 }
 
-#iniciarSesion {
+button {
     background: #0094ff;
     color: #ffffff;
     font-size: 15px;
