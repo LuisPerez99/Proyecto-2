@@ -4,13 +4,24 @@
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" href="estilo.css" />
-    <title>Ingreso</title>
+    <title>Iniciar Sesion</title>
 </head>
 <body>
-    <div id="registro/login">
+    <div id="registro-login">
+        <br /><br /><br /><br />
         <form>
-            <h1>Ingreso</h1>
+            <h1>Iniciar Sesion</h1>
+            <label for="usuario">Nombre de usuario:&nbsp;</label>
+            <input type="text" name="usuario" id="usuario" placeholder="Ingrese nombre de usuario" />
+            <br /><br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <label for="password">Contraseña:&nbsp;</label>
+            <input type="password" name="password" id="password" placeholder="***********" />
+            <br /><br />
+            <input type="submit" id="iniciarSesion" value="Iniciar sesion"/>
         </form>
     </div>
+
+    <script src="script.js"></script>
 </body>
 </html>

@@ -53,19 +53,19 @@ p{
 }
 
 #login {
-    background: #5db7f8;
+    background: #0094ff;
     color: #ffffff;
     font-size: 15px;
     font-weight: bold;
-    border-radius: 10px;
+    border-radius: 15px;
 }
 
 #registrarse {
-    background: #5db7f8;
+    background: #0094ff;
     color: #ffffff;
     font-size: 15px;
     font-weight: bold;
-    border-radius: 10px;
+    border-radius: 15px;
 }
 
 #login:hover{
@@ -114,9 +114,39 @@ form{
     box-shadow: 4px 4px 4px #2f2e2e;
 }
 
-#registro/login{
+#registro-login{
     width:auto;
     margin:0 auto;
     height:auto;
     margin-top:50px;
+    text-align:center;
+}
+
+input {
+    border-radius: 10px;
+    padding: 5px;
+}
+
+input:focus{
+    outline:0;
+}
+
+#iniciarSesion {
+    background: #0094ff;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 20px;
+    border-color:#0094ff;
+    padding:10px;
+}
+
+#reg {
+    background: #0094ff;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 20px;
+    border-color: #0094ff;
+    padding: 10px;
 }
