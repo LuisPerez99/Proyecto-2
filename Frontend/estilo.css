@@ -68,6 +68,23 @@ p{
     border-radius: 15px;
 }
 
+#registro{
+    color:#0a00ff;
+    text-decoration:underline;
+    font-family:Arial;
+    font-weight:normal;
+    text-shadow: none;
+    font-size:14px;
+}
+
+#crear {
+    color: #000000;
+    font-family: Arial;
+    font-weight: normal;
+    text-shadow: none;
+    font-size: 14px;
+}
+
 #login:hover{
     animation: botones;
     animation-duration: 5s;
@@ -101,7 +118,7 @@ p{
     padding-left:10px;
 }
 
-form{
+#iniciarSesion{
     background:#ffffff;
     width:50%;
     height:auto;
