@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, url_for, redirect
+from flask import Flask, request, jsonify, url_for, redirect, make_response, render_template
 from flask_cors import CORS
 import json
 
@@ -14,7 +14,7 @@ CORS(app)
 
 @app.route('/')
 def index():
-    return jsonify('Proyecto 2')
+    return jsonify("proyecto 2")
 
 @app.route('/registrodoctores', methods=['POST'])
 def registro_doctores():
@@ -99,16 +99,16 @@ def login():
     usuario = request.get_json(force=True)
     for i in range(len(datos_pacientes)):
         if usuario["usuario"] == datos_pacientes[i]["nombre de usuario"] and usuario["password"] == datos_pacientes[i]["password"]:
-            return jsonify({"mensaje":"Bienvenido "+datos_pacientes[i]["nombre"]+" "+datos_pacientes[i]["apellido"], "datos del usuario":datos_pacientes[i]})
+            return jsonify("Credenciales correctas")
 
     for i in range(len(datos_doctores)):
         if usuario["usuario"] == datos_doctores[i]["nombre de usuario"] and usuario["contraseña"] == datos_doctores[i]["password"]:
-            return jsonify({"mensaje":"Bienvenido Dr. "+datos_doctores[i]["nombre"]+" "+datos_doctores[i]["apellido"], "datos del usuario":datos_doctores[i]})
+            return jsonify("Credenciales correctas")
 
     for i in range(len(datos_enfermeros)):
         if usuario["usuario"] == datos_enfermeros[i]["nombre de usuario"] and usuario["contraseña"] == datos_enfermeros[i]["password"]:
-            return jsonify({"mensaje":"Bienvenido "+datos_enfermeros[i]["nombre"]+" "+datos_enfermeros[i]["apellido"], "datos del usuario":datos_enfermeros[i]})
-    return jsonify({"mensaje":"Usuario no encontrado"})
+            return jsonify("Credenciales correctas")
+    return jsonify("Credenciales incorrectas")
 
 @app.route('/datospacientes/<string:usuarios_nombredeusuario>', methods=['PUT'])
 def mod_paciente(usuarios_nombredeusuario):
