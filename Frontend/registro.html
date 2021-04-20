@@ -16,23 +16,29 @@
 
             <div class="wrap-input100 validate-input">
                 <label for="nombre">Nombre:&nbsp;</label>
-                <input type="text" class="input100" name="nombre" id="nombre" placeholder="Ingrese su nombre" />
+                <input type="text" class="input100" name="nombre" id="nombre" placeholder="Ingrese su nombre" required />
             </div>
             <br />
             <div class="wrap-input100 validate-input">
                 <label for="apellido">Apellido:&nbsp;</label>
-                <input type="text" class="input100" name="apellido" id="apellido" placeholder="Ingrese su apellido" />
+                <input type="text" class="input100" name="apellido" id="apellido" placeholder="Ingrese su apellido" required />
+            </div>
+            <br />
+            <div class="wrap-input100 validate-input">
+                <label for="nacimiento">Fecha de Nacimiento:&nbsp;</label>
+                <input type="date" class="input100" name="nacimiento" id="nacimiento" required />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </div>
             <br />
             <div class="wrap-input100 validate-input">
                 <label for="usuario">Nombre de usuario:&nbsp;</label>
-                <input type="text" class="input100" name="usuario" id="usuario" placeholder="Ingrese nombre de usuario" />
+                <input type="text" class="input100" name="usuario" id="usuario" placeholder="Ingrese nombre de usuario" required />
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </div>
             <br />
             <div class="wrap-input100 validate-input">
                 <label for="password">Contraseña:&nbsp;</label>
-                <input type="password" class="input100" name="password" id="password" placeholder="***********" />
+                <input type="password" class="input100" name="password" id="password" placeholder="***********" required />
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </div>
             <br />
@@ -44,6 +50,13 @@
                 <label for="femenino" style="font-weight:lighter">F</label>
                 <input type="radio" class="input100" value="F" id="femenino" name="genero" style="box-shadow: none;" />
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+            <br />
+            <div class="wrap-input100 validate-input">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <label for="telefono">Telefono:&nbsp;</label>
+                <input type="number" class="input100" name="telefono" id="telefono" placeholder="12345678" />
+                <label id="opcional" style="font-weight:lighter; font-family:Arial; font-size:14px">(opcional)</label>
             </div>
             <br />
             <div class="container-register-form-btn">
@@ -70,8 +83,48 @@
 
         function registrarse() {
             let nombre = document.getElementById("nombre").value;
-            let nombre = document.getElementById("nombre").value;
-            let sexo = document.getElementById("sexo").value;
+            let apellido = document.getElementById("apellido").value;
+            let nacimiento = document.getElementById("nacimiento").value;
+            let usuario = document.getElementById("usuario").value;
+            let password = document.getElementById("password").value;
+            let telefono = document.getElementById("telefono").value;
+            let elemento = document.getElementsByName("genero");
+            let sexo;
+
+            for (i = 0; i < elemento.length; i++) {
+                if (elemento[i].checked)
+                    sexo = elemento[i].value;
+                break;
+            }
+
+            if (nombre == "" || apellido == "" || nacimiento == "" || usuario == "" || password == "" || sexo == "") {
+                alert("Faltan datos por ingresar.")
+            } else {
+                fetch('http://localhost:4041/registropacientes', {
+                    method: 'POST',
+                    headers: headers,
+                    body: `{
+                "nombre":"${nombre}",
+                "apellido":"${apellido}",
+                "nacimiento":"${nacimiento}",
+    	        "nombre de usuario":"${usuario}",
+                "password":"${password}",
+                "telefono":"${telefono}",
+                "sexo":"${sexo}"
+                }`,
+                })
+
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        if (data == "datos ingresados") {
+                            alert('Usuario registrado, redirigiendo a inicio de sesion.')
+                            window.open("login.html", "_self")
+                        } else if (data == "El nombre de usuario ya existe") {
+                            alert('Este nombre de usuario ya existe.')
+                        }
+                    })
+            }                          
         }
     </script>
 </body>

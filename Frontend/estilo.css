@@ -185,3 +185,9 @@ button {
     border-color: #0094ff;
     padding: 10px;
 }
+
+#nacimiento{
+    width:175px;
+    padding:7px;
+    padding-left:10px;
+}
