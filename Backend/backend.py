@@ -41,16 +41,17 @@ def registro_pacientes():
         datos_pacientes.append(data)
         nombres_usuarios.append(data["nombre de usuario"])
         print(datos_pacientes)
-        return jsonify({"mensaje":"datos ingresados"})
+        return jsonify("datos ingresados")
 
     if data["nombre de usuario"] in nombres_usuarios:
-        return jsonify({"error":"El nombre de usuario ya existe"})
+        print("El nombre de usuario ya existe")
+        return jsonify("El nombre de usuario ya existe")
     else:
         datos_pacientes.append(data)
         nombres_usuarios.append(data["nombre de usuario"])
         print(datos_pacientes)
-        return jsonify({"mensaje":"datos ingresados"})
-    return jsonify({"mensaje":"El nombre de usuario ya existe"})
+        return jsonify("datos ingresados")
+    return jsonify("No se pudo crear el usuario")
 
 @app.route('/registroenfermeros', methods=['POST'])
 def registro_enfermeros():
