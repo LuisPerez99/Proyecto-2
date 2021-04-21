@@ -65,13 +65,17 @@
 
                 .then(usuario => {
                     console.log(usuario);
-                    if (usuario == "Credenciales correctas") {
+                    if (usuario == "paciente") {
                         alert('Inicio de sesion correcto')
                         window.open("modulo pacientes.html", "_self")
-                    } else if (usuario == "credenciales incorrectas") {
-                        alert('Credenciales incorrectas')
+                    } else if (usuario == "doctor") {
+                        alert('Inicio de sesion correcto')
+                        window.open("modulo doctores.html", "_self")
+                    } else if (usuario == "enfermero") {
+                        alert('Inicio de sesion correcto')
+                        window.open("modulo enfermeros.html", "_self")
                     } else {
-                        alert('Verifique sus credenciales')
+                        alert('Credenciales incorrectas')
                     }
                 })
                 .catch((error) => {
