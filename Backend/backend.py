@@ -79,7 +79,7 @@ def agregar_medicamentos():
     print(datos_medicamentos)
     return jsonify({"mensaje":"datos ingresados"})
 
-@app.route('/datospacientes')
+@app.route('/pacientes')
 def pacientes():
     return jsonify({"usuarios": datos_pacientes, "titulo": "Lista de pacientes"})
 
@@ -100,18 +100,23 @@ def login():
     usuario = request.get_json(force=True)
     for i in range(len(datos_pacientes)):
         if usuario["usuario"] == datos_pacientes[i]["nombre de usuario"] and usuario["password"] == datos_pacientes[i]["password"]:
-            return jsonify("Credenciales correctas")
+            return jsonify("paciente")
 
     for i in range(len(datos_doctores)):
-        if usuario["usuario"] == datos_doctores[i]["nombre de usuario"] and usuario["contraseña"] == datos_doctores[i]["password"]:
-            return jsonify("Credenciales correctas")
+        if usuario["usuario"] == datos_doctores[i]["nombre de usuario"] and usuario["password"] == datos_doctores[i]["password"]:
+            return jsonify("doctor")
 
     for i in range(len(datos_enfermeros)):
-        if usuario["usuario"] == datos_enfermeros[i]["nombre de usuario"] and usuario["contraseña"] == datos_enfermeros[i]["password"]:
-            return jsonify("Credenciales correctas")
+        if usuario["usuario"] == datos_enfermeros[i]["nombre de usuario"] and usuario["password"] == datos_enfermeros[i]["password"]:
+            return jsonify("enfermero")
     return jsonify("Credenciales incorrectas")
 
-@app.route('/datospacientes/<string:usuarios_nombredeusuario>', methods=['PUT'])
+@app.route('/pacientes/<string:usuarios_nombredeusuario>')
+def paciente(usuarios_nombredeusuario):
+    usuario = [usuarios for usuarios in datos_pacientes if usuarios['nombre de usuario'] == usuarios_nombredeusuario]
+    return jsonify(usuario)
+
+@app.route('/pacientes/<string:usuarios_nombredeusuario>', methods=['PUT'])
 def mod_paciente(usuarios_nombredeusuario):
     usuario = [usuarios for usuarios in datos_pacientes if usuarios['nombre de usuario'] == usuarios_nombredeusuario]
     data = request.get_json(force=True)
