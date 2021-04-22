@@ -111,10 +111,13 @@ def login():
             return jsonify("enfermero")
     return jsonify("Credenciales incorrectas")
 
-@app.route('/pacientes/<string:usuarios_nombredeusuario>')
-def paciente(usuarios_nombredeusuario):
-    usuario = [usuarios for usuarios in datos_pacientes if usuarios['nombre de usuario'] == usuarios_nombredeusuario]
-    return jsonify(usuario)
+@app.route('/paciente', methods=['POST'])
+def paciente():
+    data = request.get_json(force=True)
+    for i in range (len(datos_pacientes)):
+        if data['nombre de usuario'] == datos_pacientes[i]['nombre de usuario']:
+            return jsonify(datos_pacientes[i])
+    return jsonify("Error, usuario no encontrado")
 
 @app.route('/pacientes/<string:usuarios_nombredeusuario>', methods=['PUT'])
 def mod_paciente(usuarios_nombredeusuario):
