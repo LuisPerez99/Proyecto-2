@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, url_for, redirect, make_response, render_template
 from flask_cors import CORS
-import json
+import json, csv
 
 datos_pacientes = []
 datos_doctores = []
@@ -8,6 +8,12 @@ datos_enfermeros = []
 datos_medicamentos = []
 nombres_usuarios = []
 nombres_medicamentos = []
+datos_admin = {
+    "nombre":"Javier",
+    "apellido":"Golon",
+    "nombre de usuario":"admin",
+    "password":"1234"
+}
 
 app = Flask(__name__)
 CORS(app)
@@ -98,6 +104,9 @@ def medicamentos():
 @app.route('/login', methods = ['POST'])
 def login():
     usuario = request.get_json(force=True)
+    if usuario["usuario"] == datos_admin["nombre de usuario"] and usuario["password"] == datos_admin["password"]:
+        return jsonify("administrador")
+
     for i in range(len(datos_pacientes)):
         if usuario["usuario"] == datos_pacientes[i]["nombre de usuario"] and usuario["password"] == datos_pacientes[i]["password"]:
             return jsonify("paciente")
@@ -117,6 +126,29 @@ def paciente():
     for i in range (len(datos_pacientes)):
         if data['nombre de usuario'] == datos_pacientes[i]['nombre de usuario']:
             return jsonify(datos_pacientes[i])
+    return jsonify("Error, usuario no encontrado")
+
+@app.route('/doctor', methods=['POST'])
+def doctor():
+    data = request.get_json(force=True)
+    for i in range (len(datos_doctores)):
+        if data['nombre de usuario'] == datos_doctores[i]['nombre de usuario']:
+            return jsonify(datos_doctores[i])
+    return jsonify("Error, usuario no encontrado")
+
+@app.route('/enfermero', methods=['POST'])
+def enfermero():
+    data = request.get_json(force=True)
+    for i in range (len(datos_enfermeros)):
+        if data['nombre de usuario'] == datos_enfermeros[i]['nombre de usuario']:
+            return jsonify(datos_enfermeros[i])
+    return jsonify("Error, usuario no encontrado")
+
+@app.route('/admin', methods=['POST'])
+def admin():
+    data = request.get_json(force=True)
+    if data['nombre de usuario'] == datos_admin['nombre de usuario']:
+        return jsonify(datos_admin)
     return jsonify("Error, usuario no encontrado")
 
 @app.route('/pacientes/<string:usuarios_nombredeusuario>', methods=['PUT'])

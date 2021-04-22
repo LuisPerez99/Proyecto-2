@@ -24,17 +24,33 @@ function iniciarSesion() {
             console.log(usuario);
             if (usuario == "paciente") {
                 alert('Inicio de sesion correcto')
-                console.log(user);
                 localStorage.setItem('nombreUsuario', user);
+                localStorage.setItem('tipoDeUsuario', usuario);
                 window.open("modulo pacientes.html", "_self")
-            } else if (usuario == "doctor") {
+            }
+
+            if (usuario == "doctor") {
                 alert('Inicio de sesion correcto')
+                localStorage.setItem('nombreUsuario', user);
+                localStorage.setItem('tipoDeUsuario', usuario);
                 window.open("modulo doctores.html", "_self")
-            } else if (usuario == "enfermero") {
+            }
+
+            if (usuario == "enfermero") {
                 alert('Inicio de sesion correcto')
+                localStorage.setItem('nombreUsuario', user);
+                localStorage.setItem('tipoDeUsuario', usuario);
                 window.open("modulo enfermeros.html", "_self")
-            } else {
-                alert('Credenciales incorrectas')
+            }
+
+            if (usuario == "administrador") {
+                alert('Inicio de sesion correcto')
+                localStorage.setItem('tipoDeUsuario', usuario);
+                localStorage.setItem('nombreUsuario', user);
+                window.open("modulo administrador.html", "_self")
+            }
+            if (usuario == "Credenciales incorrectas") {
+                alert('Credenciales invalidas')
             }
         })
         .catch((error) => {
@@ -44,18 +60,41 @@ function iniciarSesion() {
 
 function cargarDatos() {
     let user = localStorage.getItem('nombreUsuario');
-    fetch('http://localhost:4041/paciente', {
-        method: 'POST',
-        headers: headers,
-        body: `{
+    let tipo_usuario = localStorage.getItem('tipoDeUsuario');
+    let paciente = 'http://localhost:4041/paciente';
+    let doctor = 'http://localhost:4041/doctor';
+    let enfermero = 'http://localhost:4041/enfermero';
+    let admin = 'http://localhost:4041/admin';
+
+    function cargar(dir) {
+        fetch(dir, {
+            method: 'POST',
+            headers: headers,
+            body: `{
     	        "nombre de usuario":"${user}"
                 }`,
-    })
-
-        .then(response => response.json())
-
-        .then(usuario => {
-            console.log(usuario);
-            document.getElementById("datos").innerHTML = JSON.stringify(usuario);
         })
+            .then(response => response.json())
+
+            .then(usuario => {
+                console.log(usuario);
+                document.getElementById("datos").innerHTML = usuario["nombre"];
+            })
+    }
+
+    if (tipo_usuario == "paciente") {
+        cargar(paciente);
+    }
+
+    if (tipo_usuario == "doctor") {
+        cargar(doctor);
+    }
+
+    if (tipo_usuario == "enfermero") {
+        cargar(enfermero);
+    }
+
+    if (tipo_usuario == "administrador") {
+        cargar(admin);
+    }
 }
