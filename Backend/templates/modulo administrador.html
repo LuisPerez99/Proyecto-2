@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Administrador</title>
+    <link rel="icon" href="icono.jpg">
+</head>
+<body>
+    <h1>Administrador</h1>
+    <div class="container">
+        <h4>Pacientes</h4>
+        <form action="http://localhost:4041/admin/cargarpacientes" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="pacientes">Cargar pacientes:</label>
+                <input type="file" class="file-input" name="pacientes" id="pacientes" />
+            </div>   
+            
+            <button type="submit" class="btn btn-primary">Cargar pacientes</button>
+
+        </form> 
+    </div>
+
+    <div>
+        <h4>Doctores</h4>
+        <label for="doctores">Archivo doctores:</label>
+        <input type="file" id="doctores" />
+        <button class="cargar" id="cargar doctores" onclick="cargarDoctores()">
+            Cargar Doctores
+        </button>
+    </div>
+
+    <div>
+        <h4>Enfermeros</h4>
+        <label for="enfermeros">Archivo pacientes:</label>
+        <input type="file" id="enfermeros" />
+        <button class="cargar" id="cargar enfermeros" onclick="cargarEnfermeros()">
+            Cargar Enfermeros
+        </button>
+    </div>
+
+    <script src="/static/main.js" type="text/javascript"></script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, url_for, redirect, make_response, render_template
 from flask_cors import CORS
-import json, csv
+import json, csv, os
 
 datos_pacientes = []
 datos_doctores = []
@@ -20,7 +20,7 @@ CORS(app)
 
 @app.route('/')
 def index():
-    return jsonify("proyecto 2")
+    return render_template('UHospital.html')
 
 @app.route('/registrodoctores', methods=['POST'])
 def registro_doctores():
@@ -40,23 +40,27 @@ def registro_doctores():
         return jsonify({"mensaje":"datos ingresados"})
     return jsonify({"mensaje":"El nombre de usuario ya existe"})
 
-@app.route('/registropacientes', methods=['POST'])
+@app.route('/registropacientes', methods=['GET','POST'])
 def registro_pacientes():
-    data = request.get_json(force=True)
-    if not datos_doctores and not datos_enfermeros and not datos_pacientes:
-        datos_pacientes.append(data)
-        nombres_usuarios.append(data["nombre de usuario"])
-        print(datos_pacientes)
-        return jsonify("datos ingresados")
+    if request.method == 'POST':
+        data = request.get_json(force=True)
+        if not datos_doctores and not datos_enfermeros and not datos_pacientes:
+            datos_pacientes.append(data)
+            nombres_usuarios.append(data["nombre de usuario"])
+            print(datos_pacientes)
+            return jsonify("datos ingresados")
 
-    if data["nombre de usuario"] in nombres_usuarios:
-        print("El nombre de usuario ya existe")
-        return jsonify("El nombre de usuario ya existe")
-    else:
-        datos_pacientes.append(data)
-        nombres_usuarios.append(data["nombre de usuario"])
-        print(datos_pacientes)
-        return jsonify("datos ingresados")
+        if data["nombre de usuario"] in nombres_usuarios:
+            print("El nombre de usuario ya existe")
+            return jsonify("El nombre de usuario ya existe")
+        else:
+            datos_pacientes.append(data)
+            nombres_usuarios.append(data["nombre de usuario"])
+            print(datos_pacientes)
+            return jsonify("datos ingresados")
+    
+    if request.method == 'GET':
+        return render_template('registro.html')
     return jsonify("No se pudo crear el usuario")
 
 @app.route('/registroenfermeros', methods=['POST'])
@@ -101,23 +105,27 @@ def enfermeros():
 def medicamentos():
     return jsonify({"medicamentos": datos_medicamentos, "titulo": "Lista de medicamentos"})
 
-@app.route('/login', methods = ['POST'])
+@app.route('/login', methods = ['GET','POST'])
 def login():
-    usuario = request.get_json(force=True)
-    if usuario["usuario"] == datos_admin["nombre de usuario"] and usuario["password"] == datos_admin["password"]:
-        return jsonify("administrador")
+    if request.method == 'POST':
+        usuario = request.get_json(force=True)
+        if usuario["usuario"] == datos_admin["nombre de usuario"] and usuario["password"] == datos_admin["password"]:
+            return jsonify("administrador")
 
-    for i in range(len(datos_pacientes)):
-        if usuario["usuario"] == datos_pacientes[i]["nombre de usuario"] and usuario["password"] == datos_pacientes[i]["password"]:
-            return jsonify("paciente")
+        for i in range(len(datos_pacientes)):
+            if usuario["usuario"] == datos_pacientes[i]["nombre de usuario"] and usuario["password"] == datos_pacientes[i]["password"]:
+                return jsonify("paciente")
 
-    for i in range(len(datos_doctores)):
-        if usuario["usuario"] == datos_doctores[i]["nombre de usuario"] and usuario["password"] == datos_doctores[i]["password"]:
-            return jsonify("doctor")
+        for i in range(len(datos_doctores)):
+            if usuario["usuario"] == datos_doctores[i]["nombre de usuario"] and usuario["password"] == datos_doctores[i]["password"]:
+                return jsonify("doctor")
 
-    for i in range(len(datos_enfermeros)):
-        if usuario["usuario"] == datos_enfermeros[i]["nombre de usuario"] and usuario["password"] == datos_enfermeros[i]["password"]:
-            return jsonify("enfermero")
+        for i in range(len(datos_enfermeros)):
+            if usuario["usuario"] == datos_enfermeros[i]["nombre de usuario"] and usuario["password"] == datos_enfermeros[i]["password"]:
+                return jsonify("enfermero")
+    
+    if request.method == 'GET':
+        return render_template('login.html')
     return jsonify("Credenciales incorrectas")
 
 @app.route('/paciente', methods=['POST'])
@@ -144,12 +152,46 @@ def enfermero():
             return jsonify(datos_enfermeros[i])
     return jsonify("Error, usuario no encontrado")
 
-@app.route('/admin', methods=['POST'])
+@app.route('/admin', methods=['GET','POST'])
 def admin():
-    data = request.get_json(force=True)
-    if data['nombre de usuario'] == datos_admin['nombre de usuario']:
-        return jsonify(datos_admin)
+    if request.method == 'POST':
+        data = request.get_json(force=True)
+        if data['nombre de usuario'] == datos_admin['nombre de usuario']:
+            return jsonify(datos_admin)
+    
+    if (request.method == 'GET'):
+        return render_template('modulo administrador.html')   
     return jsonify("Error, usuario no encontrado")
+
+app.config['FILE_UPLOADS'] = "static/file/uploads"
+
+@app.route('/admin/cargarpacientes', methods=['POST'])
+def cargar_pacientes():
+    if request.method == 'POST':
+        if request.files:
+            doc = request.files['pacientes']
+            doc.save(os.path.join(app.config['FILE_UPLOADS'], doc.filename))
+            print("archivo guardado")
+
+            with open('static/file/uploads/pacientes.csv', 'r') as csv_file:
+                lector = csv.reader(csv_file)
+                next(lector)
+
+                for line in lector:
+                    datos_usuario = {
+                        "nombre": line[0],
+                        "apellido": line[1],
+                        "fecha": line[2],
+                        "sexo": line[3],
+                        "nombre de usuario": line[4],
+                        "password": line[5],
+                        "telefono": line[6]
+                        }
+                    print(line[0])
+                    datos_pacientes.append(datos_usuario)
+                    print(datos_pacientes)
+        return redirect(url_for('admin'))
+    return redirect(url_for('admin'))
 
 @app.route('/pacientes/<string:usuarios_nombredeusuario>', methods=['PUT'])
 def mod_paciente(usuarios_nombredeusuario):

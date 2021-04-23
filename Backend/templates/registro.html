@@ -3,7 +3,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" type="text/css" href="estilo.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/estilo.css" />
     <title>Registro</title>
     <link rel="icon" href="icono.jpg">
 </head>
@@ -67,7 +67,7 @@
             <br />
             <label id="crear">¿Ya tiene una cuenta?</label>
             <br />
-            <a href="login.html" id="registro">Iniciar Sesion</a>
+            <a href="http://localhost:4041/login" id="registro">Iniciar Sesion</a>
         </div>
     </div>
 
@@ -118,8 +118,7 @@
                     .then(data => {
                         console.log(data);
                         if (data == "datos ingresados") {
-                            alert('Usuario registrado, redirigiendo a inicio de sesion.')
-                            window.open("login.html", "_self")
+                            alert('Usuario registrado')
                         } else if (data == "El nombre de usuario ya existe") {
                             alert('Este nombre de usuario ya existe.')
                         }

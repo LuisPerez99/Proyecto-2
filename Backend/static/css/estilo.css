@@ -91,6 +91,10 @@ p{
     animation-iteration-count: infinite
 }
 
+button:focus{
+    outline: none;
+}
+
 #registrarse:hover {
     animation: botones;
     animation-duration: 5s;

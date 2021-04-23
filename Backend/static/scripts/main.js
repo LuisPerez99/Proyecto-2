@@ -47,7 +47,11 @@ function iniciarSesion() {
                 alert('Inicio de sesion correcto')
                 localStorage.setItem('tipoDeUsuario', usuario);
                 localStorage.setItem('nombreUsuario', user);
-                window.open("modulo administrador.html", "_self")
+
+                fetch('http://localhost:4041/admin', {
+                    method: 'GET',
+                    headers: headers,
+                })
             }
             if (usuario == "Credenciales incorrectas") {
                 alert('Credenciales invalidas')
@@ -78,7 +82,6 @@ function cargarDatos() {
 
             .then(usuario => {
                 console.log(usuario);
-                document.getElementById("datos").innerHTML = usuario["nombre"];
             })
     }
 
