@@ -160,7 +160,7 @@ def admin():
             return jsonify(datos_admin)
     
     if (request.method == 'GET'):
-        return render_template('modulo administrador.html')   
+        return render_template('modulo administrador.html')
     return jsonify("Error, usuario no encontrado")
 
 app.config['FILE_UPLOADS'] = "static/file/uploads"
@@ -302,4 +302,4 @@ def eliminarMedicamento():
     return jsonify({"mensaje":"No se ha podido eliminar el medicamento"})
 
 if __name__ == '__main__':
-    app.run("0.0.0.0",port=4041)
+    app.run(debug=True,port=4041)

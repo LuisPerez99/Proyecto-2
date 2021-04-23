@@ -48,10 +48,7 @@ function iniciarSesion() {
                 localStorage.setItem('tipoDeUsuario', usuario);
                 localStorage.setItem('nombreUsuario', user);
 
-                fetch('http://localhost:4041/admin', {
-                    method: 'GET',
-                    headers: headers,
-                })
+                window.location.replace("http://localhost:4041/admin");
             }
             if (usuario == "Credenciales incorrectas") {
                 alert('Credenciales invalidas')
