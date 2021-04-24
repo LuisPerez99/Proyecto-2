@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Backend/static/file/uploads/doctores.csv
+/Backend/static/file/uploads/enfermeros.csv

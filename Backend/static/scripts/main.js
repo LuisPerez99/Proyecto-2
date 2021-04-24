@@ -26,28 +26,35 @@ function iniciarSesion() {
                 alert('Inicio de sesion correcto')
                 localStorage.setItem('nombreUsuario', user);
                 localStorage.setItem('tipoDeUsuario', usuario);
-                window.open("modulo pacientes.html", "_self")
+                console.log(user)
+                console.log(usuario)
+                window.location.replace("http://localhost:4041/paciente");
             }
 
             if (usuario == "doctor") {
                 alert('Inicio de sesion correcto')
                 localStorage.setItem('nombreUsuario', user);
                 localStorage.setItem('tipoDeUsuario', usuario);
-                window.open("modulo doctores.html", "_self")
+                console.log(user)
+                console.log(usuario)
+                window.location.replace("http://localhost:4041/doctor");
             }
 
             if (usuario == "enfermero") {
                 alert('Inicio de sesion correcto')
                 localStorage.setItem('nombreUsuario', user);
                 localStorage.setItem('tipoDeUsuario', usuario);
-                window.open("modulo enfermeros.html", "_self")
+                console.log(user)
+                console.log(usuario)
+                window.location.replace("http://localhost:4041/enfermero");
             }
 
             if (usuario == "administrador") {
                 alert('Inicio de sesion correcto')
                 localStorage.setItem('tipoDeUsuario', usuario);
                 localStorage.setItem('nombreUsuario', user);
-
+                console.log(user)
+                console.log(usuario)
                 window.location.replace("http://localhost:4041/admin");
             }
             if (usuario == "Credenciales incorrectas") {

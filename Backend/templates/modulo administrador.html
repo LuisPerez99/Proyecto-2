@@ -5,8 +5,9 @@
     <meta charset="utf-8" />
     <title>Administrador</title>
     <link rel="icon" href="icono.jpg">
+    <link rel="stylesheet" type="text/css" href="/static/css/estilo.css" />
 </head>
-<body>
+<body onload="cargarDatos()">
     <h1>Administrador</h1>
     <div class="container">
         <h4>Pacientes</h4>
@@ -14,29 +15,37 @@
             <div class="form-group">
                 <label for="pacientes">Cargar pacientes:</label>
                 <input type="file" class="file-input" name="pacientes" id="pacientes" />
-            </div>   
-            
+            </div>
+
             <button type="submit" class="btn btn-primary">Cargar pacientes</button>
 
-        </form> 
+        </form>
     </div>
 
-    <div>
+    <div class="container">
         <h4>Doctores</h4>
-        <label for="doctores">Archivo doctores:</label>
-        <input type="file" id="doctores" />
-        <button class="cargar" id="cargar doctores" onclick="cargarDoctores()">
-            Cargar Doctores
-        </button>
+        <form action="http://localhost:4041/admin/cargardoctores" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="doctores">Cargar doctores:</label>
+                <input type="file" class="file-input" name="doctores" id="doctores" />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Cargar doctores</button>
+
+        </form>
     </div>
 
-    <div>
+    <div class="container">
         <h4>Enfermeros</h4>
-        <label for="enfermeros">Archivo pacientes:</label>
-        <input type="file" id="enfermeros" />
-        <button class="cargar" id="cargar enfermeros" onclick="cargarEnfermeros()">
-            Cargar Enfermeros
-        </button>
+        <form action="http://localhost:4041/admin/cargarenfermeros" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="enfermeros">Cargar pacientes:</label>
+                <input type="file" class="file-input" name="enfermeros" id="enfermeros" />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Cargar enfermeros</button>
+
+        </form>
     </div>
 
     <script src="/static/scripts/main.js" type="text/javascript"></script>
