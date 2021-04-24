@@ -218,6 +218,40 @@ def cargar_enfermeros():
         return redirect(url_for('admin'))
     return redirect(url_for('admin'))
 
+@app.route('/admin/cargarmedicamentos', methods=['POST'])
+def cargar_medicamentos():
+    if request.method == 'POST':
+        if request.files:
+            doc = request.files['medicamentos']
+            doc.save(os.path.join(app.config['FILE_UPLOADS'], doc.filename))
+            print("archivo guardado")
+
+            with open('static/file/uploads/medicamentos.csv', 'r') as csv_file:
+                lector = csv.reader(csv_file)
+                next(lector)
+
+                for line in lector:
+                    datos_medicamento = {
+                        "nombre": line[0],
+                        "precio": line[1],
+                        "descripcion": line[2],
+                        "cantidad": line[3],
+                        }
+                    datos_medicamentos.append(datos_medicamento)
+                    nombres_medicamentos.append(datos_medicamento['nombre'])
+                print("Medicamentos: "+str(datos_medicamentos))
+        return redirect(url_for('admin'))
+    return redirect(url_for('admin'))
+
+@app.route('/modificarperfil', methods=['GET','PUT'])
+def mod_perfil():
+    if request.method == 'PUT':
+        return jsonify("modificar")
+    
+    if request.method == 'GET':
+        return render_template('modificar perfil.html')
+    return jsonify({"mensaje":"Error"})
+
 @app.route('/pacientes/<string:usuarios_nombredeusuario>', methods=['PUT'])
 def mod_paciente(usuarios_nombredeusuario):
     usuario = [usuarios for usuarios in datos_pacientes if usuarios['nombre de usuario'] == usuarios_nombredeusuario]

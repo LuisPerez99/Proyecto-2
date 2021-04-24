@@ -195,3 +195,80 @@ button {
     padding:7px;
     padding-left:10px;
 }
+
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #ffffff;
+    width: auto;
+    height: auto;
+    text-align: center;
+    position: center;
+    padding: 50px;
+    padding-top: 1px;
+    margin: auto;
+    border-radius: 25px;
+    box-shadow: 4px 4px 4px #2f2e2e;
+    display: inline-block;
+}
+
+.tab button{
+    border-radius: 0px;
+}
+
+.tabcontent {
+    display: none;
+}
+
+#datos {
+    padding: 20px;
+    padding-top:0px;
+    background-color: #ffffff;
+    width: auto;
+    height: auto;
+    text-align: center;
+    position: center;
+    margin: auto;
+    border-radius: 25px;
+    box-shadow: 4px 4px 4px #2f2e2e;
+    display: inline-block;
+}
+
+#datos #nombre{
+    font-weight:normal
+}
+
+#datos #usuario{
+    font-weight:normal
+}
+
+#admin {
+    margin: auto;
+    width: 50%;
+}
+
+#modificar {
+    padding: 5px;
+}
+
+#modificar_perfil {
+    background: #ffffff;
+    width: auto;
+    height: auto;
+    text-align: center;
+    position: center;
+    padding: 50px;
+    padding-top: 1px;
+    margin: auto;
+    border-radius: 25px;
+    box-shadow: 4px 4px 4px #2f2e2e;
+    display: inline-block;
+}
+
+#modContainer {
+    width: auto;
+    margin: 0 auto;
+    height: auto;
+    margin-top: 50px;
+    text-align: center;
+}

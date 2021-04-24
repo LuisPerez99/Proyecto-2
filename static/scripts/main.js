@@ -73,6 +73,7 @@ function cargarDatos() {
     let doctor = 'http://localhost:4041/doctor';
     let enfermero = 'http://localhost:4041/enfermero';
     let admin = 'http://localhost:4041/admin';
+    document.getElementById("defaultOpen").click();
 
     function cargar(dir) {
         fetch(dir, {
@@ -85,7 +86,9 @@ function cargarDatos() {
             .then(response => response.json())
 
             .then(usuario => {
-                console.log(usuario);
+                localStorage.setItem('usuario', usuario);
+                document.getElementById('nombre').innerHTML = usuario.nombre + " " + usuario.apellido;
+                document.getElementById('usuario').innerHTML = usuario["nombre de usuario"];
             })
     }
 
@@ -104,4 +107,26 @@ function cargarDatos() {
     if (tipo_usuario == "administrador") {
         cargar(admin);
     }
+}
+
+function abrirMenu(evt, nombreTab) {
+    var i, contenidoTab, linkTab;
+
+    contenidoTab = document.getElementsByClassName('tabcontent');
+    for (i = 0; i < contenidoTab.length; i++) {
+        contenidoTab[i].style.display = "none";
+    }
+
+    linkTab = document.getElementsByClassName("tablinks");
+    for (i = 0; i < linkTab.length; i++) {
+        linkTab[i].className = linkTab[i].className.replace("active", "");
+    }
+
+    document.getElementById(nombreTab).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+
+function modificarDatos() {
+    let user = localStorage.getItem('usuario');
+    window.location.replace("http://localhost:4041/modificarperfil");
 }

@@ -5,47 +5,84 @@
     <meta charset="utf-8" />
     <title>Administrador</title>
     <link rel="icon" href="icono.jpg">
-    <link rel="stylesheet" type="text/css" href="/static/css/estilo.css" />
+    <link rel="stylesheet" type="text/css" href="static/css/estilo.css" />
 </head>
 <body onload="cargarDatos()">
-    <h1>Administrador</h1>
-    <div class="container">
-        <h4>Pacientes</h4>
-        <form action="http://localhost:4041/admin/cargarpacientes" method="POST" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="pacientes">Cargar pacientes:</label>
-                <input type="file" class="file-input" name="pacientes" id="pacientes" />
+    <div id="admin" class="container">
+        <h1>Administrador</h1>
+
+        <div id="datos">
+            <h4>
+                Datos del usuario
+            </h4>
+            <label>Nombre:&nbsp;</label>
+            <label id="nombre"></label>
+            <br /><br />
+            <label>Nombre de usuario:&nbsp;</label>
+            <label id="usuario"></label>
+            <br /><br />
+            <button id="modificar" onclick="modificarDatos()">Modificar Perfil</button>
+        </div>
+        <hr />
+
+        <div class="tab">
+            <button class="tablinks" onclick="abrirMenu(event, 'defaultOpen')">Pacientes</button>
+            <button class="tablinks" onclick="abrirMenu(event, 'doctores')">Doctores</button>
+            <button class="tablinks" onclick="abrirMenu(event, 'enfermeros')">Enfermeros</button>
+            <button class="tablinks" onclick="abrirMenu(event, 'medicamentos')">Medicamentos</button>
+
+            <div id="defaultOpen" class="tabcontent">
+                <h4>Pacientes</h4>
+                <form action="http://localhost:4041/admin/cargarpacientes" method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="pacientes">Cargar pacientes:</label>
+                        <input type="file" class="file-input" name="pacientes" id="pacientes" />
+                    </div>
+                    <br />
+                    <button type="submit" class="btn btn-primary">Cargar pacientes</button>
+
+                </form>
             </div>
 
-            <button type="submit" class="btn btn-primary">Cargar pacientes</button>
+            <div id="doctores" class="tabcontent">
+                <h4>Doctores</h4>
+                <form action="http://localhost:4041/admin/cargardoctores" method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="doctores">Cargar doctores:</label>
+                        <input type="file" class="file-input" name="doctores" id="doctores" />
+                    </div>
+                    <br />
+                    <button type="submit" class="btn btn-primary">Cargar doctores</button>
 
-        </form>
-    </div>
-
-    <div class="container">
-        <h4>Doctores</h4>
-        <form action="http://localhost:4041/admin/cargardoctores" method="POST" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="doctores">Cargar doctores:</label>
-                <input type="file" class="file-input" name="doctores" id="doctores" />
+                </form>
             </div>
 
-            <button type="submit" class="btn btn-primary">Cargar doctores</button>
+            <div id="enfermeros" class="tabcontent">
+                <h4>Enfermeros</h4>
+                <form action="http://localhost:4041/admin/cargarenfermeros" method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="enfermeros">Cargar pacientes:</label>
+                        <input type="file" class="file-input" name="enfermeros" id="enfermeros" />
+                    </div>
+                    <br />
+                    <button type="submit" class="btn btn-primary">Cargar enfermeros</button>
 
-        </form>
-    </div>
-
-    <div class="container">
-        <h4>Enfermeros</h4>
-        <form action="http://localhost:4041/admin/cargarenfermeros" method="POST" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="enfermeros">Cargar pacientes:</label>
-                <input type="file" class="file-input" name="enfermeros" id="enfermeros" />
+                </form>
             </div>
 
-            <button type="submit" class="btn btn-primary">Cargar enfermeros</button>
+            <div id="medicamentos" class="tabcontent">
+                <h4>Medicamentos</h4>
+                <form action="http://localhost:4041/admin/cargarmedicamentos" method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="medicamentos">Cargar pacientes:</label>
+                        <input type="file" class="file-input" name="medicamentos" id="medicamentos" />
+                    </div>
+                    <br />
+                    <button type="submit" class="btn btn-primary">Cargar medicamentos</button>
 
-        </form>
+                </form>
+            </div>
+        </div>
     </div>
 
     <script src="/static/scripts/main.js" type="text/javascript"></script>
