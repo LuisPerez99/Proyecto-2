@@ -252,69 +252,10 @@ def mod_perfil():
         return render_template('modificar perfil.html')
     return jsonify({"mensaje":"Error"})
 
-@app.route('/pacientes/<string:usuarios_nombredeusuario>', methods=['PUT'])
-def mod_paciente(usuarios_nombredeusuario):
-    usuario = [usuarios for usuarios in datos_pacientes if usuarios['nombre de usuario'] == usuarios_nombredeusuario]
-    data = request.get_json(force=True)
-    if data['nombre de usuario'] in nombres_usuarios:
-        return jsonify({"mensaje":"El nombre de usuario ya existe"})
-    else :
-        if (len(usuario) > 0):
-            usuario[0]['nombre'] = data['nombre']
-            usuario[0]['apellido'] = data['apellido']
-            usuario[0]['fecha de nacimiento'] = data['fecha de nacimiento']
-            usuario[0]['nombre de usuario'] = data['nombre de usuario']
-            usuario[0]['password'] = data['password']
-            usuario[0]['telefono'] = data['telefono']
-            return jsonify({"mensaje": "Datos Actualizados"})           
-    return jsonify({"mensaje":"No se pudieron modificar los datos"})
-
-@app.route('/datosdoctores/<string:usuarios_nombredeusuario>', methods=['PUT'])
-def mod_doctor(usuarios_nombredeusuario):
-    usuario = [usuarios for usuarios in datos_doctores if usuarios['nombre de usuario'] == usuarios_nombredeusuario]
-    data = request.get_json(force=True)
-    if data['nombre de usuario'] in nombres_usuarios:
-        return jsonify({"mensaje":"El nombre de usuario ya existe"})
-    else :
-        if (len(usuario) > 0):
-            usuario[0]['nombre'] = data['nombre']
-            usuario[0]['apellido'] = data['apellido']
-            usuario[0]['fecha de nacimiento'] = data['fecha de nacimiento']
-            usuario[0]['nombre de usuario'] = data['nombre de usuario']
-            usuario[0]['password'] = data['password']
-            usuario[0]['telefono'] = data['telefono']
-            return jsonify({"mensaje": "Datos Actualizados"})           
-    return jsonify({"mensaje":"No se pudieron modificar los datos"})
-
-@app.route('/datosenfermeros/<string:usuarios_nombredeusuario>', methods=['PUT'])
-def mod_enfermero(usuarios_nombredeusuario):
-    usuario = [usuarios for usuarios in datos_enfermeros if usuarios['nombre de usuario'] == usuarios_nombredeusuario]
-    data = request.get_json(force=True)
-    if data['nombre de usuario'] in nombres_usuarios:
-        return jsonify({"mensaje":"El nombre de usuario ya existe"})
-    else :
-        if (len(usuario) > 0):
-            usuario[0]['nombre'] = data['nombre']
-            usuario[0]['apellido'] = data['apellido']
-            usuario[0]['fecha de nacimiento'] = data['fecha de nacimiento']
-            usuario[0]['nombre de usuario'] = data['nombre de usuario']
-            usuario[0]['password'] = data['password']
-            usuario[0]['telefono'] = data['telefono']
-            return jsonify({"mensaje": "Datos Actualizados"})           
-    return jsonify({"mensaje":"No se pudieron modificar los datos"})
-
-@app.route('/datosmedicamentos/<string:medicamentos_nombre>', methods=['PUT'])
-def mod_medicamento(medicamentos_nombre):
-    medicamento = [medicamentos for medicamentos in datos_medicamentos if medicamentos['nombre'] == medicamentos_nombre]
-    data = request.get_json(force=True)
-
-    if (len(medicamento) > 0):
-        medicamento[0]['nombre'] = data['nombre']
-        medicamento[0]['precio'] = data['precio']
-        medicamento[0]['descripcion'] = data['descripcion']
-        medicamento[0]['cantidad'] = data['cantidad']
-        return jsonify({"mensaje": "Datos Actualizados"})           
-    return jsonify({"mensaje":"No se pudieron modificar los datos"})
+@app.route('/admin/datos-pacientes')
+def ver_pacientes():
+    data = datos_pacientes
+    return render_template('datos pacientes.html', data = json.dumps(data))
 
 @app.route('/eliminarusuario', methods=['DELETE'])
 def eliminarUsuario():

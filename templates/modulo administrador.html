@@ -8,6 +8,8 @@
     <link rel="stylesheet" type="text/css" href="static/css/estilo.css" />
 </head>
 <body onload="cargarDatos()">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
     <div id="admin" class="container">
         <h1>Administrador</h1>
 
@@ -24,7 +26,6 @@
             <button id="modificar" onclick="modificarDatos()">Modificar Perfil</button>
         </div>
         <hr />
-
         <div class="tab">
             <button class="tablinks" onclick="abrirMenu(event, 'defaultOpen')">Pacientes</button>
             <button class="tablinks" onclick="abrirMenu(event, 'doctores')">Doctores</button>
@@ -83,8 +84,42 @@
                 </form>
             </div>
         </div>
+
+        <hr />
+        <div class="container">
+            <h4>Visualizacion de datos</h4>
+            <button class="btn-redirect" id="datos-pacientes">Datos Pacientes</button>
+            <button class="btn-redirect" id="datos-doctores">Datos Doctores</button>
+            <button class="btn-redirect" id="datos-enfermeros">Datos Enfermeros</button>
+            <button class="btn-redirect" id="datos-medicamentos">Datos Medicamentos</button>
+        </div>
     </div>
 
     <script src="/static/scripts/main.js" type="text/javascript"></script>
+
+    <script>
+        document.getElementById('datos-pacientes').onclick = verDatos;
+        document.getElementById('datos-doctores').onclick = verDatos;
+        document.getElementById('datos-enfermeros').onclick = verDatos;
+        document.getElementById('datos-medicamentos').onclick = verDatos;
+
+        function verDatos(clicked) {
+            if (this.id == 'datos-pacientes') {
+                window.location.replace("http://localhost:4041/admin/datos-pacientes");
+            }
+
+            if (this.id == 'datos-doctores') {
+                window.location.replace("http://localhost:4041/admin/datos-doctores");
+            }
+
+            if (this.id == 'datos-enfermeros') {
+                window.location.replace("http://localhost:4041/admin/datos-enfermeros");
+            }
+
+            if (this.id == 'datos-medicamentoss') {
+                window.location.replace("http://localhost:4041/admin/datos-medicamentos");
+            }
+        }
+    </script>
 </body>
 </html>

@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="../static/css/estilo.css" />
+    <title>Datos Pacientes</title>
+    <link rel="shortcut icon" href="#" />
+</head>
+<body style="text-align: center;">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <h1>Datos Pacientes</h1>
+
+    <table class="fa-table table-striped">
+        <tr class="bg-info">
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Fecha de Nacimiento</th>
+            <th>Sexo</th>
+            <th>Nombre de usuario</th>
+            <th>Teléfono</th>
+        </tr>
+
+        <tbody id="tabla" class="center">
+
+        </tbody>
+    </table>
+
+    <script>
+        var pacientes = {{ data | tojson }};
+        let listaPacientes = JSON.parse(pacientes);
+
+        llenarTabla(listaPacientes)
+
+        function llenarTabla(data) {
+            var tabla = document.getElementById('tabla')
+
+            for (var i = 0; i < listaPacientes.length; i++) {
+                var fila = `<tr>
+    	                         <td>${data[i].nombre}</td>
+    	                         <td>${data[i].apellido}</td>
+    	                         <td>${data[i].fecha}</td>
+    	                         <td>${data[i].sexo}</td>
+    	                         <td>${data[i]['nombre de usuario']}</td>
+    	                         <td>${data[i].telefono}</td>
+                            </tr>`
+                tabla.innerHTML += fila
+            }
+        }
+    </script>
+</body>
+</html>

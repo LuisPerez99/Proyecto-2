@@ -272,3 +272,20 @@ button {
     margin-top: 50px;
     text-align: center;
 }
+
+table.center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+td {
+    border: solid;
+    border-width: 2px;
+    border-color: #000000;
+}
+
+th {
+    border: solid;
+    border-width: 2px;
+    border-color: #000000;
+}
