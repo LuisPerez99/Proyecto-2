@@ -59,14 +59,14 @@
             </div>
 
             <div id="enfermeros" class="tabcontent">
-                <h4>Enfermeros</h4>
+                <h4>Enfermeras</h4>
                 <form action="http://localhost:4041/admin/cargarenfermeros" method="POST" enctype="multipart/form-data">
                     <div class="form-group">
-                        <label for="enfermeros">Cargar pacientes:</label>
-                        <input type="file" class="file-input" name="enfermeros" id="enfermeros" />
+                        <label for="enfermeras">Cargar enfermeras:</label>
+                        <input type="file" class="file-input" name="enfermeras" id="enfermeras" />
                     </div>
                     <br />
-                    <button type="submit" class="btn btn-primary">Cargar enfermeros</button>
+                    <button type="submit" class="btn btn-primary">Cargar enfermeras</button>
 
                 </form>
             </div>
@@ -75,7 +75,7 @@
                 <h4>Medicamentos</h4>
                 <form action="http://localhost:4041/admin/cargarmedicamentos" method="POST" enctype="multipart/form-data">
                     <div class="form-group">
-                        <label for="medicamentos">Cargar pacientes:</label>
+                        <label for="medicamentos">Cargar medicamentos:</label>
                         <input type="file" class="file-input" name="medicamentos" id="medicamentos" />
                     </div>
                     <br />
@@ -90,7 +90,7 @@
             <h4>Visualizacion de datos</h4>
             <button class="btn-redirect" id="datos-pacientes">Datos Pacientes</button>
             <button class="btn-redirect" id="datos-doctores">Datos Doctores</button>
-            <button class="btn-redirect" id="datos-enfermeros">Datos Enfermeros</button>
+            <button class="btn-redirect" id="datos-enfermeros">Datos Enfermeras</button>
             <button class="btn-redirect" id="datos-medicamentos">Datos Medicamentos</button>
         </div>
     </div>
@@ -98,6 +98,8 @@
     <script src="/static/scripts/main.js" type="text/javascript"></script>
 
     <script>
+        document.getElementById("defaultOpen").click();
+
         document.getElementById('datos-pacientes').onclick = verDatos;
         document.getElementById('datos-doctores').onclick = verDatos;
         document.getElementById('datos-enfermeros').onclick = verDatos;
@@ -113,10 +115,10 @@
             }
 
             if (this.id == 'datos-enfermeros') {
-                window.location.replace("http://localhost:4041/admin/datos-enfermeros");
+                window.location.replace("http://localhost:4041/admin/datos-enfermeras");
             }
 
-            if (this.id == 'datos-medicamentoss') {
+            if (this.id == 'datos-medicamentos') {
                 window.location.replace("http://localhost:4041/admin/datos-medicamentos");
             }
         }

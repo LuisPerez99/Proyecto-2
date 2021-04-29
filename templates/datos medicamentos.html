@@ -3,9 +3,49 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="../static/css/estilo.css" />
     <title>Datos Medicamentos</title>
+    <link rel="shortcut icon" href="#" />
 </head>
-<body>
-    <h1>Datos Medicamentos</h1>
+<body style="text-align: center;">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <div class="container" style="padding: 20px">
+        <div id="contenedor-tabla">
+            <h1>Datos de los Medicamentos</h1>
+            <table class="fa-table table-striped">
+                <tr class="bg-info">
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Descripcion</th>
+                    <th>Cantidad</th>
+                </tr>
+                <tbody id="tabla" class="center">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <script>
+        var medicamentos = {{ data | tojson }};
+        let listaMedicamentos = JSON.parse(medicamentos);
+
+        llenarTabla(listaMedicamentos)
+
+        function llenarTabla(data) {
+            var tabla = document.getElementById('tabla')
+
+            for (var i = 0; i < listaMedicamentos.length; i++) {
+                var fila = `<tr>
+    	                         <td>${data[i].nombre}</td>
+    	                         <td>${data[i].precio}</td>
+    	                         <td>${data[i].descripcion}</td>
+    	                         <td>${data[i].cantidad}</td>
+                            </tr>`
+                tabla.innerHTML += fila
+            }
+        }
+    </script>
 </body>
 </html>

@@ -194,11 +194,11 @@ def cargar_doctores():
 def cargar_enfermeros():
     if request.method == 'POST':
         if request.files:
-            doc = request.files['enfermeros']
+            doc = request.files['enfermeras']
             doc.save(os.path.join(app.config['FILE_UPLOADS'], doc.filename))
             print("archivo guardado")
 
-            with open('static/file/uploads/enfermeros.csv', 'r') as csv_file:
+            with open('static/file/uploads/enfermeras.csv', 'r') as csv_file:
                 lector = csv.reader(csv_file)
                 next(lector)
 
@@ -214,7 +214,7 @@ def cargar_enfermeros():
                         }
                     datos_enfermeros.append(datos_usuario)
                     nombres_usuarios.append(datos_usuario['nombre de usuario'])
-                print("Enfermeros: "+str(datos_enfermeros))
+                print("Enfermeras: "+str(datos_enfermeros))
         return redirect(url_for('admin'))
     return redirect(url_for('admin'))
 
@@ -256,6 +256,21 @@ def mod_perfil():
 def ver_pacientes():
     data = datos_pacientes
     return render_template('datos pacientes.html', data = json.dumps(data))
+
+@app.route('/admin/datos-doctores')
+def ver_doctores():
+    data = datos_doctores
+    return render_template('datos doctores.html', data = json.dumps(data))
+
+@app.route('/admin/datos-enfermeras')
+def ver_enfermeras():
+    data = datos_enfermeros
+    return render_template('datos enfermeros.html', data = json.dumps(data))
+
+@app.route('/admin/datos-medicamentos')
+def ver_medicamentos():
+    data = datos_medicamentos
+    return render_template('datos medicamentos.html', data = json.dumps(data))
 
 @app.route('/eliminarusuario', methods=['DELETE'])
 def eliminarUsuario():

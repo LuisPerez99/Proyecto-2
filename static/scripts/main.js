@@ -73,7 +73,6 @@ function cargarDatos() {
     let doctor = 'http://localhost:4041/doctor';
     let enfermero = 'http://localhost:4041/enfermero';
     let admin = 'http://localhost:4041/admin';
-    document.getElementById("defaultOpen").click();
 
     function cargar(dir) {
         fetch(dir, {

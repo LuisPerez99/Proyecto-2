@@ -9,7 +9,18 @@
 <body onload="cargarDatos()">
     <h1>Pacientes</h1>
     <label>Datos del usuario: </label>
-    <div id="datos"></div>
+    <div id="datos">
+        <h4>
+            Datos del usuario
+        </h4>
+        <label>Nombre:&nbsp;</label>
+        <label id="nombre"></label>
+        <br /><br />
+        <label>Nombre de usuario:&nbsp;</label>
+        <label id="usuario"></label>
+        <br /><br />
+        <button id="modificar" onclick="modificarDatos()">Modificar Perfil</button>
+    </div>
 
     <script src="/static/scripts/main.js" type="text/javascript"></script>
 </body>
