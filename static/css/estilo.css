@@ -314,7 +314,7 @@ table {
     padding: 50px;
     margin: auto;
     border-radius: 25px;
-    box-shadow: 2px 2px 2px #808080;
+    box-shadow: 2px 2px 2px #818181;
 }
 
 tr:nth-child(even) {
@@ -322,5 +322,5 @@ tr:nth-child(even) {
 }
 
 tr:nth-child(odd) {
-    background-color: #ccc;
+    background-color: rgb(216, 214, 214);
 }

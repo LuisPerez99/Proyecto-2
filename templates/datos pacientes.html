@@ -21,6 +21,7 @@
                     <th>Sexo</th>
                     <th>Nombre de usuario</th>
                     <th>Teléfono</th>
+                    <th>Acciones</th>
                 </tr>
                 <tbody id="tabla" class="center">
                 </tbody>
@@ -46,6 +47,12 @@
     	                         <td>${data[i].sexo}</td>
     	                         <td>${data[i]['nombre de usuario']}</td>
     	                         <td>${data[i].telefono}</td>
+                                 <td><button style="background: red;
+                                                    border-color: white;">Eliminar</button>
+                                    <button style="background: green;
+                                            border-color: white;">Modificar</button>
+                                    <button style="background: blue;
+                                            border-color: white;">Ver info</button></td>
                             </tr>`
                 tabla.innerHTML += fila
             }
