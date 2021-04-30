@@ -252,55 +252,67 @@ def mod_perfil():
         return render_template('modificar perfil.html')
     return jsonify({"mensaje":"Error"})
 
-@app.route('/admin/datos-pacientes')
+@app.route('/datos-pacientes')
 def ver_pacientes():
     data = datos_pacientes
     return render_template('datos pacientes.html', data = json.dumps(data))
 
-@app.route('/admin/datos-doctores')
+@app.route('/datos-doctores')
 def ver_doctores():
     data = datos_doctores
     return render_template('datos doctores.html', data = json.dumps(data))
 
-@app.route('/admin/datos-enfermeras')
+@app.route('/datos-enfermeras')
 def ver_enfermeras():
     data = datos_enfermeros
     return render_template('datos enfermeros.html', data = json.dumps(data))
 
-@app.route('/admin/datos-medicamentos')
+@app.route('/datos-medicamentos')
 def ver_medicamentos():
     data = datos_medicamentos
     return render_template('datos medicamentos.html', data = json.dumps(data))
 
-@app.route('/eliminarusuario', methods=['DELETE'])
-def eliminarUsuario():
+@app.route('/datos-pacientes/eliminarpaciente', methods=['POST'])
+def eliminarPaciente():
     data = request.get_json(force=True)
-    if data['nombre de usuario'] not in nombres_usuarios:
-        return jsonify({"mensaje":"Usuario no encontrado."})
-    else:
-        for i in range(len(datos_enfermeros)):
-            if data['nombre de usuario'] == datos_enfermeros[i]['nombre de usuario'] and data['nombre de usuario'] == nombres_usuarios[i]:
-               print(datos_enfermeros[i])
-               del datos_enfermeros[i], nombres_usuarios[i]
-            return jsonify({"mensaje":"Usuario eliminado"})  
     
     if data['nombre de usuario'] not in nombres_usuarios:
-        return jsonify({"mensaje":"Usuario no encontrado."})
+        return jsonify("Usuario no encontrado.")
     else:
         for i in range(len(datos_pacientes)):
-            if data['nombre de usuario'] == datos_pacientes[i]['nombre de usuario'] and data['nombre de usuario'] == nombres_usuarios[i]:
-                print(datos_pacientes[i])
-                del datos_pacientes[i], nombres_usuarios[i]
-            return jsonify({"mensaje":"Usuario eliminado"}) 
+            if data['nombre de usuario'] == datos_pacientes[i]['nombre de usuario']:
+                print("Datos eliminados: "+str(datos_pacientes[i]))
+                del datos_pacientes[i]
+                return jsonify("Usuario eliminado")
+    return jsonify({"mensaje":"No se ha podido eliminar al usuario"})
+
+@app.route('/datos-enfermeras/eliminarenfermera', methods=['POST'])
+def eliminarEnfermera():
+    data = request.get_json(force=True)
 
     if data['nombre de usuario'] not in nombres_usuarios:
-        return jsonify({"mensaje":"Usuario no encontrado."})
+        return jsonify("Usuario no encontrado.")
+    else:
+        for i in range(len(datos_enfermeros)):
+            if data['nombre de usuario'] == datos_enfermeros[i]['nombre de usuario']:
+                print("Datos eliminados: "+str(datos_enfermeros[i]))
+                del datos_enfermeros[i]
+                return jsonify("Usuario eliminado")  
+    return jsonify({"mensaje":"No se ha podido eliminar al usuario"})
+
+@app.route('/datos-doctores/eliminardoctor', methods=['POST'])
+def eliminarDoctor():
+    data = request.get_json(force=True)
+
+    if data['nombre de usuario'] not in nombres_usuarios:
+        return jsonify("Usuario no encontrado.")
     else:
         for i in range(len(datos_doctores)):
-            if data['nombre de usuario'] == datos_doctores[i]['nombre de usuario'] and data['nombre de usuario'] == nombres_usuarios[i]:
-               print(datos_doctores[i])
-               del datos_doctores[i], nombres_usuarios[i]
-            return jsonify({"mensaje":"Usuario eliminado"}) 
+            if data['nombre de usuario'] == datos_doctores[i]['nombre de usuario']:
+                print("Datos eliminados: "+str(datos_doctores[i]))
+                del datos_doctores[i]
+                print(procesado)
+                return jsonify("Usuario eliminado")
     return jsonify({"mensaje":"No se ha podido eliminar al usuario"})
 
 @app.route('/eliminarmedicamento', methods=['DELETE'])

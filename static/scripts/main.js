@@ -130,3 +130,113 @@ function modificarDatos() {
     let user = localStorage.getItem('usuario');
     window.location.replace("http://localhost:4041/modificarperfil");
 }
+
+function eliminar(tipo) {
+    let tabla = document.getElementById('tabla'), rIndex
+    let tipoDeUsuario = tipo
+
+    if (tipoDeUsuario == 'paciente') {      
+        for (let i = 0; i < tabla.rows.length; i++) {
+            for (let j = 0; j < tabla.rows[i].cells.length; j++) {
+                tabla.rows[i].cells[j].onclick = function () {
+                rIndex = this.parentElement.rowIndex
+
+                let usuario = listaPacientes[rIndex-1]['nombre de usuario']
+                console.log(usuario)
+                eliminacion()
+
+                function eliminacion() {
+                    fetch ('http://localhost:4041/datos-pacientes/eliminarpaciente', {
+                        method: 'POST',
+                        headers: headers,
+                        body: `{
+                                "nombre de usuario": "${usuario}"
+                               }`,
+                    })
+
+                    .then(response => response.json())
+
+                    .then(eliminado => {
+                        console.log(eliminado)
+                        if (eliminado == 'Usuario eliminado') {
+                            alert('Usuario eliminado')
+                            location.reload()
+                        } else if (eliminado == 'Usuario no encontrado') {
+                            alert('El usuario no existe')
+                        }
+                    })
+                }
+                }
+            }
+       }
+    } else if (tipoDeUsuario == 'enfermera') {
+        for (let i = 0; i < tabla.rows.length; i++) {
+            for (let j = 0; j < tabla.rows[i].cells.length; j++) {
+                tabla.rows[i].cells[j].onclick = function () {
+                rIndex = this.parentElement.rowIndex
+
+                let usuario = listaEnfermeras[rIndex-1]['nombre de usuario']
+                console.log(usuario)
+                eliminacion()
+
+                function eliminacion() {
+                    fetch ('http://localhost:4041/datos-enfermeras/eliminarenfermera', {
+                        method: 'POST',
+                        headers: headers,
+                        body: `{
+                                "nombre de usuario": "${usuario}"
+                               }`,
+                    })
+
+                    .then(response => response.json())
+
+                    .then(eliminado => {
+                        console.log(eliminado)
+                        if (eliminado == 'Usuario eliminado') {
+                            alert('Usuario eliminado')
+                            location.reload()
+                        } else if (eliminado == 'Usuario no encontrado') {
+                            alert('El usuario no existe')
+                        }
+                    })
+                }
+                }
+            }
+       }
+    } else if (tipoDeUsuario == 'doctor') {
+        for (let i = 0; i < tabla.rows.length; i++) {
+            for (let j = 0; j < tabla.rows[i].cells.length; j++) {
+                tabla.rows[i].cells[j].onclick = function () {
+                rIndex = this.parentElement.rowIndex
+
+                let usuario = listaDoctores[rIndex-1]['nombre de usuario']
+                console.log(usuario)
+                eliminacion()
+
+                function eliminacion() {
+                    fetch ('http://localhost:4041/datos-doctores/eliminardoctor', {
+                        method: 'POST',
+                        headers: headers,
+                        body: `{
+                                "nombre de usuario": "${usuario}"
+                               }`,
+                    })
+
+                    .then(response => response.json())
+
+                    .then(eliminado => {
+                        console.log(eliminado)
+                        if (eliminado == 'Usuario eliminado') {
+                            alert('Usuario eliminado')
+                            location.reload()
+                        } else if (eliminado == 'Usuario no encontrado') {
+                            alert('El usuario no existe')
+                        }
+                    })
+                }
+                }
+            }
+       }       
+    }
+
+}

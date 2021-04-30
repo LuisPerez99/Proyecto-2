@@ -19,6 +19,7 @@
                     <th>Precio</th>
                     <th>Descripcion</th>
                     <th>Cantidad</th>
+                    <th></th>
                 </tr>
                 <tbody id="tabla" class="center">
                 </tbody>
@@ -42,6 +43,12 @@
     	                         <td>${data[i].precio}</td>
     	                         <td>${data[i].descripcion}</td>
     	                         <td>${data[i].cantidad}</td>
+                                 <td><button style="background: red;
+                                                    border-color: white;">Eliminar</button>
+                                     <button style="background: green;
+                                                    border-color: white;">Modificar</button>
+                                     <button style="background: blue;
+                                                    border-color: white;">Ver info</button></td>
                             </tr>`
                 tabla.innerHTML += fila
             }

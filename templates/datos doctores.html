@@ -22,6 +22,7 @@
                     <th>Nombre de usuario</th>
                     <th>Especialidad</th>
                     <th>Teléfono</th>
+                    <th>Acciones</th>
                 </tr>
                 <tbody id="tabla" class="center">
                 </tbody>
@@ -29,6 +30,7 @@
         </div>
     </div>
 
+    <script src="/static/scripts/main.js" type="text/javascript"></script>
 
     <script>
         var doctores = {{ data | tojson }};
@@ -38,6 +40,7 @@
 
         function llenarTabla(data) {
             var tabla = document.getElementById('tabla')
+            doctor = 'doctor'
 
             for (var i = 0; i < listaDoctores.length; i++) {
                 var fila = `<tr>
@@ -48,6 +51,12 @@
     	                         <td>${data[i]['nombre de usuario']}</td>
                                  <td>${data[i].especialidad}</td>
     	                         <td>${data[i].telefono}</td>
+                                 <td><button style="background: red;
+                                                    border-color: white;" onclick="eliminar(doctor)">Eliminar</button>
+                                     <button style="background: green;
+                                                    border-color: white;">Modificar</button>
+                                     <button style="background: blue;
+                                                    border-color: white;">Ver info</button></td>
                             </tr>`
                 tabla.innerHTML += fila
             }
