@@ -74,6 +74,7 @@ function cargarDatos() {
     let doctor = 'http://localhost:4041/doctor';
     let enfermero = 'http://localhost:4041/enfermero';
     let admin = 'http://localhost:4041/admin';
+    console.log(user+" "+tipo_usuario)
 
     function cargar(dir) {
         fetch(dir, {
@@ -126,9 +127,31 @@ function abrirMenu(evt, nombreTab) {
     evt.currentTarget.className += " active";
 }
 
-function modificarDatos() {
-    let user = localStorage.getItem('usuario');
-    window.location.replace("http://localhost:4041/modificarperfil");
+function eliminacion(dir, usuario) {
+    fetch (dir, {
+        method: 'POST',
+        headers: headers,
+        body: `{
+                "nombre de usuario": "${usuario}"
+               }`,
+    })
+
+    .then(response => response.json())
+
+    .then(eliminado => {
+        console.log(eliminado)
+        if (eliminado == 'Usuario eliminado') {
+            alert('Usuario eliminado')
+            location.reload()
+        } else if (eliminado == 'Usuario no encontrado') {
+            alert('El usuario no existe')
+        }
+
+        if (eliminado == 'Medicamento eliminado') {
+            alert('Medicamento eliminado')
+            location.reload()
+        }
+    })
 }
 
 function eliminar(tipo) {
@@ -142,30 +165,9 @@ function eliminar(tipo) {
                 rIndex = this.parentElement.rowIndex
 
                 let usuario = listaPacientes[rIndex-1]['nombre de usuario']
+                let direccion = 'http://localhost:4041/datos-pacientes/eliminarpaciente'
                 console.log(usuario)
-                eliminacion()
-
-                function eliminacion() {
-                    fetch ('http://localhost:4041/datos-pacientes/eliminarpaciente', {
-                        method: 'POST',
-                        headers: headers,
-                        body: `{
-                                "nombre de usuario": "${usuario}"
-                               }`,
-                    })
-
-                    .then(response => response.json())
-
-                    .then(eliminado => {
-                        console.log(eliminado)
-                        if (eliminado == 'Usuario eliminado') {
-                            alert('Usuario eliminado')
-                            location.reload()
-                        } else if (eliminado == 'Usuario no encontrado') {
-                            alert('El usuario no existe')
-                        }
-                    })
-                }
+                eliminacion(direccion, usuario)
                 }
             }
        }
@@ -176,30 +178,9 @@ function eliminar(tipo) {
                 rIndex = this.parentElement.rowIndex
 
                 let usuario = listaEnfermeras[rIndex-1]['nombre de usuario']
+                let direccion = 'http://localhost:4041/datos-enfermeras/eliminarenfermera'
                 console.log(usuario)
-                eliminacion()
-
-                function eliminacion() {
-                    fetch ('http://localhost:4041/datos-enfermeras/eliminarenfermera', {
-                        method: 'POST',
-                        headers: headers,
-                        body: `{
-                                "nombre de usuario": "${usuario}"
-                               }`,
-                    })
-
-                    .then(response => response.json())
-
-                    .then(eliminado => {
-                        console.log(eliminado)
-                        if (eliminado == 'Usuario eliminado') {
-                            alert('Usuario eliminado')
-                            location.reload()
-                        } else if (eliminado == 'Usuario no encontrado') {
-                            alert('El usuario no existe')
-                        }
-                    })
-                }
+                eliminacion(direccion, usuario)
                 }
             }
        }
@@ -210,33 +191,229 @@ function eliminar(tipo) {
                 rIndex = this.parentElement.rowIndex
 
                 let usuario = listaDoctores[rIndex-1]['nombre de usuario']
+                let direccion = 'http://localhost:4041/datos-doctores/eliminardoctor'
                 console.log(usuario)
-                eliminacion()
-
-                function eliminacion() {
-                    fetch ('http://localhost:4041/datos-doctores/eliminardoctor', {
-                        method: 'POST',
-                        headers: headers,
-                        body: `{
-                                "nombre de usuario": "${usuario}"
-                               }`,
-                    })
-
-                    .then(response => response.json())
-
-                    .then(eliminado => {
-                        console.log(eliminado)
-                        if (eliminado == 'Usuario eliminado') {
-                            alert('Usuario eliminado')
-                            location.reload()
-                        } else if (eliminado == 'Usuario no encontrado') {
-                            alert('El usuario no existe')
-                        }
-                    })
+                eliminacion(direccion, usuario)
                 }
+            }
+       }       
+    } else if (tipoDeUsuario == 'medicamento') {
+        for (let i = 0; i < tabla.rows.length; i++) {
+            for (let j = 0; j < tabla.rows[i].cells.length; j++) {
+                tabla.rows[i].cells[j].onclick = function () {
+                rIndex = this.parentElement.rowIndex
+
+                let usuario = listaMedicamentos[rIndex-1]['nombre']
+                let direccion = 'http://localhost:4041/datos-medicamentos/eliminarmedicamento'
+                console.log(usuario)
+                eliminacion(direccion, usuario)
                 }
             }
        }       
     }
+}
+
+function enviarInfo(tipo) {
+    if (tipo == 'paciente') {
+        for (let i = 0; i < tabla.rows.length; i++) {
+            for (let j = 0; j < tabla.rows[i].cells.length; j++) {
+                tabla.rows[i].cells[j].onclick = function () {
+                rIndex = this.parentElement.rowIndex
+
+                let usuario = listaPacientes[rIndex-1]['nombre de usuario']
+                localStorage.setItem('usuarioSeleccionado', usuario)
+                localStorage.setItem('tipo', tipo)
+                console.log(usuario)
+                window.location.replace('http://localhost:4041/ver-datos')                
+                }
+            }
+        } 
+    } else if (tipo == 'enfermera') {
+        for (let i = 0; i < tabla.rows.length; i++) {
+            for (let j = 0; j < tabla.rows[i].cells.length; j++) {
+                tabla.rows[i].cells[j].onclick = function () {
+                rIndex = this.parentElement.rowIndex
+
+                let usuario = listaEnfermeras[rIndex-1]['nombre de usuario']
+                localStorage.setItem('usuarioSeleccionado', usuario)
+                localStorage.setItem('tipo', tipo)
+                console.log(usuario)
+                window.location.replace('http://localhost:4041/ver-datos')                
+                }
+            }
+        } 
+    } else if (tipo == 'doctor') {
+        for (let i = 0; i < tabla.rows.length; i++) {
+            for (let j = 0; j < tabla.rows[i].cells.length; j++) {
+                tabla.rows[i].cells[j].onclick = function () {
+                rIndex = this.parentElement.rowIndex
+
+                let usuario = listaDoctores[rIndex-1]['nombre de usuario']
+                localStorage.setItem('usuarioSeleccionado', usuario)
+                localStorage.setItem('tipo', tipo)
+                console.log(usuario)
+                window.location.replace('http://localhost:4041/ver-datos')                
+                }
+            }
+        } 
+    } else if (tipo == 'medicamento') {
+        for (let i = 0; i < tabla.rows.length; i++) {
+            for (let j = 0; j < tabla.rows[i].cells.length; j++) {
+                tabla.rows[i].cells[j].onclick = function () {
+                rIndex = this.parentElement.rowIndex
+
+                let usuario = listaMedicamentos[rIndex-1]['nombre']
+                localStorage.setItem('usuarioSeleccionado', usuario)
+                localStorage.setItem('tipo', tipo)
+                console.log(usuario)
+                window.location.replace('http://localhost:4041/ver-medicamento')                
+                }
+            }
+        }
+    }
+}
+
+function mostrarDatos() {
+    let user = localStorage.getItem('usuarioSeleccionado')
+    let tipo = localStorage.getItem('tipo')
+
+    if (tipo == 'paciente' || tipo == 'enfermera') {
+        fetch ('http://localhost:4041/ver-datos', {
+            method: 'POST',
+            headers: headers,
+            body: `{
+                "nombre de usuario": "${user}"
+            }`,
+        })
+            .then(response => response.json())
+            .then(usuario => {
+                document.getElementById('nombre').innerHTML = usuario.nombre;
+                document.getElementById('apellido').innerHTML = usuario.apellido;
+                document.getElementById('nacimiento').innerHTML = usuario.fecha;
+                document.getElementById('sexo').innerHTML = usuario.sexo;
+                document.getElementById('usuario').innerHTML = usuario["nombre de usuario"];
+                document.getElementById('telefono').innerHTML = usuario.telefono;
+
+                if (tipo == 'paciente') {
+                    document.getElementById('titulo').innerHTML = 'Datos del Paciente'
+                } else if (tipo == 'enfermera') {
+                    document.getElementById('titulo').innerHTML = 'Datos de la Enfermera'
+                }
+            })
+    } else if (tipo == 'doctor') {
+        fetch ('http://localhost:4041/ver-datos', {
+            method: 'POST',
+            headers: headers,
+            body: `{
+                "nombre de usuario": "${user}"
+            }`,
+        })
+            .then(response => response.json())
+            .then(usuario => {
+                document.getElementById('nombre').innerHTML = usuario.nombre;
+                document.getElementById('apellido').innerHTML = usuario.apellido;
+                document.getElementById('nacimiento').innerHTML = usuario.fecha;
+                document.getElementById('sexo').innerHTML = usuario.sexo;
+                document.getElementById('usuario').innerHTML = usuario["nombre de usuario"];
+                document.getElementById('telefono').innerHTML = usuario.telefono;
+                document.getElementById('titulo').innerHTML = 'Datos del Doctor'
+
+                let datos = document.getElementById('datos')
+                const titulo = document.createElement('label')
+                const tituloTexto = document.createTextNode('Especialidad: ')
+                const esp = document.createElement('label')
+                const espTexto = document.createTextNode(usuario.especialidad)
+                titulo.classList.add('data-title')
+                esp.classList.add('data')               
+                const br = document.createElement('br')
+                const br1 = document.createElement('br')
+                titulo.appendChild(tituloTexto)
+                esp.appendChild(espTexto)
+                datos.appendChild(br)
+                datos.appendChild(br1)
+                datos.appendChild(titulo)
+                datos.appendChild(esp)
+            })
+    } else if (tipo == 'medicamento') {
+        fetch ('http://localhost:4041/ver-medicamento', {
+            method: 'POST',
+            headers: headers,
+            body: `{
+                "nombre": "${user}"
+            }`,
+        })
+            .then(response => response.json())
+            .then(medicamento => {
+                console.log(medicamento)
+                document.getElementById('nombre').innerHTML = medicamento.nombre
+                document.getElementById('precio').innerHTML = medicamento.precio
+                document.getElementById('descripcion').innerHTML = medicamento.descripcion
+                document.getElementById('cantidad').innerHTML = medicamento.cantidad
+            })
+    }
+
+}
+
+function enviarInfoAMod(tipo) {
+    if (tipo == 'paciente') {
+        for (let i = 0; i < tabla.rows.length; i++) {
+            for (let j = 0; j < tabla.rows[i].cells.length; j++) {
+                tabla.rows[i].cells[j].onclick = function () {
+                rIndex = this.parentElement.rowIndex
+
+                let usuario = listaPacientes[rIndex-1]['nombre de usuario']
+                localStorage.setItem('usuarioSeleccionado', usuario)
+                localStorage.setItem('tipo', tipo)
+                console.log(usuario)
+                window.location.replace('http://localhost:4041/modificarperfil')                
+                }
+            }
+        } 
+    } else if (tipo == 'enfermera') {
+        for (let i = 0; i < tabla.rows.length; i++) {
+            for (let j = 0; j < tabla.rows[i].cells.length; j++) {
+                tabla.rows[i].cells[j].onclick = function () {
+                rIndex = this.parentElement.rowIndex
+
+                let usuario = listaEnfermeras[rIndex-1]['nombre de usuario']
+                localStorage.setItem('usuarioSeleccionado', usuario)
+                localStorage.setItem('tipo', tipo)
+                console.log(usuario)
+                window.location.replace('http://localhost:4041/modificarperfil')                
+                }
+            }
+        } 
+    } else if (tipo == 'doctor') {
+        for (let i = 0; i < tabla.rows.length; i++) {
+            for (let j = 0; j < tabla.rows[i].cells.length; j++) {
+                tabla.rows[i].cells[j].onclick = function () {
+                rIndex = this.parentElement.rowIndex
+
+                let usuario = listaDoctores[rIndex-1]['nombre de usuario']
+                localStorage.setItem('usuarioSeleccionado', usuario)
+                localStorage.setItem('tipo', tipo)
+                console.log(usuario)
+                window.location.replace('http://localhost:4041/modificarperfil')                
+                }
+            }
+        } 
+    } else if (tipo == 'medicamento') {
+        for (let i = 0; i < tabla.rows.length; i++) {
+            for (let j = 0; j < tabla.rows[i].cells.length; j++) {
+                tabla.rows[i].cells[j].onclick = function () {
+                rIndex = this.parentElement.rowIndex
+
+                let usuario = listaMedicamentos[rIndex-1]['nombre']
+                localStorage.setItem('usuarioSeleccionado', usuario)
+                localStorage.setItem('tipo', tipo)
+                console.log(usuario)
+                window.location.replace('http://localhost:4041/ver-medicamento')                
+                }
+            }
+        }
+    }
+}
+
+function modificarUsuario(tipo) {
 
 }

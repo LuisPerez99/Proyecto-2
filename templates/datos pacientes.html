@@ -51,9 +51,9 @@
                                  <td><button style="background: red;
                                                     border-color: white;" onclick="eliminar(paciente)">Eliminar</button>
                                     <button style="background: green;
-                                            border-color: white;">Modificar</button>
+                                            border-color: white;" onclick(modificarUsuario(paciente))>Modificar</button>
                                     <button style="background: blue;
-                                            border-color: white;">Ver info</button></td>
+                                            border-color: white;" onclick="enviarInfo(paciente)">Ver info</button></td>
                             </tr>`
                 tabla.innerHTML += fila
             }

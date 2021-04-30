@@ -7,7 +7,6 @@ datos_doctores = []
 datos_enfermeros = []
 datos_medicamentos = []
 nombres_usuarios = []
-nombres_medicamentos = []
 datos_admin = {
     "nombre":"Javier",
     "apellido":"Golon",
@@ -238,19 +237,35 @@ def cargar_medicamentos():
                         "cantidad": line[3],
                         }
                     datos_medicamentos.append(datos_medicamento)
-                    nombres_medicamentos.append(datos_medicamento['nombre'])
                 print("Medicamentos: "+str(datos_medicamentos))
         return redirect(url_for('admin'))
     return redirect(url_for('admin'))
 
-@app.route('/modificarperfil', methods=['GET','PUT'])
+@app.route('/modificarperfil', methods=['GET','POST'])
 def mod_perfil():
-    if request.method == 'PUT':
-        return jsonify("modificar")
+    if request.method == 'POST':
+        data = request.get_json(force=True)
+
+        for i in range(len(datos_pacientes)):
+            if data['nombre de usuario'] == datos_pacientes[i]['nombre de usuario']:
+                datos_pacientes[i] = data
+                print(datos_pacientes[i])
+                return jsonify(datos_pacientes[i])
     
     if request.method == 'GET':
         return render_template('modificar perfil.html')
     return jsonify({"mensaje":"Error"})
+
+@app.route('/modificarperfil/modificar', methods=['POST'])
+def modificar():
+    data = request.get_json(force=True)
+
+    for i in range(len(datos_pacientes)):
+        if data['nombre de usuario'] == datos_pacientes[i]['nombre de usuario']:
+            datos_pacientes[i] = data
+            print(datos_pacientes[i])
+            return jsonify("modificado")
+    return jsonify({"error":"no se pudo modificar la informacion"})
 
 @app.route('/datos-pacientes')
 def ver_pacientes():
@@ -283,7 +298,11 @@ def eliminarPaciente():
             if data['nombre de usuario'] == datos_pacientes[i]['nombre de usuario']:
                 print("Datos eliminados: "+str(datos_pacientes[i]))
                 del datos_pacientes[i]
-                return jsonify("Usuario eliminado")
+
+                for j in range(len(nombres_usuarios)):
+                    if data['nombre de usuario'] == nombres_usuarios[j]:
+                        del nombres_usuarios[j]
+                        return jsonify("Usuario eliminado")
     return jsonify({"mensaje":"No se ha podido eliminar al usuario"})
 
 @app.route('/datos-enfermeras/eliminarenfermera', methods=['POST'])
@@ -297,7 +316,11 @@ def eliminarEnfermera():
             if data['nombre de usuario'] == datos_enfermeros[i]['nombre de usuario']:
                 print("Datos eliminados: "+str(datos_enfermeros[i]))
                 del datos_enfermeros[i]
-                return jsonify("Usuario eliminado")  
+
+                for j in range(len(nombres_usuarios)):
+                    if data['nombre de usuario'] == nombres_usuarios[j]:
+                        del nombres_usuarios[j]
+                        return jsonify("Usuario eliminado") 
     return jsonify({"mensaje":"No se ha podido eliminar al usuario"})
 
 @app.route('/datos-doctores/eliminardoctor', methods=['POST'])
@@ -311,22 +334,61 @@ def eliminarDoctor():
             if data['nombre de usuario'] == datos_doctores[i]['nombre de usuario']:
                 print("Datos eliminados: "+str(datos_doctores[i]))
                 del datos_doctores[i]
-                print(procesado)
-                return jsonify("Usuario eliminado")
+
+                for j in range(len(nombres_usuarios)):
+                    if data['nombre de usuario'] == nombres_usuarios[j]:
+                        del nombres_usuarios[j]
+                        return jsonify("Usuario eliminado")
     return jsonify({"mensaje":"No se ha podido eliminar al usuario"})
 
-@app.route('/eliminarmedicamento', methods=['DELETE'])
+@app.route('/datos-medicamentos/eliminarmedicamento', methods=['POST'])
 def eliminarMedicamento():
     data = request.get_json(force=True)
-    if data['nombre'] not in nombres_medicamentos:
-        return jsonify({"mensaje":"Medicamento no encontrado."})
-    else:
-        for i in range(len(datos_medicamentos)):
-            if data['nombre'] == datos_medicamentos[i]['nombre'] and data['nombre'] == nombres_medicamentos[i]:
-               print(datos_medicamentos[i])
-               del datos_medicamentos[i], nombres_medicamentos[i]
-            return jsonify({"mensaje":"Medicamento eliminado"})  
+
+    for i in range(len(datos_medicamentos)):
+        if data['nombre de usuario'] == datos_medicamentos[i]['nombre']:
+            print(datos_medicamentos[i])
+            del datos_medicamentos[i]
+            return jsonify("Medicamento eliminado")  
     return jsonify({"mensaje":"No se ha podido eliminar el medicamento"})
+
+@app.route('/ver-datos', methods = ['GET','POST'])
+def ver_datos():
+    if request.method == 'POST':
+        data = request.get_json(force=True)
+
+        for i in range(len(datos_pacientes)):
+            if data['nombre de usuario'] == datos_pacientes[i]['nombre de usuario']:
+                print(datos_pacientes[i])
+                return jsonify(datos_pacientes[i])
+
+        for i in range(len(datos_enfermeros)):
+            if data['nombre de usuario'] == datos_enfermeros[i]['nombre de usuario']:
+                print(datos_enfermeros[i])
+                return jsonify(datos_enfermeros[i])
+
+        for i in range(len(datos_doctores)):
+            if data['nombre de usuario'] == datos_doctores[i]['nombre de usuario']:
+                print(datos_doctores[i])
+                return jsonify(datos_doctores[i])
+    
+    if request.method == 'GET':
+        return render_template('ver datos.html')
+    return jsonify({"error":"no se encontro al usuario"})
+
+@app.route('/ver-medicamento', methods = ['GET','POST'])
+def ver_medicamento():
+    if request.method == 'POST':
+        data = request.get_json(force=True)
+
+        for i in range(len(datos_medicamentos)):
+            if data['nombre'] == datos_medicamentos[i]['nombre']:
+                print(datos_medicamentos[i])
+                return jsonify(datos_medicamentos[i])
+
+    if request.method == 'GET':
+        return render_template('ver medicamento.html')
+    return jsonify({"error":"no se encontro el medicamento"})
 
 if __name__ == '__main__':
     app.run(debug=True,port=4041)

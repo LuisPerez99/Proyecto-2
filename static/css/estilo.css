@@ -324,3 +324,13 @@ tr:nth-child(even) {
 tr:nth-child(odd) {
     background-color: rgb(216, 214, 214);
 }
+
+.data-container {
+    background: #ffffff;
+    width: fit-content;
+    height: auto;
+    position: center;
+    padding: 50px;
+    margin: auto;
+    border-radius: 25px;
+}
