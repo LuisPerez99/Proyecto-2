@@ -248,23 +248,39 @@ def mod_perfil():
 
         for i in range(len(datos_pacientes)):
             if data['nombre de usuario'] == datos_pacientes[i]['nombre de usuario']:
-                datos_pacientes[i] = data
                 print(datos_pacientes[i])
                 return jsonify(datos_pacientes[i])
+        
+        for i in range(len(datos_enfermeros)):
+            if data['nombre de usuario'] == datos_enfermeros[i]['nombre de usuario']:
+                print(datos_enfermeros[i])
+                return jsonify(datos_enfermeros[i])
+
+        for i in range(len(datos_doctores)):
+            if data['nombre de usuario'] == datos_doctores[i]['nombre de usuario']:
+                print(datos_doctores[i])
+                return jsonify(datos_doctores[i])
     
     if request.method == 'GET':
         return render_template('modificar perfil.html')
-    return jsonify({"mensaje":"Error"})
+    return jsonify({"error":"no se pudo modificar usuario"})
 
-@app.route('/modificarperfil/modificar', methods=['POST'])
+@app.route('/modificar', methods=['POST'])
 def modificar():
     data = request.get_json(force=True)
 
-    for i in range(len(datos_pacientes)):
-        if data['nombre de usuario'] == datos_pacientes[i]['nombre de usuario']:
-            datos_pacientes[i] = data
-            print(datos_pacientes[i])
-            return jsonify("modificado")
+    if request.method == 'POST':
+        for i in range(len(datos_pacientes)):
+            if data['usuario'] == datos_pacientes[i]['nombre de usuario']:
+                datos_pacientes[i]['nombre'] = data['nombre']
+                datos_pacientes[i]['apellido'] = data['apellido']
+                datos_pacientes[i]['fecha'] = data['fecha']
+                datos_pacientes[i]['nombre de usuario'] = data['nombre de usuario']
+                datos_pacientes[i]['password'] = data['password']
+                datos_pacientes[i]['telefono'] = data['telefono']
+                print(datos_pacientes[i])
+                return jsonify("datos modificados")
+
     return jsonify({"error":"no se pudo modificar la informacion"})
 
 @app.route('/datos-pacientes')

@@ -397,23 +397,74 @@ function enviarInfoAMod(tipo) {
                 }
             }
         } 
-    } else if (tipo == 'medicamento') {
-        for (let i = 0; i < tabla.rows.length; i++) {
-            for (let j = 0; j < tabla.rows[i].cells.length; j++) {
-                tabla.rows[i].cells[j].onclick = function () {
-                rIndex = this.parentElement.rowIndex
-
-                let usuario = listaMedicamentos[rIndex-1]['nombre']
-                localStorage.setItem('usuarioSeleccionado', usuario)
-                localStorage.setItem('tipo', tipo)
-                console.log(usuario)
-                window.location.replace('http://localhost:4041/ver-medicamento')                
-                }
-            }
-        }
     }
 }
 
-function modificarUsuario(tipo) {
+function datosAModificar() {
+    let user = localStorage.getItem('usuarioSeleccionado')
+    console.log(user)
+    fetch ('http://localhost:4041/modificarperfil', {
+        method: 'POST',
+        headers: headers,
+        body: `{
+            "nombre de usuario":"${user}"
+        }`,
+    })
+        .then(response => response.json())
+        .then(usuario => {
+            localStorage.setItem('usuarioAModificar', user)
+            document.getElementById('nombre').value = usuario.nombre
+            document.getElementById('apellido').value = usuario.apellido
+            document.getElementById('nacimiento').value = usuario.fecha
+            document.getElementById('usuario').value = usuario['nombre de usuario']
+            document.getElementById('password').value = usuario.password
+            document.getElementById('telefono').value = usuario.telefono
 
+            if (usuario.sexo == 'M') {
+                let boton = document.getElementById('masculino')
+                boton.checked = true
+            } else if (usuario.sexo == 'F') {
+                let boton = document.getElementById('femenino')
+                boton.checked = true
+            }
+        })
+}
+
+function modificarUsuario() {
+    let user = localStorage.getItem('usuarioAModificar')
+
+    let nombre = document.getElementById('nombre').value
+    let apellido = document.getElementById('apellido').value
+    let nacimiento = document.getElementById('nacimiento').value
+    let usuario = document.getElementById('usuario').value
+    let password = document.getElementById('password').value
+    let telefono = document.getElementById('telefono').value
+    
+    console.log(nombre+" "+user+" "+apellido+" "+nacimiento+" "+usuario+" "+password+" "+telefono)
+
+    if (nombre == " " || apellido == " " || nacimiento == " " || usuario == " " || password == " ") {
+        alert('Faltan datos por ingresar')
+    } else {
+        fetch('http://localhost:4041/modificar', {
+            method: 'POST',
+            headers: headers,
+            body: `{
+                "usuario":"${user}",
+                "nombre":"${nombre}",
+                "apellido":"${apellido}",
+                "fecha":"${nacimiento}",
+                "nombre de usuario":"${usuario}",
+                "password":"${password}",
+                "telefono":"${telefono}"
+            }`,
+        })
+            .then(response => response.json())
+            .then(res => {
+                if (res == 'datos modificados') {
+                    alert('Se han modificado los datos del usuario')
+                } else {
+                    alert('No se han podido modificar los datos')
+                }
+            })
+    }
 }

@@ -6,14 +6,62 @@
     <link rel="stylesheet" type="text/css" href="static/css/estilo.css" />
     <title>Modificar Perfil</title>
 </head>
-<body>
+<body onload="datosAModificar()">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <div id="modContainer" class="container">
         <div class="modificar" id="modificar_perfil">
             <h1>Modificar Perfil</h1>
-            <div class="wrap-input100 validate-input">
 
+            <div class="wrap-input100 validate-input">
+                <label for="nombre">Nombre:&nbsp;</label>
+                <input type="text" class="input100" name="nombre" id="nombre" placeholder="Ingrese su nombre" required />
+            </div>
+            <br />
+            <div class="wrap-input100 validate-input">
+                <label for="apellido">Apellido:&nbsp;</label>
+                <input type="text" class="input100" name="apellido" id="apellido" required />
+            </div>
+            <br />
+            <div class="wrap-input100 validate-input">
+                <label for="nacimiento">Fecha de Nacimiento:&nbsp;</label>
+                <input type="text" class="input100" name="nacimiento" id="nacimiento" required />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+            <br />
+            <div class="wrap-input100 validate-input">
+                <label for="usuario">Nombre de usuario:&nbsp;</label>
+                <input type="text" class="input100" name="usuario" id="usuario" required />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+            <br />
+            <div class="wrap-input100 validate-input">
+                <label for="password">Contraseña:&nbsp;</label>
+                <input type="password" class="input100" name="password" id="password" required />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+            <br />
+            <div class="wrap-input100 validate-input">
+                <label for="sexo">Sexo:&nbsp;&nbsp;&nbsp;</label>
+                <label for="masculino" style="font-weight:lighter;">M</label>
+                <input type="radio" class="input100" value="M" id="masculino" name="genero" style="box-shadow: none;" />
+                &nbsp;&nbsp;&nbsp;
+                <label for="femenino" style="font-weight:lighter">F</label>
+                <input type="radio" class="input100" value="F" id="femenino" name="genero" style="box-shadow: none;" />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+            <br />
+            <div class="wrap-input100 validate-input">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <label for="telefono">Telefono:&nbsp;</label>
+                <input type="number" class="input100" name="telefono" id="telefono" />
+                <label id="opcional" style="font-weight:lighter; font-family:Arial; font-size:14px">(opcional)</label>
+            </div>
+            <br />
+            <div class="container-modify-form-btn">
+                <button class="modify-form-btn" onclick="modificarUsuario()">
+                    Modificar
+                </button>
             </div>
         </div>
     </div>
