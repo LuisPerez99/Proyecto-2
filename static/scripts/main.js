@@ -708,7 +708,7 @@ function solicitarCita() {
     let fecha = document.getElementById('fecha-cita').value
     let hora = document.getElementById('hora-cita').value
     let motivo = document.getElementById('motivo').value
-    console.log(user+" "+fecha+" "+hora+" "+motivo)
+
     fetch ('http://localhost:4041/solicitar-cita', {
         method: 'POST',
         headers: headers,
@@ -717,9 +717,8 @@ function solicitarCita() {
             "fecha":"${fecha}",
             "hora":"${hora}",
             "motivo":"${motivo}",
-            "aceptada":"no",
-            "doctor":" ",
-            "completada":"no",
+            "estado":"rechazada",
+            "doctor":" "
         }`,
     })
         .then(response => response.json())
@@ -734,5 +733,17 @@ function solicitarCita() {
 }
 
 function cargarCitas() {
-    
+    let user = localStorage.getItem('nombreUsuario')
+
+    fetch('http://localhost:4041/ver-citas', {
+        method: 'POST',
+        headers: headers,
+        body: `{
+            "nombre de usuario":"${user}"
+        }`
+    })
+        .then(response => response.json())
+        .then(res => {
+            console.log(res)
+        })
 }

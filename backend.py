@@ -503,8 +503,13 @@ def solicitar_cita():
                 else:
                     for i in range(len(citas)):
                         if data['nombre de usuario'] == citas[i]['nombre de usuario']:
-                            if citas[i]['completada'] == 'no':
-                                return jsonify('cita pendiente/aceptada')                          
+                            if citas[i]['estado'] == 'pendiente' or citas[i]['estado'] == 'aceptada':
+                                return jsonify('cita pendiente/aceptada')
+                            else:
+                                citas.append(data)
+                                print("Cita agregada: "+str(data))
+                                print("Lista de citas: "+str(citas))
+                                return jsonify('cita agregada')
                         else:
                             citas.append(data)
                             print("Cita agregada: "+str(data))
@@ -524,10 +529,11 @@ def ver_citas():
             if data['nombre de usuario'] == datos_pacientes[i]['nombre de usuario']:
                 if not citas:
                     return jsonify("no hay citas en el sistema")
-                else:
-                    for i in range(len(citas)):
-                        if data['nommbre de usuario'] == citas[i]['nombre de usuario']:
-                            return jsonify(citas[i])
+                else:    
+                    citas_paciente = [x for x in citas if data['nombre de usuario'] == citas]
+                    for i in range(len(citas_paciente)):
+                        print(citas_paciente[i])
+                        return jsonify({"citas":citas_paciente[i]})
     
     if request.method == 'GET':
         return render_template('ver citas.html')
