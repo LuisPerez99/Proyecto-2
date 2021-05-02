@@ -1,30 +1,28 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" href="../static/css/estilo.css" />
-    <title>Datos Medicamentos</title>
+    <title>Comprar Medicina</title>
     <link rel="shortcut icon" href="#" />
 </head>
 <body style="text-align: center;">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.1/html2pdf.bundle.js"></script>
 
     <div class="container" style="padding: 20px">
         <div id="contenedor-tabla">
-            <h1>Datos de los Medicamentos</h1>
-            <div class="contenedor-boton-pdf">
-                <button id="generarPDF">Generar Reporte en PDF</button>
+            <h1>Medicamentos Disponibles</h1>
+            <div class="btn-container">
+                <button class="btn" id="carrito" onclick="irACarrito()">Carrito</button>
             </div>
-            <br>
             <table class="fa-table table-striped" id="table">
                 <tr class="bg-info">
                     <th>Nombre</th>
                     <th>Precio</th>
                     <th>Descripcion</th>
-                    <th>Cantidad</th>
-                    <th></th>
+                    <th>Disponibles</th>
+                    <th>Acciones</th>
                 </tr>
                 <tbody id="tabla" class="center">
                 </tbody>
@@ -37,38 +35,25 @@
     <script>
         var medicamentos = {{ data | tojson }};
         let listaMedicamentos = JSON.parse(medicamentos);
-        console.log(medicamentos)
+
         llenarTabla(listaMedicamentos)
 
         function llenarTabla(data) {
             var tabla = document.getElementById('tabla')
-            medicamento = 'medicamento'
 
             for (var i = 0; i < listaMedicamentos.length; i++) {
                 var fila = `<tr>
     	                         <td>${data[i].nombre}</td>
     	                         <td>${data[i].precio}</td>
     	                         <td>${data[i].descripcion}</td>
-    	                         <td>${data[i].cantidad}</td>
-                                 <td><button style="background: red;
-                                                    border-color: white;" onclick="eliminar(medicamento)">Eliminar</button>
+                                 <td>${data[i].cantidad}</td>
+                                 <td><button style="background: green;
+                                                    border-color: white;" onclick="agregarAlCarrito()">Agregar al carrito</button>
                                      <button style="background: green;
-                                                    border-color: white;" onclick="enviarInfoAMod(medicamento)">Modificar</button>
-                                     <button style="background: blue;
-                                                    border-color: white;" onclick="enviarInfo(medicamento)">Ver info</button></td>
                             </tr>`
                 tabla.innerHTML += fila
             }
         }
-
-        let boton = document.getElementById('generarPDF')
-        boton.addEventListener("click", () => {
-            const tabla = document.getElementById('table')
-            html2pdf(tabla, {
-                margin: 15,
-                filename: 'listado de medicamentos.pdf'
-            })            
-        })
-    </script>
+     </script>
 </body>
 </html>

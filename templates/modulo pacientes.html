@@ -31,8 +31,13 @@
         </div>
         <br>
         <div class="btn-container">
-            <button class="btn-request" id="comprar-medicina">Comprar Medicina</button>
+            <button class="btn-request" id="comprar-medicina" onclick="comprar()">Comprar Medicina</button>
         </div>
     </div>
+    <script>
+        function comprar() {
+            window.location.replace("http://localhost:4041/comprar")
+        }
+    </script>
 </body>
 </html>

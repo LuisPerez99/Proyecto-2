@@ -10,6 +10,7 @@ datos_enfermeros = []
 datos_medicamentos = []
 nombres_usuarios = []
 citas = []
+pedidos = []
 datos_admin = {
     "nombre":"Javier",
     "apellido":"Golon",
@@ -495,26 +496,25 @@ def solicitar_cita():
 
         for i in range(len(datos_pacientes)):
             if data['nombre de usuario'] == datos_pacientes[i]['nombre de usuario']:
-                if not citas:
-                        citas.append(data)
-                        print("Cita agregada: "+str(data))
-                        print("Lista de citas: "+str(citas))
-                        return jsonify('cita agregada')
-                else:
-                    for i in range(len(citas)):
-                        if data['nombre de usuario'] == citas[i]['nombre de usuario']:
-                            if citas[i]['estado'] == 'pendiente' or citas[i]['estado'] == 'aceptada':
-                                return jsonify('cita pendiente/aceptada')
-                            else:
-                                citas.append(data)
-                                print("Cita agregada: "+str(data))
-                                print("Lista de citas: "+str(citas))
-                                return jsonify('cita agregada')
+                if "citas" in datos_pacientes[i]:
+                    for j in range(len(datos_pacientes[i]['citas'])):
+                        if datos_pacientes[i]['citas'][j]['estado'] == 'pendiente' or datos_pacientes[i]['citas'][j]['estado'] == 'aceptada':
+                            return jsonify('cita pendiente/aceptada')
                         else:
+                            datos_pacientes[i]['citas'].append(data)
                             citas.append(data)
-                            print("Cita agregada: "+str(data))
-                            print("Lista de citas: "+str(citas))
-                            return jsonify('cita agregada')
+                            datos_pacientes[i]['citas'][j]['id'] = len(datos_pacientes[i]['citas']) - 1
+                            
+                            print("Citas del paciente: "+str(datos_pacientes[i]['citas']))
+                            return jsonify(datos_pacientes[i]['citas'])                  
+                else:
+                    data['id'] = 0
+                    datos_pacientes[i]['citas'] = []
+                    datos_pacientes[i]['citas'].append(data)
+                    citas.append(data)
+                    print("Citas del paciente: "+str(datos_pacientes[i]['citas']))
+                    print("Citas: "+str(citas))
+                    return jsonify(datos_pacientes[i]['citas'])
 
     if request.method == 'GET':
         return render_template('solicitar cita.html')
@@ -527,17 +527,27 @@ def ver_citas():
 
         for i in range(len(datos_pacientes)):
             if data['nombre de usuario'] == datos_pacientes[i]['nombre de usuario']:
-                if not citas:
-                    return jsonify("no hay citas en el sistema")
-                else:    
-                    citas_paciente = [x for x in citas if data['nombre de usuario'] == citas]
-                    for i in range(len(citas_paciente)):
-                        print(citas_paciente[i])
-                        return jsonify({"citas":citas_paciente[i]})
+                return jsonify(datos_pacientes[i]['citas'])
     
     if request.method == 'GET':
         return render_template('ver citas.html')
     return jsonify({"error":"no se pueden mostrar las citas del paciente"})
+
+@app.route('/comprar', methods=['GET','POST'])
+def comprar():
+    if request.method == 'POST':
+        data = request.get_json(force=True)
+
+        return jsonify('pedido agregado')
+
+    if request.method == 'GET':
+        data = datos_medicamentos
+        return render_template('comprar medicina.html', data = json.dumps(data))
+    return jsonify({"error":"No se pudo realizar el pedido"})
+
+@app.route('/carrito')
+def carrito():
+    return render_template('carrito de compras.html')
 
 if __name__ == '__main__':
     app.run(debug=True,port=4041)

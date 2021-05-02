@@ -306,17 +306,6 @@ table {
     overflow: hidden;
 }
 
-#contenedor-tabla {
-    background: #ffffff;
-    width: auto;
-    height: auto;
-    position: center;
-    padding: 50px;
-    margin: auto;
-    border-radius: 25px;
-    box-shadow: 2px 2px 2px #818181;
-}
-
 tr:nth-child(even) {
     background-color: #ffffff;
 }

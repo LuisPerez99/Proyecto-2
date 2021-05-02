@@ -713,11 +713,12 @@ function solicitarCita() {
         method: 'POST',
         headers: headers,
         body: `{
+            "id":" ",
             "nombre de usuario":"${user}",
             "fecha":"${fecha}",
             "hora":"${hora}",
             "motivo":"${motivo}",
-            "estado":"rechazada",
+            "estado":"pendiente",
             "doctor":" "
         }`,
     })
@@ -745,5 +746,88 @@ function cargarCitas() {
         .then(response => response.json())
         .then(res => {
             console.log(res)
+
+            document.getElementById('titulo').innerHTML = 'Citas del Paciente '+user
+            let tabla = document.getElementById('tabla')
+        
+            for (var i = 0; i < res.length; i++) {
+                var fila = `<tr>
+                                <td>${res[i].fecha}</td>
+                                <td>${res[i].hora}</td>
+                                <td>${res[i].motivo}</td>
+                                <td>${res[i].doctor}</td>
+                                <td>${res[i].estado}</td>
+                            </tr>`
+                tabla.innerHTML += fila
+            }                
         })
+}
+
+carrito = []
+
+function agregarAlCarrito() {
+    for (let i = 0; i < tabla.rows.length; i++) {
+        for (let j = 0; j < tabla.rows[i].cells.length; j++) {
+            tabla.rows[i].cells[j].onclick = function () {
+            rIndex = this.parentElement.rowIndex
+
+            let medicina = listaMedicamentos[rIndex-1]['nombre']
+            let precio = listaMedicamentos[rIndex-1]['precio']
+            let disponible = listaMedicamentos[rIndex - 1]['cantidad']
+            
+            let medicinaAgregada = {
+                "nombre":medicina,
+                "precio":precio,
+                "disponible":disponible
+            }
+            carrito.push(medicinaAgregada)
+            localStorage.setItem('carrito', JSON.stringify(carrito))
+            console.log(carrito)
+            }
+        }
+    } 
+}
+
+function irACarrito() {
+    window.location.replace("http://localhost:4041/carrito")
+}
+
+function cargarCarrito() {
+    let carrito = JSON.parse(localStorage.getItem("carrito") || "[]")
+    console.log(carrito)
+
+    llenarTabla(carrito)
+
+    function llenarTabla(data) {
+        let tabla = document.getElementById('tabla')
+        paciente = 'paciente'
+
+        for (var i = 0; i < data.length; i++) {
+            let numero = document.createElement('input')
+            numero.setAttribute('type', 'number')
+            let td = document.createElement('td')
+            
+            td.appendChild(numero)
+            tabla.appendChild(td)
+            var fila = `<tr>
+                            <td>${data[i].nombre}</td>
+                            <td>${data[i].precio}</td>
+                            <td><input type="number" id="${i}" min="1" max="${data[i].disponible}"></td>
+                        </tr>`
+            tabla.innerHTML += fila
+        }
+    }
+}
+
+function comprar() {
+    let carrito = JSON.parse(localStorage.getItem("carrito") || "[]")
+    console.log(carrito)
+
+    fetch('http://localhost:4041/comprar', {
+        method: 'POST',
+        headers: headers,
+        body: `{
+            
+        }`
+    })
 }

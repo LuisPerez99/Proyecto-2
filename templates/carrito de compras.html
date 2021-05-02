@@ -3,26 +3,28 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>Lista de Citas</title>
-        <link rel="stylesheet" type="text/css" href="static/css/estilo.css" />
-        <link rel="shortcut icon" href="#">
+        <link rel="stylesheet" type="text/css" href="../static/css/estilo.css" />
+        <title>Comprar Medicina</title>
+        <link rel="shortcut icon" href="#" />
     </head>
-    <body style="text-align: center;" onload="cargarCitas()">
+    <body style="text-align: center;" onload="cargarCarrito()">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
         <div class="container" style="padding: 20px">
-            <h1 id="titulo"></h1>
             <div id="contenedor-tabla">
+                <h1>Pedido</h1>
                 <table class="fa-table table-striped" id="table">
                     <tr class="bg-info">
-                        <th>Fecha</th>
-                        <th>Hora</th>
-                        <th>Motivo</th>
-                        <th>Doctor</th>
-                        <th>Estado</th>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
                     </tr>
                     <tbody id="tabla" class="center"></tbody>
                 </table>
+            </div>
+            <br>
+            <div class="btn-container">
+                <button class="btn-comprar" id="comprar" onclick="comprar()">Registrar Pedido</button>
             </div>
         </div>
 
