@@ -9,11 +9,16 @@
 </head>
 <body style="text-align: center;">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.1/html2pdf.bundle.js"></script>
 
     <div class="container" style="padding: 20px">
         <div id="contenedor-tabla">
             <h1>Datos de los Medicamentos</h1>
-            <table class="fa-table table-striped">
+            <div class="contenedor-boton-pdf">
+                <button id="generarPDF">Generar Reporte en PDF</button>
+            </div>
+            <br>
+            <table class="fa-table table-striped" id="table">
                 <tr class="bg-info">
                     <th>Nombre</th>
                     <th>Precio</th>
@@ -48,13 +53,22 @@
                                  <td><button style="background: red;
                                                     border-color: white;" onclick="eliminar(medicamento)">Eliminar</button>
                                      <button style="background: green;
-                                                    border-color: white;">Modificar</button>
+                                                    border-color: white;" onclick="enviarInfoAMod(medicamento)">Modificar</button>
                                      <button style="background: blue;
                                                     border-color: white;" onclick="enviarInfo(medicamento)">Ver info</button></td>
                             </tr>`
                 tabla.innerHTML += fila
             }
         }
+
+        let boton = document.getElementById('generarPDF')
+        boton.addEventListener("click", () => {
+            const tabla = document.getElementById('table')
+            html2pdf(tabla, {
+                margin: 15,
+                filename: 'listado de medicamentos.pdf'
+            })            
+        })
     </script>
 </body>
 </html>

@@ -3,12 +3,14 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <title>Pacientes</title>
-    <link rel="icon" href="icono.jpg">
+    <title>Paciente</title>
+    <link rel="stylesheet" type="text/css" href="static/css/estilo.css" />
+    <link rel="shortcut icon" href="#">
+    <script src="/static/scripts/main.js" type="text/javascript"></script>
 </head>
-<body onload="cargarDatos()">
-    <h1>Pacientes</h1>
-    <label>Datos del usuario: </label>
+<body onload="cargarDatos()" style="text-align: center;">
+    <h1>Paciente</h1>
+
     <div id="datos">
         <h4>
             Datos del usuario
@@ -19,9 +21,18 @@
         <label>Nombre de usuario:&nbsp;</label>
         <label id="usuario"></label>
         <br /><br />
-        <button id="modificar" onclick="modificarDatos()">Modificar Perfil</button>
+        <button id="modificar" onclick="enviarInfoUsuario('paciente')">Modificar Perfil</button>
     </div>
-
-    <script src="/static/scripts/main.js" type="text/javascript"></script>
+    <br><br>
+    <div class="container">
+        <h4>Acciones</h4>
+        <div class="btn-container">
+            <button class="btn-request" id="solicitar-cita" onclick="cita()">Solicitar cita</button>
+        </div>
+        <br>
+        <div class="btn-container">
+            <button class="btn-request" id="comprar-medicina">Comprar Medicina</button>
+        </div>
+    </div>
 </body>
 </html>

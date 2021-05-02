@@ -334,3 +334,16 @@ tr:nth-child(odd) {
     margin: auto;
     border-radius: 25px;
 }
+
+.container {
+    padding: 20px;
+    background-color: #ffffff;
+    width: auto;
+    height: auto;
+    text-align: center;
+    position: center;
+    margin: auto;
+    border-radius: 25px;
+    box-shadow: 4px 4px 4px #2f2e2e;
+    display: inline-block;
+}

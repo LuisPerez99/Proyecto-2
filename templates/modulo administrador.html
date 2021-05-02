@@ -7,10 +7,10 @@
     <link rel="stylesheet" type="text/css" href="static/css/estilo.css" />
     <link rel="shortcut icon" href="#">
 </head>
-<body onload="cargarDatos()">
+<body onload="cargarDatos()" style="text-align: center;">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-    <div id="admin" class="container">
+    <div id="admin" class="actions-container">
         <h1>Administrador</h1>
 
         <div id="datos">
@@ -23,7 +23,7 @@
             <label>Nombre de usuario:&nbsp;</label>
             <label id="usuario"></label>
             <br /><br />
-            <button id="modificar" onclick="modificarDatos()">Modificar Perfil</button>
+            <button id="modificar" onclick="enviarInfoUsuario('administrador')">Modificar Perfil</button>
         </div>
         <hr />
         <div class="tab">
@@ -86,7 +86,7 @@
         </div>
 
         <hr />
-        <div class="container">
+        <div class="data-container">
             <h4>Visualizacion de datos</h4>
             <button class="btn-redirect" id="datos-pacientes">Datos Pacientes</button>
             <button class="btn-redirect" id="datos-doctores">Datos Doctores</button>
