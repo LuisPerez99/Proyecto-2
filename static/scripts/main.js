@@ -803,31 +803,77 @@ function cargarCarrito() {
         paciente = 'paciente'
 
         for (var i = 0; i < data.length; i++) {
+            let tr = document.createElement('tr')
+            let nombre = document.createElement('label')
+            let nombreText = document.createTextNode(data[i].nombre)
+            nombre.appendChild(nombreText)
+            let precio = document.createElement('label')
+            let precioText = document.createTextNode(data[i].precio)
+            precio.appendChild(precioText)
+            precio.setAttribute('id', 'precio '+i)
             let numero = document.createElement('input')
             numero.setAttribute('type', 'number')
-            let td = document.createElement('td')
-            
-            td.appendChild(numero)
-            tabla.appendChild(td)
-            var fila = `<tr>
-                            <td>${data[i].nombre}</td>
-                            <td>${data[i].precio}</td>
-                            <td><input type="number" id="${i}" min="1" max="${data[i].disponible}"></td>
-                        </tr>`
-            tabla.innerHTML += fila
+            numero.setAttribute('id', 'numero '+i)
+            let tdnumero = document.createElement('td')
+            let tdnombre = document.createElement('td')
+            let tdprecio = document.createElement('td')
+            tdnombre.appendChild(nombre)
+            tdprecio.appendChild(precio)
+            tdnumero.appendChild(numero)
+            tr.appendChild(tdnombre)
+            tr.appendChild(tdprecio)
+            tr.appendChild(tdnumero)
+            tabla.appendChild(tr)
         }
     }
 }
 
+function calcularTotal() {
+    let carrito = JSON.parse(localStorage.getItem('carrito') || "[]")
+    var total = 0
+
+    for (let i = 0; i < carrito.length; i++) {
+        let precio = parseFloat(document.getElementById('precio '+i).innerHTML)
+        let numero = document.getElementById('numero '+i).value
+
+        var subtotal = precio*numero
+        total = total + subtotal
+    }
+    console.log(total)
+    localStorage.setItem('total', total.toFixed(2))
+    document.getElementById('total').innerHTML = total.toFixed(2)
+}
+
 function comprar() {
-    let carrito = JSON.parse(localStorage.getItem("carrito") || "[]")
+    calcularTotal()
+    let carrito = JSON.parse(localStorage.getItem("carrito"))
+    let total = localStorage.getItem('total')
     console.log(carrito)
 
     fetch('http://localhost:4041/comprar', {
         method: 'POST',
         headers: headers,
         body: `{
-            
+            "medicinas": ${JSON.stringify(carrito)},
+            "total":"${total}"
         }`
     })
+        .then(response => response.json())
+        .then(res => {
+            if (res == 'pedido agregado') {
+                alert('Pedido realizado con exito')
+            } else {
+                alert('El pedido no se ha podido realizar')
+            }
+        })
+}
+
+function irACitas(tipo) {
+    if (tipo == 'enfermera') {
+        localStorage.setItem('tipo', tipo)
+        window.location.replace('http://localhost:4041/administrar-citas')
+    } else if (tipo == 'doctor') {
+        localStorage.setItem('tipo', tipo)
+        window.location.replace('http://localhost:4041/administrar-citas')
+    }
 }

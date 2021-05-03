@@ -8,8 +8,8 @@
     <link rel="shortcut icon" href="#">
 </head>
 <body onload="cargarDatos()" style="text-align: center;">
-    <h1>Enfermeras</h1>
-    <div id="datos">
+    <h1>Enfermera</h1>
+    <div id="datos" class="container">
         <h4>
             Datos del usuario
         </h4>
@@ -21,7 +21,24 @@
         <br /><br />
         <button id="modificar" onclick="enviarInfoUsuario('enfermera')">Modificar Perfil</button>
     </div>
+    <br><br>
+    <div class="container">
+        <h3>Acciones</h3>
+        <div class="btn-container">
+            <button class="btn-citas" id="ver-citas" onclick="irACitas('enfermera')">Ver todas las citas</button>
+            <button class="btn-aceptadas" id="ver-aceptadas" onclick="navegar(aceptadas)">Ver citas aceptadas</button>
+            <button class="btn-factura" id="facturas" onclick="navegar(facturas)">Generar Factura</button>
+        </div>
+    </div>
 
     <script src="/static/scripts/main.js" type="text/javascript"></script>
+    <script>
+    let aceptadas = 'http://localhost:4041/citas-aceptadas'
+    let facturas = 'http://localhost:4041/generar-factura' 
+
+    function navegar(dir) {
+        window.location.replace(dir)
+    }
+    </script>
 </body>
 </html>

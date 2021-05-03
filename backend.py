@@ -503,7 +503,7 @@ def solicitar_cita():
                         else:
                             datos_pacientes[i]['citas'].append(data)
                             citas.append(data)
-                            datos_pacientes[i]['citas'][j]['id'] = len(datos_pacientes[i]['citas']) - 1
+                            datos_pacientes[i]['citas'][j]['id'] = len(citas) - 1
                             
                             print("Citas del paciente: "+str(datos_pacientes[i]['citas']))
                             return jsonify(datos_pacientes[i]['citas'])                  
@@ -538,6 +538,10 @@ def comprar():
     if request.method == 'POST':
         data = request.get_json(force=True)
 
+        print("Pedido: "+str(data))
+
+        for i in range(len(data['medicinas'])):
+            pedidos.append(data['medicinas'][i]['nombre'])
         return jsonify('pedido agregado')
 
     if request.method == 'GET':
@@ -548,6 +552,33 @@ def comprar():
 @app.route('/carrito')
 def carrito():
     return render_template('carrito de compras.html')
+
+@app.route('/administrar-citas', methods=['GET','POST'])
+def administrar_citas():
+    if request.method == 'POST':
+        data = request.get_json(force=True)
+
+        for i in range(len(citas)):
+            if data['id'] == citas[i]['id']:
+                citas[i]['estado'] = data['estado']
+                citas[i]['doctor'] = data['doctor']
+                print(citas[i])
+                for j in range(len(datos_pacientes)):
+                    for k in range(len(datos_pacientes[j]['citas'])):
+                        if data['id'] == datos_pacientes[j]['citas'][k]['id']:
+                            datos_pacientes[j]['citas'][k]['estado'] = data['estado']
+                            datos_pacientes[j]['citas'][k]['doctor'] = data['doctor']
+                            print(datos_pacientes[j]['citas'][k]['id'])
+                            return jsonify('cita modificada')
+
+    if request.method == 'GET':
+        data = citas
+        return render_template('administrar citas.html', data = json.dumps(data))
+    return jsonify({"error":"no se pueden cargar las citas"})
+
+@app.route('/lista-doctores')
+def lista_doctores():
+    return jsonify(datos_doctores)
 
 if __name__ == '__main__':
     app.run(debug=True,port=4041)
