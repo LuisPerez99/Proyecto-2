@@ -9,6 +9,7 @@
 </head>
 <body onload="cargarDatos()" style="text-align: center;">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.1/html2pdf.bundle.js"></script>
 
     <div id="admin" class="actions-container">
         <h1>Administrador</h1>
@@ -86,6 +87,7 @@
         </div>
 
         <hr />
+
         <div class="data-container">
             <h4>Visualizacion de datos</h4>
             <button class="btn-redirect" id="datos-pacientes">Datos Pacientes</button>
@@ -93,6 +95,17 @@
             <button class="btn-redirect" id="datos-enfermeros">Datos Enfermeras</button>
             <button class="btn-redirect" id="datos-medicamentos">Datos Medicamentos</button>
         </div>
+        <hr>
+        <div class="data-container">
+            <h4>Generar Reportes</h4>
+            <button class="btn-report" id="mas-vendidos" onclick="reporteVendidos()">Medicamentos mas vendidos</button>
+            <button class="btn-report" id="mas-citas" onclick="reporteCitas()" >Doctores con mas citas</button>
+            <button class="btn-report" id="enfermedades" onclick="reporteEnfermedades()">Enfermedades mas comunes</button>
+        </div>
+    </div>
+
+    <div id="reporte">
+
     </div>
 
     <script src="/static/scripts/main.js" type="text/javascript"></script>
@@ -121,6 +134,147 @@
             if (this.id == 'datos-medicamentos') {
                 window.location.replace("http://localhost:4041/datos-medicamentos");
             }
+        }
+
+        function reporteVendidos() {
+            fetch('http://localhost:4041/reportes', {
+                method: 'POST',
+                headers: headers,
+                body: `{
+                    "tipo":"mas vendidos"
+                }`,
+            })   
+                .then(response => response.json())
+                .then(res => {
+                    medicamentos = new Set(res)
+
+                    let rep = document.getElementById('reporte')
+
+                    const div = document.createElement('div')
+                    div.setAttribute('class','container')
+                    rep.appendChild(div)
+
+                    const h1 = document.createElement('h1')
+                    const h1Text = document.createTextNode('Medicamentos Mas vendidos')
+                    h1.appendChild(h1Text)
+                    div.appendChild(h1)
+
+                    const tbody = document.createElement('tbody')
+                    div.appendChild(tbody)
+
+                    for (let i = 0; i < medicamentos.length; i++) {
+                        const tr = document.createElement('tr')
+                        tbody.appendChild(tr)
+
+                        const med = document.createElement('label')
+                        const medText = document.createTextNode(medicamentos[i])
+                        med.appendChild(medText)
+                        const tdmed = document.createElement('td')
+                        tdmed.appendChild(med)
+                        tbody.appendChild(tdmed)
+                    }
+
+                    html2pdf(div, {
+                        margin: 10,
+                        filename: 'Reporte de Medicamentos Mas Vendidos'
+                    })
+
+                    rep.removeChild(div)
+                })
+        }
+
+        function reporteCitas() {
+            fetch('http://localhost:4041/reportes', {
+                method: 'POST',
+                headers: headers,
+                body: `{
+                    "tipo":"citas"
+                }`,
+            })   
+                .then(response => response.json())
+                .then(res => {
+                    doctores = new Set(res)
+
+                    let rep = document.getElementById('reporte')
+
+                    const div = document.createElement('div')
+                    div.setAttribute('class','container')
+                    rep.appendChild(div)
+
+                    const h1 = document.createElement('h1')
+                    const h1Text = document.createTextNode('Doctores con mas citas')
+                    h1.appendChild(h1Text)
+                    div.appendChild(h1)
+
+                    const tbody = document.createElement('tbody')
+                    div.appendChild(tbody)
+
+                    for (let i = 0; i < medicamentos.length; i++) {
+                        const tr = document.createElement('tr')
+                        tbody.appendChild(tr)
+
+                        const med = document.createElement('label')
+                        const medText = document.createTextNode(doctores[i])
+                        med.appendChild(medText)
+                        const tdmed = document.createElement('td')
+                        tdmed.appendChild(med)
+                        tbody.appendChild(tdmed)
+                    }
+
+                    html2pdf(div, {
+                        margin: 10,
+                        filename: 'Reporte de Doctores con mas citas'
+                    })
+
+                    rep.removeChild(div)
+                })
+        }
+
+        function reporteEnfermedades() {
+            fetch('http://localhost:4041/reportes', {
+                method: 'POST',
+                headers: headers,
+                body: `{
+                    "tipo":"enfermedades"
+                }`,
+            })   
+                .then(response => response.json())
+                .then(res => {
+                    enfermedades = new Set(res)
+
+                    let rep = document.getElementById('reporte')
+
+                    const div = document.createElement('div')
+                    div.setAttribute('class','container')
+                    rep.appendChild(div)
+
+                    const h1 = document.createElement('h1')
+                    const h1Text = document.createTextNode('Enfermedades mas comunes')
+                    h1.appendChild(h1Text)
+                    div.appendChild(h1)
+
+                    const tbody = document.createElement('tbody')
+                    div.appendChild(tbody)
+
+                    for (let i = 0; i < medicamentos.length; i++) {
+                        const tr = document.createElement('tr')
+                        tbody.appendChild(tr)
+
+                        const med = document.createElement('label')
+                        const medText = document.createTextNode(enfermedades[i])
+                        med.appendChild(medText)
+                        const tdmed = document.createElement('td')
+                        tdmed.appendChild(med)
+                        tbody.appendChild(tdmed)
+                    }
+
+                    html2pdf(div, {
+                        margin: 10,
+                        filename: 'Reporte de Enfermedades mas comunes'
+                    })
+
+                    rep.removeChild(div)
+                })
         }
     </script>
 </body>

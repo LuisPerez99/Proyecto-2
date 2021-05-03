@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Generar Receta</title>
+    <link rel="stylesheet" type="text/css" href="static/css/estilo.css" />
+    <link rel="shortcut icon" href="#">
+</head>
+<style>
+    .container{
+        border: 2px solid rgba(0, 0, 0, 0.2);
+    }
+</style>
+<body style="text-align: center;">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.1/html2pdf.bundle.js"></script>
+    <div>
+        <br><br>
+        <button onclick="regresarADoctor()" style="float:left">Regresar</button>
+        <br>
+    </div>
+    <div class="container" id="factura">
+        <h1 id="generar">Generar Receta</h1>
+        <div>
+            <h1 id="titulo"></h1>
+            <div class="text-input-container">
+                <label for="fecha">Fecha:&nbsp;</label>
+                <input type="text" id="fecha" name="fecha" disabled>
+            </div>
+            <br>
+            <div class="text-input-container">
+                <label for="paciente">Nombre del Paciente:&nbsp;</label>
+                <input type="text" id="paciente" name="paciente">
+            </div>
+            <br>
+            <div class="text-input-container">
+                <label for="padecimiento">Padecimiento:&nbsp;</label>
+                <input type="text" id="padecimiento" name="padecimiento">
+            </div>
+            <br>
+            <div class="text-input-container">
+                <label for="descripcion">Descripcion:&nbsp;</label>
+                <br>
+                <textarea id="descripcion" name="descripcion" placeholder="Ingrese aqui la descripcion del padecimiento"></textarea>
+            </div>
+        </div>
+    </div>
+    <br><br>
+    &nbsp;<button class="btn-generar" id="generar-factura" onclick="generarReceta()">Generar Receta</button>
+
+    <script src="/static/scripts/main.js" type="text/javascript"></script>
+    <script>
+        fecha = new Date();
+        y = fecha.getFullYear()
+        m = fecha.getMonth() + 1
+        d = fecha.getDate()
+        document.getElementById('fecha').value = d + "/" + m + "/" + y
+
+        function generarReceta() {
+            const div = document.getElementById('factura')
+            let padecimiento = document.getElementById('padecimiento').value
+            let padecimientoLower = padecimiento.toLowerCase()
+            document.getElementById('titulo').innerHTML = 'Receta'
+            document.getElementById('generar').innerHTML = ''
+
+            fetch('http://localhost:4041/generar-receta', {
+                method: 'POST',
+                headers: headers,
+                body: `{
+                    "padecimiento":"${padecimientoLower}"
+                }`
+            })
+                .then(response => response.json())
+                .then(res => {
+                    if (res == 'cita completada') {
+                        alert('Receta generada con exito')
+                    } else {
+                        alert('ha ocurrido un error')
+                    }
+                })
+
+            html2pdf(div, {
+                margin: 10,
+                filename: 'Receta.pdf'
+            })
+
+            document.getElementById('titulo').innerHTML = ''
+            document.getElementById('generar').innerHTML = 'Generar Receta'
+        }
+    </script>
+</body>
+</html>

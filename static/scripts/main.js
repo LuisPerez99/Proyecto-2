@@ -877,3 +877,24 @@ function irACitas(tipo) {
         window.location.replace('http://localhost:4041/administrar-citas')
     }
 }
+
+function cerrarSesion() {
+    localStorage.clear()
+    window.location.replace('http://localhost:4041/login')
+}
+
+function regresarAAdmin() {
+    window.location.replace('http://localhost:4041/admin')
+}
+
+function regresarADoctor() {
+    window.location.replace('http://localhost:4041/doctor')
+}
+
+function regresarAPaciente() {
+    window.location.replace('http://localhost:4041/paciente')
+}
+
+function regresarAEnfermera() {
+    window.location.replace('http://localhost:4041/enfermero')
+}

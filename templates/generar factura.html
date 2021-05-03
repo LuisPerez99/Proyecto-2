@@ -3,7 +3,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <title>Enfermeras</title>
+    <title>Generar Facturas</title>
     <link rel="stylesheet" type="text/css" href="static/css/estilo.css" />
     <link rel="shortcut icon" href="#">
 </head>
@@ -14,7 +14,11 @@
 </style>
 <body style="text-align: center;">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.1/html2pdf.bundle.js"></script>
-
+    <div>
+        <br><br>
+        <button onclick="regresarAEnfermera()" style="float:left">Regresar</button>
+        <br>
+    </div>
     <div class="container" id="factura">
         <h1 id="generar">Generar Factura</h1>
         <div>
@@ -92,8 +96,25 @@
         function generarFactura() {
             generarTotal()
             const div = document.getElementById('factura')
+            let nombreDoctor = document.getElementById('doctor').value
             document.getElementById('titulo').innerHTML = 'Factura'
             document.getElementById('generar').innerHTML = ''
+
+            fetch('http://localhost:4041/generar-factura', {
+                method: 'POST',
+                headers: headers,
+                body: `{
+                    "doctor":"${nombreDoctor}"
+                }`
+            })
+                .then(response => response.json())
+                .then(res => {
+                    if (res == 'cita completada') {
+                        alert('Factura generada con exito')
+                    } else {
+                        alert('ha ocurrido un error')
+                    }
+                })
 
             html2pdf(div, {
                 margin: 10,

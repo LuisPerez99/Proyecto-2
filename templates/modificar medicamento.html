@@ -10,6 +10,12 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     </head>
     <body onload="datosAModificar()">
+        <div>
+            <br><br>
+            <button onclick="regresarAMedicamentos()" style="float:left">Regresar</button>
+            <br>
+        </div>
+
         <div id="modContainer" class="container">
             <div class="modificar" id="modificar_perfil">
                 <h1>Modificar Medicamento</h1>
@@ -43,5 +49,10 @@
                 </div>
             </div>
         </div>
+        <script>
+            function regresarAMedicamentos() {
+                window.location.replace('http://localhost:4041/datos-medicamentos')
+            }
+        </script>
     </body>
 </html>

@@ -8,8 +8,13 @@
     <link rel="shortcut icon" href="#">
 </head>
 <body onload="cargarDatos()" style="text-align: center;">
-    <h1>Doctores</h1>
+    <div>
+        <br><br>
+        <button onclick="cerrarSesion()" style="float:left">Cerrar Sesion</button>
+        <br>
+    </div>
 
+    <h1>Doctores</h1>
     <div id="datos">
         <h4>
             Datos del usuario
@@ -22,9 +27,16 @@
         <br /><br />
         <button id="modificar" onclick="enviarInfoUsuario('doctor')">Modificar Perfil</button>
     </div>
-    <div>
+    <br><br>
+    <div class="container">
         <button class="btn-citas" id="ver-citas" onclick="irACitas('doctor')">Ver todas las citas</button>
+        <button class="btn-receta" id="generar-receta" onclick="generarReceta()">Generar Receta</button>
     </div>
     <script src="/static/scripts/main.js" type="text/javascript"></script>
+    <script>
+        function generarReceta() {
+            window.location.replace('http://localhost:4041/generar-receta')
+        }
+    </script>
 </body>
 </html>

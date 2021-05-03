@@ -12,6 +12,7 @@ nombres_usuarios = []
 citas = []
 pedidos = []
 citas_completadas = []
+recetas = []
 datos_admin = {
     "nombre":"Javier",
     "apellido":"Golon",
@@ -486,12 +487,13 @@ def solicitar_cita():
                         if datos_pacientes[i]['citas'][j]['estado'] == 'pendiente' or datos_pacientes[i]['citas'][j]['estado'] == 'aceptada':
                             return jsonify('cita pendiente/aceptada')
                         else:
+                            data['id'] = len(citas)
                             datos_pacientes[i]['citas'].append(data)
                             citas.append(data)
-                            datos_pacientes[i]['citas'][j]['id'] = len(citas) - 1
                             
                             print("Citas del paciente: "+str(datos_pacientes[i]['citas']))
-                            return jsonify(datos_pacientes[i]['citas'])                  
+                            print("Citas en el sistema: "+str(citas))
+                    return jsonify(datos_pacientes[i]['citas'])                  
                 else:
                     data['id'] = 0
                     datos_pacientes[i]['citas'] = []
@@ -542,7 +544,7 @@ def carrito():
 def administrar_citas():
     if request.method == 'POST':
         data = request.get_json(force=True)
-
+        print(data)
         for i in range(len(citas)):
             if data['id'] == citas[i]['id']:
                 citas[i]['estado'] = data['estado']
@@ -554,10 +556,11 @@ def administrar_citas():
                             datos_pacientes[j]['citas'][k]['estado'] = data['estado']
                             datos_pacientes[j]['citas'][k]['doctor'] = data['doctor']
                             print(datos_pacientes[j]['citas'][k]['id'])
-                            return jsonify('cita modificada')
+        return jsonify('cita modificada')
 
     if request.method == 'GET':
         data = citas
+        print(citas)
         return render_template('administrar citas.html', data = json.dumps(data))
     return jsonify({"error":"no se pueden cargar las citas"})
 
@@ -584,6 +587,7 @@ def generar_factura():
         data = request.get_json(force=True)
 
         citas_completadas.append(data)
+        print(citas_completadas)
         return jsonify('cita completada')
 
     if request.method == 'GET':
@@ -594,6 +598,52 @@ def generar_factura():
             data = nombres_doctores
         return render_template('generar factura.html', data = json.dumps(data))
     return jsonify({"error":"ha sucedido un error"})
+
+@app.route('/citas-aceptadas-doctor', methods=['GET','POST'])
+def ver_citas_aceptadas():
+    if request.method == 'POST':
+        data = request.get_json(force=True)
+        citas_doctor = []
+
+        for i in range(len(citas)):
+            if data['doctor'] == citas[i]['doctor'] and citas[i]['estado'] == 'aceptada':
+                citas_doctor.append(citas[i])
+                print(citas_doctor)
+        return jsonify(citas_doctor)
+
+    if request.method == 'GET':
+        return render_template('citas del doctor.html')
+    return jsonify({"error":"ha sucedido un error"})
+
+@app.route('/generar-receta', methods=['GET','POST'])
+def generar_receta():
+    if request.method == 'POST':
+        data = request.get_json(force=True)
+
+        recetas.append(data)
+        print(recetas)
+        return jsonify('cita completada')
+
+    if request.method == 'GET':
+        return render_template('generar recetas.html')
+    return jsonify({"error":"ha sucedido un error"})
+
+@app.route('/reportes', methods = ['POST'])
+def reportes():
+    data = request.get_json(force=True)
+
+    if data['tipo'] == 'mas vendidos':
+        return jsonify(pedidos)
+
+    if data['tipo'] == 'citas':
+        nombres_doctores = []
+        for i in range(len(citas)):
+            nombres_doctores.append(citas[i]['doctor'])
+        return jsonify(nombres_doctores)
+    
+    if data['tipo'] == 'enfermedades':
+        return jsonify(recetas)
+    return jsonify('error')
 
 if __name__ == '__main__':
     app.run(debug=True,port=4041)
