@@ -188,7 +188,132 @@
                         }
                     } 
                 } else if (tipo == 'doctor') {
-                    console.log('ja')
+                    let user = localStorage.getItem('nombreUsuario')
+
+                    fetch('http://localhost:4041/ver-datos', {
+                        method: 'POST',
+                        headers: headers,
+                        body: `{
+                            "nombre de usuario":"${user}"
+                        }`
+                    })
+                        .then(response => response.json())
+                        .then(res => {
+                            let datosDoctor = JSON.parse(JSON.stringify(res))
+                            llenarTabla(listaCitas)
+                            let nombreDoctor = datosDoctor.nombre+" "+datosDoctor.apellido
+
+                            function llenarTabla(data) {
+                                var tabla = document.getElementById('tabla')
+                    
+                                for (var i = 0; i < data.length; i++) {
+                                    const fecha = document.createElement('label')
+                                    const fechaValue = document.createTextNode(data[i].fecha)
+                                    fecha.appendChild(fechaValue)
+                                    const tdfecha = document.createElement('td')
+                                    tdfecha.appendChild(fecha)
+                                    tabla.appendChild(tdfecha)
+                    
+                                    const hora = document.createElement('label')
+                                    const horaValue = document.createTextNode(data[i].hora)
+                                    hora.appendChild(horaValue)
+                                    const tdhora = document.createElement('td')
+                                    tdhora.appendChild(hora)
+                                    tabla.appendChild(tdhora)
+                    
+                                    const motivo = document.createElement('label')
+                                    const motivoValue = document.createTextNode(data[i].motivo)
+                                    motivo.appendChild(motivoValue)
+                                    const tdmotivo = document.createElement('td')
+                                    tdmotivo.appendChild(motivo)
+                                    tabla.appendChild(tdmotivo)
+                                    
+                                    const estado = document.createElement('label')
+                                    const estadoValue = document.createTextNode(data[i].estado)
+                                    estado.appendChild(estadoValue)
+                                    estado.setAttribute('id', 'estado-'+i)
+                                    const tdestado = document.createElement('td')
+                                    tdestado.appendChild(estado)
+                                    tabla.appendChild(tdestado)
+                                    
+                                    if (document.getElementById('estado-'+i).innerHTML == 'pendiente') {
+                                        const aceptar = document.createElement('button')
+                                        aceptar.setAttribute('id','aceptar-'+i)
+                                        aceptar.setAttribute('class', 'btn-aceptar')
+                                        aceptar.setAttribute('onclick', 'aceptarCita()')
+                                        aceptar.textContent = 'Aceptar'
+                                        const rechazar = document.createElement('button')
+                                        rechazar.setAttribute('id','rechazar-'+i)
+                                        rechazar.setAttribute('class', 'btn-rechazar')
+                                        rechazar.textContent = 'Rechazar'
+                                        const tdacciones = document.createElement('td')
+                                        tdacciones.appendChild(aceptar)
+                                        tdacciones.appendChild(rechazar)
+                                        tabla.appendChild(tdacciones)
+        
+                                        for (let i = 0; i < listaCitas.length; i++) {
+                                            document.getElementById('aceptar-'+i).onclick = function aceptarCita() {
+                                                let id = i
+                                                console.log(id+" "+nombreDoctor)
+                                                fetch('http://localhost:4041/administrar-citas', {
+                                                    method: 'POST',
+                                                    headers: headers,
+                                                    body: `{
+                                                        "id": ${id},
+                                                        "doctor": "${nombreDoctor}",
+                                                        "estado": "aceptada"
+                                                    }`
+                                                })
+                                                    .then(response => response.json())
+                                                    .then(res => {
+                                                        if (res == 'cita modificada') {
+                                                            alert('La cita ha sido aceptada')
+                                                        } else {
+                                                            alert('No se pudieron modificar los datos de la cita')
+                                                         }
+                                                     })
+                                            }
+        
+                                            document.getElementById('rechazar-'+i).onclick = function rechazarCita() {
+                                                let id = i
+                                                console.log(id)
+                                                fetch('http://localhost:4041/administrar-citas', {
+                                                    method: 'POST',
+                                                    headers: headers,
+                                                    body: `{
+                                                        "id": ${id},
+                                                        "doctor": " ",
+                                                        "estado": "rechazada"
+                                                    }`
+                                                })
+                                                    .then(response => response.json())
+                                                    .then(res => {
+                                                        if (res == 'cita modificada') {
+                                                            alert('La cita ha sido rechazada')
+                                                        } else {
+                                                            alert('No se pudieron modificar los datos de la cita')
+                                                         }
+                                                     })
+                                            }
+                                        }
+                                    } else {
+                                        const nada = document.createElement('label')
+                                        const nadaValue = document.createTextNode('Ninguna')
+                                        nada.appendChild(nadaValue)
+                                        const tdnada = document.createElement('td')
+                                        tdnada.appendChild(nada)
+                                        tabla.appendChild(tdnada)
+                    
+                                        const doctor = document.createElement('label')
+                                        const doctorValue = document.createTextNode(data[i].doctor)
+                                        doctor.appendChild(doctorValue)
+                                        const tddoctor = document.createElement('td')
+                                        tddoctor.appendChild(doctor)
+                                        tabla.appendChild(tddoctor)
+                                    }
+                                }
+                            } 
+                        })
                 } 
             }
         </script>

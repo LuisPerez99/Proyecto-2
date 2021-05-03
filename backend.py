@@ -11,6 +11,7 @@ datos_medicamentos = []
 nombres_usuarios = []
 citas = []
 pedidos = []
+citas_completadas = []
 datos_admin = {
     "nombre":"Javier",
     "apellido":"Golon",
@@ -49,22 +50,6 @@ def registro_pacientes():
     if request.method == 'GET':
         return render_template('registro.html')
     return jsonify("No se pudo crear el usuario")
-
-@app.route('/pacientes')
-def pacientes():
-    return jsonify({"usuarios": datos_pacientes, "titulo": "Lista de pacientes"})
-
-@app.route('/datosdoctores')
-def doctores():
-    return jsonify({"usuarios": datos_doctores, "titulo":"Lista de doctores"})
-
-@app.route('/datosenfermeros')
-def enfermeros():
-    return jsonify({"usuarios": datos_enfermeros, "titulo":"Lista de enfermeros"})
-
-@app.route('/datosmedicamentos')
-def medicamentos():
-    return jsonify({"medicamentos": datos_medicamentos, "titulo": "Lista de medicamentos"})
 
 @app.route('/login', methods = ['GET','POST'])
 def login():
@@ -579,6 +564,36 @@ def administrar_citas():
 @app.route('/lista-doctores')
 def lista_doctores():
     return jsonify(datos_doctores)
+
+@app.route('/citas-aceptadas')
+def citas_aceptadas():
+    citas_aceptadas = []
+    
+    for i in range(len(citas)):
+        if citas[i]['estado'] == 'aceptada':
+            citas_aceptadas.append(citas[i])
+            data = citas_aceptadas
+            return render_template('citas aceptadas.html', data = json.dumps(data))
+        else:
+            return jsonify('no hay citas aceptadas')
+    return jsonify({"error":"no se han podido cargar las citas aceptadas"})
+
+@app.route('/generar-factura', methods=['GET','POST'])
+def generar_factura():
+    if request.method == 'POST':
+        data = request.get_json(force=True)
+
+        citas_completadas.append(data)
+        return jsonify('cita completada')
+
+    if request.method == 'GET':
+        nombres_doctores = []
+
+        for i in range(len(datos_doctores)):
+            nombres_doctores.append(datos_doctores[i]['nombre']+" "+datos_doctores[i]['apellido'])
+            data = nombres_doctores
+        return render_template('generar factura.html', data = json.dumps(data))
+    return jsonify({"error":"ha sucedido un error"})
 
 if __name__ == '__main__':
     app.run(debug=True,port=4041)
