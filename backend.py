@@ -529,6 +529,7 @@ def comprar():
 
         for i in range(len(data['medicinas'])):
             pedidos.append(data['medicinas'][i]['nombre'])
+            print(pedidos)
         return jsonify('pedido agregado')
 
     if request.method == 'GET':
