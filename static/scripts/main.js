@@ -2,7 +2,7 @@
 let headers = new Headers();
 headers.append('Content-Type', 'application/json');
 headers.append('Accept', 'application/json');
-headers.append('Access-Control-Allow-Origin', 'http://EXTERNAL:5000');
+headers.append('Access-Control-Allow-Origin', 'http://127.0.01:5000');
 headers.append('Access-Control-Allow-Credentials', 'true');
 headers.append('GET', 'POST', 'OPTIONS');
 
@@ -10,7 +10,7 @@ function iniciarSesion() {
     let user = document.getElementById("usuario").value;
     let password = document.getElementById("password").value;
 
-    fetch('http://EXTERNAL:5000/login', {
+    fetch('http://127.0.01:5000/login', {
         method: 'POST',
         headers: headers,
         body: `{
@@ -29,7 +29,7 @@ function iniciarSesion() {
                 localStorage.setItem('tipoDeUsuario', usuario);
                 console.log(user)
                 console.log(usuario)
-                window.location.replace("http://EXTERNAL:5000/paciente");
+                window.location.replace("http://127.0.01:5000/paciente");
             }
 
             if (usuario == "doctor") {
@@ -38,7 +38,7 @@ function iniciarSesion() {
                 localStorage.setItem('tipoDeUsuario', usuario);
                 console.log(user)
                 console.log(usuario)
-                window.location.replace("http://EXTERNAL:5000/doctor");
+                window.location.replace("http://127.0.01:5000/doctor");
             }
 
             if (usuario == "enfermero") {
@@ -47,7 +47,7 @@ function iniciarSesion() {
                 localStorage.setItem('tipoDeUsuario', usuario);
                 console.log(user)
                 console.log(usuario)
-                window.location.replace("http://EXTERNAL:5000/enfermero");
+                window.location.replace("http://127.0.01:5000/enfermero");
             }
 
             if (usuario == "administrador") {
@@ -56,7 +56,7 @@ function iniciarSesion() {
                 localStorage.setItem('nombreUsuario', user);
                 console.log(user)
                 console.log(usuario)
-                window.location.replace("http://EXTERNAL:5000/admin");
+                window.location.replace("http://127.0.01:5000/admin");
             }
             if (usuario == "Credenciales incorrectas") {
                 alert('Credenciales invalidas')
@@ -70,10 +70,10 @@ function iniciarSesion() {
 function cargarDatos() {
     let user = localStorage.getItem('nombreUsuario');
     let tipo_usuario = localStorage.getItem('tipoDeUsuario');
-    let paciente = 'http://EXTERNAL:5000/paciente';
-    let doctor = 'http://EXTERNAL:5000/doctor';
-    let enfermero = 'http://EXTERNAL:5000/enfermero';
-    let admin = 'http://EXTERNAL:5000/admin';
+    let paciente = 'http://127.0.01:5000/paciente';
+    let doctor = 'http://127.0.01:5000/doctor';
+    let enfermero = 'http://127.0.01:5000/enfermero';
+    let admin = 'http://127.0.01:5000/admin';
     console.log(user+" "+tipo_usuario)
 
     function cargar(dir) {
@@ -165,7 +165,7 @@ function eliminar(tipo) {
                 rIndex = this.parentElement.rowIndex
 
                 let usuario = listaPacientes[rIndex-1]['nombre de usuario']
-                let direccion = 'http://EXTERNAL:5000/datos-pacientes/eliminarpaciente'
+                let direccion = 'http://127.0.01:5000/datos-pacientes/eliminarpaciente'
                 console.log(usuario)
                 eliminacion(direccion, usuario)
                 }
@@ -178,7 +178,7 @@ function eliminar(tipo) {
                 rIndex = this.parentElement.rowIndex
 
                 let usuario = listaEnfermeras[rIndex-1]['nombre de usuario']
-                let direccion = 'http://EXTERNAL:5000/datos-enfermeras/eliminarenfermera'
+                let direccion = 'http://127.0.01:5000/datos-enfermeras/eliminarenfermera'
                 console.log(usuario)
                 eliminacion(direccion, usuario)
                 }
@@ -191,7 +191,7 @@ function eliminar(tipo) {
                 rIndex = this.parentElement.rowIndex
 
                 let usuario = listaDoctores[rIndex-1]['nombre de usuario']
-                let direccion = 'http://EXTERNAL:5000/datos-doctores/eliminardoctor'
+                let direccion = 'http://127.0.01:5000/datos-doctores/eliminardoctor'
                 console.log(usuario)
                 eliminacion(direccion, usuario)
                 }
@@ -204,7 +204,7 @@ function eliminar(tipo) {
                 rIndex = this.parentElement.rowIndex
 
                 let usuario = listaMedicamentos[rIndex-1]['nombre']
-                let direccion = 'http://EXTERNAL:5000/datos-medicamentos/eliminarmedicamento'
+                let direccion = 'http://127.0.01:5000/datos-medicamentos/eliminarmedicamento'
                 console.log(usuario)
                 eliminacion(direccion, usuario)
                 }
@@ -224,7 +224,7 @@ function enviarInfo(tipo) {
                 localStorage.setItem('usuarioSeleccionado', usuario)
                 localStorage.setItem('tipo', tipo)
                 console.log(usuario)
-                window.location.replace('http://EXTERNAL:5000/ver-datos')                
+                window.location.replace('http://127.0.01:5000/ver-datos')                
                 }
             }
         } 
@@ -238,7 +238,7 @@ function enviarInfo(tipo) {
                 localStorage.setItem('usuarioSeleccionado', usuario)
                 localStorage.setItem('tipo', tipo)
                 console.log(usuario)
-                window.location.replace('http://EXTERNAL:5000/ver-datos')                
+                window.location.replace('http://127.0.01:5000/ver-datos')                
                 }
             }
         } 
@@ -252,7 +252,7 @@ function enviarInfo(tipo) {
                 localStorage.setItem('usuarioSeleccionado', usuario)
                 localStorage.setItem('tipo', tipo)
                 console.log(usuario)
-                window.location.replace('http://EXTERNAL:5000/ver-datos')                
+                window.location.replace('http://127.0.01:5000/ver-datos')                
                 }
             }
         } 
@@ -266,7 +266,7 @@ function enviarInfo(tipo) {
                 localStorage.setItem('usuarioSeleccionado', usuario)
                 localStorage.setItem('tipo', tipo)
                 console.log(usuario)
-                window.location.replace('http://EXTERNAL:5000/ver-medicamento')                
+                window.location.replace('http://127.0.01:5000/ver-medicamento')                
                 }
             }
         }
@@ -278,7 +278,7 @@ function mostrarDatos() {
     let tipo = localStorage.getItem('tipo')
 
     if (tipo == 'paciente' || tipo == 'enfermera') {
-        fetch ('http://EXTERNAL:5000/ver-datos', {
+        fetch ('http://127.0.01:5000/ver-datos', {
             method: 'POST',
             headers: headers,
             body: `{
@@ -301,7 +301,7 @@ function mostrarDatos() {
                 }
             })
     } else if (tipo == 'doctor') {
-        fetch ('http://EXTERNAL:5000/ver-datos', {
+        fetch ('http://127.0.01:5000/ver-datos', {
             method: 'POST',
             headers: headers,
             body: `{
@@ -335,7 +335,7 @@ function mostrarDatos() {
                 datos.appendChild(esp)
             })
     } else if (tipo == 'medicamento') {
-        fetch ('http://EXTERNAL:5000/ver-medicamento', {
+        fetch ('http://127.0.01:5000/ver-medicamento', {
             method: 'POST',
             headers: headers,
             body: `{
@@ -360,13 +360,13 @@ function enviarInfoUsuario(tipo) {
         localStorage.setItem('usuarioSeleccionado', usuario)
         localStorage.setItem('tipo', tipo)
         console.log(usuario)
-        window.location.replace('http://EXTERNAL:5000/modificarperfil')
+        window.location.replace('http://127.0.01:5000/modificarperfil')
     } else if (tipo == 'paciente' || tipo =='enfermera' || tipo == 'doctor') {
         let usuario = localStorage.getItem('nombreUsuario')
         localStorage.setItem('usuarioSeleccionado', usuario)
         localStorage.setItem('tipo', tipo)
         console.log(usuario)
-        window.location.replace('http://EXTERNAL:5000/modificarperfil')      
+        window.location.replace('http://127.0.01:5000/modificarperfil')      
     }
 }
 
@@ -381,7 +381,7 @@ function enviarInfoAMod(tipo) {
                 localStorage.setItem('usuarioSeleccionado', usuario)
                 localStorage.setItem('tipo', tipo)
                 console.log(usuario)
-                window.location.replace('http://EXTERNAL:5000/modificarperfil')                
+                window.location.replace('http://127.0.01:5000/modificarperfil')                
                 }
             }
         } 
@@ -395,7 +395,7 @@ function enviarInfoAMod(tipo) {
                 localStorage.setItem('usuarioSeleccionado', usuario)
                 localStorage.setItem('tipo', tipo)
                 console.log(usuario)
-                window.location.replace('http://EXTERNAL:5000/modificarperfil')                
+                window.location.replace('http://127.0.01:5000/modificarperfil')                
                 }
             }
         } 
@@ -409,7 +409,7 @@ function enviarInfoAMod(tipo) {
                 localStorage.setItem('usuarioSeleccionado', usuario)
                 localStorage.setItem('tipo', tipo)
                 console.log(usuario)
-                window.location.replace('http://EXTERNAL:5000/modificarperfil')                
+                window.location.replace('http://127.0.01:5000/modificarperfil')                
                 }
             }
         } 
@@ -423,7 +423,7 @@ function enviarInfoAMod(tipo) {
                 localStorage.setItem('usuarioSeleccionado', usuario)
                 localStorage.setItem('tipo', tipo)
                 console.log(usuario)
-                window.location.replace('http://EXTERNAL:5000/modificar-medicamento')                
+                window.location.replace('http://127.0.01:5000/modificar-medicamento')                
                 }
             }
         } 
@@ -435,7 +435,7 @@ function datosAModificar() {
     let tipo = localStorage.getItem('tipo')
 
     if (tipo == 'paciente' || tipo == 'enfermera') {
-        fetch ('http://EXTERNAL:5000/modificarperfil', {
+        fetch ('http://127.0.01:5000/modificarperfil', {
             method: 'POST',
             headers: headers,
             body: `{
@@ -462,7 +462,7 @@ function datosAModificar() {
                 }
             })
     } else if (tipo == 'doctor') {
-        fetch ('http://EXTERNAL:5000/modificarperfil', {
+        fetch ('http://127.0.01:5000/modificarperfil', {
             method: 'POST',
             headers: headers,
             body: `{
@@ -499,7 +499,7 @@ function datosAModificar() {
                 }
             })
     } else if (tipo == 'medicamento') {
-        fetch('http://EXTERNAL:5000/modificar-medicamento', {
+        fetch('http://127.0.01:5000/modificar-medicamento', {
             method: 'POST',
             headers: headers,
             body: `{
@@ -515,7 +515,7 @@ function datosAModificar() {
                 document.getElementById('cantidad').value = medicamento.cantidad
             })
     } else if (tipo == 'administrador') {
-        fetch('http://EXTERNAL:5000/modificarperfil', {
+        fetch('http://127.0.01:5000/modificarperfil', {
             method: 'POST',
             headers: headers,
             body: `{
@@ -568,7 +568,7 @@ function modificarUsuario() {
                 sexo = 'F'
             }
 
-            fetch('http://EXTERNAL:5000/modificar', {
+            fetch('http://127.0.01:5000/modificar', {
                 method: 'POST',
                 headers: headers,
                 body: `{
@@ -614,7 +614,7 @@ function modificarUsuario() {
         if (nombre == " " || apellido == " " || nacimiento == " " || usuario == " " || password == " "|| especialidad == " ") {
             alert('Faltan datos por ingresar')
         } else {
-            fetch('http://EXTERNAL:5000/modificar', {
+            fetch('http://127.0.01:5000/modificar', {
                 method: 'POST',
                 headers: headers,
                 body: `{
@@ -645,7 +645,7 @@ function modificarUsuario() {
         let usuario = document.getElementById('usuario').value
         let password = document.getElementById('password').value
 
-        fetch('http://EXTERNAL:5000/modificar', {
+        fetch('http://127.0.01:5000/modificar', {
             method: 'POST',
             headers: headers,
             body: `{
@@ -675,7 +675,7 @@ function modificarMedicamento() {
     let descripcion = document.getElementById('descripcion').value
     let cantidad = document.getElementById('cantidad').value
 
-    fetch('http://EXTERNAL:5000/modificar-medicamento/modificar', {
+    fetch('http://127.0.01:5000/modificar-medicamento/modificar', {
         method: 'POST',
         headers: headers,
         body: `{
@@ -700,7 +700,7 @@ function cita() {
     let user = localStorage.getItem('nombreUsuario');
     localStorage.setItem('usuarioSolicitando', user)
     console.log(user)
-    window.location.replace("http://EXTERNAL:5000/solicitar-cita")
+    window.location.replace("http://127.0.01:5000/solicitar-cita")
 }
 
 function solicitarCita() {
@@ -709,7 +709,7 @@ function solicitarCita() {
     let hora = document.getElementById('hora-cita').value
     let motivo = document.getElementById('motivo').value
 
-    fetch ('http://EXTERNAL:5000/solicitar-cita', {
+    fetch ('http://127.0.01:5000/solicitar-cita', {
         method: 'POST',
         headers: headers,
         body: `{
@@ -736,7 +736,7 @@ function solicitarCita() {
 function cargarCitas() {
     let user = localStorage.getItem('nombreUsuario')
 
-    fetch('http://EXTERNAL:5000/ver-citas', {
+    fetch('http://127.0.01:5000/ver-citas', {
         method: 'POST',
         headers: headers,
         body: `{
@@ -789,7 +789,7 @@ function agregarAlCarrito() {
 }
 
 function irACarrito() {
-    window.location.replace("http://EXTERNAL:5000/carrito")
+    window.location.replace("http://127.0.01:5000/carrito")
 }
 
 function cargarCarrito() {
@@ -850,7 +850,7 @@ function comprar() {
     let total = localStorage.getItem('total')
     console.log(carrito)
 
-    fetch('http://EXTERNAL:5000/comprar', {
+    fetch('http://127.0.01:5000/comprar', {
         method: 'POST',
         headers: headers,
         body: `{
@@ -871,30 +871,30 @@ function comprar() {
 function irACitas(tipo) {
     if (tipo == 'enfermera') {
         localStorage.setItem('tipo', tipo)
-        window.location.replace('http://EXTERNAL:5000/administrar-citas')
+        window.location.replace('http://127.0.01:5000/administrar-citas')
     } else if (tipo == 'doctor') {
         localStorage.setItem('tipo', tipo)
-        window.location.replace('http://EXTERNAL:5000/administrar-citas')
+        window.location.replace('http://127.0.01:5000/administrar-citas')
     }
 }
 
 function cerrarSesion() {
     localStorage.clear()
-    window.location.replace('http://EXTERNAL:5000/login')
+    window.location.replace('http://127.0.01:5000/login')
 }
 
 function regresarAAdmin() {
-    window.location.replace('http://EXTERNAL:5000/admin')
+    window.location.replace('http://127.0.01:5000/admin')
 }
 
 function regresarADoctor() {
-    window.location.replace('http://EXTERNAL:5000/doctor')
+    window.location.replace('http://127.0.01:5000/doctor')
 }
 
 function regresarAPaciente() {
-    window.location.replace('http://EXTERNAL:5000/paciente')
+    window.location.replace('http://127.0.01:5000/paciente')
 }
 
 function regresarAEnfermera() {
-    window.location.replace('http://EXTERNAL:5000/enfermero')
+    window.location.replace('http://127.0.01:5000/enfermero')
 }

@@ -67,7 +67,7 @@
             <br />
             <label id="crear">¿Ya tiene una cuenta?</label>
             <br />
-            <a href="http://EXTERNAL:5000/login" id="registro">Iniciar Sesion</a>
+            <a href="http://127.0.01:5000/login" id="registro">Iniciar Sesion</a>
         </div>
     </div>
 
@@ -77,7 +77,7 @@
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('Accept', 'application/json');
-        headers.append('Access-Control-Allow-Origin', 'http://EXTERNAL:5000');
+        headers.append('Access-Control-Allow-Origin', 'http://127.0.01:5000');
         headers.append('Access-Control-Allow-Credentials', 'true');
         headers.append('GET', 'POST', 'OPTIONS');
 
@@ -100,7 +100,7 @@
             if (nombre == "" || apellido == "" || nacimiento == "" || usuario == "" || password == "" || sexo == "") {
                 alert("Faltan datos por ingresar.")
             } else {
-                fetch('http://EXTERNAL:5000/registropacientes', {
+                fetch('http://127.0.01:5000/registropacientes', {
                     method: 'POST',
                     headers: headers,
                     body: `{

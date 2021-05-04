@@ -36,7 +36,7 @@
         <script>
             let user = localStorage.getItem('nombreUsuario')
 
-            fetch('http://EXTERNAL:5000/ver-datos', {
+            fetch('http://127.0.01:5000/ver-datos', {
                 method: 'POST',
                 headers: headers,
                 body: `{
@@ -49,7 +49,7 @@
                     var nombreDoctor = datosDoctor.nombre+" "+datosDoctor.apellido
                     localStorage.setItem('doctor', nombreDoctor)
 
-                    fetch('http://EXTERNAL:5000/citas-aceptadas-doctor', {
+                    fetch('http://127.0.01:5000/citas-aceptadas-doctor', {
                         method: 'POST',
                         headers: headers,
                         body: `{
@@ -99,7 +99,7 @@
                                         document.getElementById('completar-'+i).onclick = function aceptarCita() {
                                             let id = listaCitas[i].id
                                             console.log(id+" "+nombreDoctor)
-                                            fetch('http://EXTERNAL:5000/administrar-citas', {
+                                            fetch('http://127.0.01:5000/administrar-citas', {
                                                 method: 'POST',
                                                 headers: headers,
                                                 body: `{
