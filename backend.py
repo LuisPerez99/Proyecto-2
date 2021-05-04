@@ -633,15 +633,18 @@ def reportes():
     data = request.get_json(force=True)
 
     if data['tipo'] == 'mas vendidos':
+        print(pedidos)
         return jsonify(pedidos)
 
     if data['tipo'] == 'citas':
         nombres_doctores = []
         for i in range(len(citas)):
             nombres_doctores.append(citas[i]['doctor'])
+        print(nombres_doctores)
         return jsonify(nombres_doctores)
     
     if data['tipo'] == 'enfermedades':
+        print(recetas)
         return jsonify(recetas)
     return jsonify('error')
 
