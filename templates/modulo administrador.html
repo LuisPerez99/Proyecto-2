@@ -152,7 +152,7 @@
             })   
                 .then(response => response.json())
                 .then(res => {
-                    medicamentos = new Set(res)
+                    var medicamentos = new Set(res)
 
                     let rep = document.getElementById('reporte')
 
@@ -199,7 +199,7 @@
             })   
                 .then(response => response.json())
                 .then(res => {
-                    doctores = new Set(res)
+                    var doctores = new Set(res)
 
                     let rep = document.getElementById('reporte')
 
@@ -246,7 +246,7 @@
             })   
                 .then(response => response.json())
                 .then(res => {
-                    enfermedades = new Set(res)
+                    var enfermedades = new Set(res)
 
                     let rep = document.getElementById('reporte')
 
