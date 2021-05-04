@@ -100,7 +100,7 @@
             document.getElementById('titulo').innerHTML = 'Factura'
             document.getElementById('generar').innerHTML = ''
 
-            fetch('http://localhost:4041/generar-factura', {
+            fetch('http://EXTERNAL:5000/generar-factura', {
                 method: 'POST',
                 headers: headers,
                 body: `{
