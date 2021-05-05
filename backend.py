@@ -482,7 +482,7 @@ def solicitar_cita():
 
         for i in range(len(datos_pacientes)):
             if data['nombre de usuario'] == datos_pacientes[i]['nombre de usuario']:
-                if "citas" in datos_pacientes[i]:
+                if "citas" not in datos_pacientes[i]:
                     for j in range(len(datos_pacientes[i]['citas'])):
                         if datos_pacientes[i]['citas'][j]['estado'] == 'pendiente' or datos_pacientes[i]['citas'][j]['estado'] == 'aceptada':
                             return jsonify('cita pendiente/aceptada')
@@ -493,14 +493,6 @@ def solicitar_cita():
                             
                             print("Citas del paciente: "+str(datos_pacientes[i]['citas']))
                             print("Citas en el sistema: "+str(citas))
-                    return jsonify(datos_pacientes[i]['citas'])                  
-                else:
-                    data['id'] = 0
-                    datos_pacientes[i]['citas'] = []
-                    datos_pacientes[i]['citas'].append(data)
-                    citas.append(data)
-                    print("Citas del paciente: "+str(datos_pacientes[i]['citas']))
-                    print("Citas: "+str(citas))
                     return jsonify(datos_pacientes[i]['citas'])
 
     if request.method == 'GET':
@@ -552,11 +544,12 @@ def administrar_citas():
                 citas[i]['doctor'] = data['doctor']
                 print(citas[i])
                 for j in range(len(datos_pacientes)):
-                    for k in range(len(datos_pacientes[j]['citas'])):
-                        if data['id'] == datos_pacientes[j]['citas'][k]['id']:
-                            datos_pacientes[j]['citas'][k]['estado'] = data['estado']
-                            datos_pacientes[j]['citas'][k]['doctor'] = data['doctor']
-                            print(datos_pacientes[j]['citas'][k]['id'])
+                    if 'citas' in datos_pacientes[j]:
+                        for k in range(len(datos_pacientes[j]['citas'])):
+                            if data['id'] == datos_pacientes[j]['citas'][k]['id']:
+                                datos_pacientes[j]['citas'][k]['estado'] = data['estado']
+                                datos_pacientes[j]['citas'][k]['doctor'] = data['doctor']
+                                print(datos_pacientes[j]['citas'][k]['id'])
         return jsonify('cita modificada')
 
     if request.method == 'GET':
