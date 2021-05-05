@@ -1,2 +1,2 @@
 Enlace del repositorio: https://github.com/LuisPerez99/Proyecto-2
-Enlace de pagina: http://34.69.253.122.122:5000/
+Enlace de pagina: http://localhost.122:5000/

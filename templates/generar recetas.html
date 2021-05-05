@@ -63,7 +63,7 @@
             document.getElementById('titulo').innerHTML = 'Receta'
             document.getElementById('generar').innerHTML = ''
 
-            fetch('http://34.69.253.122:5000/generar-receta', {
+            fetch('http://localhost:5000/generar-receta', {
                 method: 'POST',
                 headers: headers,
                 body: `{

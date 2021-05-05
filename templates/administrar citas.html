@@ -96,7 +96,7 @@
                             tr.appendChild(tdacciones)
 
                             if (data[i].estado == 'pendiente') {
-                                fetch('http://34.69.253.122:5000/lista-doctores', {
+                                fetch('http://localhost:5000/lista-doctores', {
                                     method: 'GET',
                                     headers: headers,
                                 })
@@ -149,7 +149,7 @@
                 } else if (tipo == 'doctor') {
                     let user = localStorage.getItem('nombreUsuario')
 
-                    fetch('http://34.69.253.122:5000/ver-datos', {
+                    fetch('http://localhost:5000/ver-datos', {
                         method: 'POST',
                         headers: headers,
                         body: `{
@@ -246,7 +246,7 @@
                 let id = getId[1]
                 console.log(id+" "+nombreDoctor)
 
-                fetch('http://34.69.253.122:5000/administrar-citas', {
+                fetch('http://localhost:5000/administrar-citas', {
                     method: 'POST',
                     headers: headers,
                     body: `{
@@ -271,7 +271,7 @@
                 let id = getId[1]
                 console.log(id)
 
-                fetch('http://34.69.253.122:5000/administrar-citas', {
+                fetch('http://localhost:5000/administrar-citas', {
                     method: 'POST',
                     headers: headers,
                     body: `{
@@ -297,7 +297,7 @@
                 let id = getId[1]
 
                 console.log(id+" "+nombreDoctor)
-                fetch('http://34.69.253.122:5000/administrar-citas', {
+                fetch('http://localhost:5000/administrar-citas', {
                     method: 'POST',
                     headers: headers,
                     body: `{
@@ -322,7 +322,7 @@
                     let id = getId[1]
                     console.log(id)
 
-                    fetch('http://34.69.253.122:5000/administrar-citas', {
+                    fetch('http://localhost:5000/administrar-citas', {
                         method: 'POST',
                         headers: headers,
                         body: `{
@@ -344,14 +344,14 @@
                 }  
 
             function irACitasAceptadas() {
-                window.location.replace('http://34.69.253.122:5000/citas-aceptadas-doctor')
+                window.location.replace('http://localhost:5000/citas-aceptadas-doctor')
             }
 
             function regresar() {
                 if (tipo == 'enfermera') {
-                    window.location.replace('http://34.69.253.122:5000/enfermero')
+                    window.location.replace('http://localhost:5000/enfermero')
                 } else if (tipo == 'doctor') {
-                    window.location.replace('http://34.69.253.122:5000/doctor')
+                    window.location.replace('http://localhost:5000/doctor')
                 }
             }
         </script>

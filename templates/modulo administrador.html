@@ -41,7 +41,7 @@
 
             <div id="defaultOpen" class="tabcontent">
                 <h4>Pacientes</h4>
-                <form action="http://34.69.253.122:5000/admin/cargarpacientes" method="POST" enctype="multipart/form-data">
+                <form action="http://localhost:5000/admin/cargarpacientes" method="POST" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="pacientes">Cargar pacientes:</label>
                         <input type="file" class="file-input" name="pacientes" id="pacientes" />
@@ -54,7 +54,7 @@
 
             <div id="doctores" class="tabcontent">
                 <h4>Doctores</h4>
-                <form action="http://34.69.253.122:5000/admin/cargardoctores" method="POST" enctype="multipart/form-data">
+                <form action="http://localhost:5000/admin/cargardoctores" method="POST" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="doctores">Cargar doctores:</label>
                         <input type="file" class="file-input" name="doctores" id="doctores" />
@@ -67,7 +67,7 @@
 
             <div id="enfermeros" class="tabcontent">
                 <h4>Enfermeras</h4>
-                <form action="http://34.69.253.122:5000/admin/cargarenfermeros" method="POST" enctype="multipart/form-data">
+                <form action="http://localhost:5000/admin/cargarenfermeros" method="POST" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="enfermeras">Cargar enfermeras:</label>
                         <input type="file" class="file-input" name="enfermeras" id="enfermeras" />
@@ -80,7 +80,7 @@
 
             <div id="medicamentos" class="tabcontent">
                 <h4>Medicamentos</h4>
-                <form action="http://34.69.253.122:5000/admin/cargarmedicamentos" method="POST" enctype="multipart/form-data">
+                <form action="http://localhost:5000/admin/cargarmedicamentos" method="POST" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="medicamentos">Cargar medicamentos:</label>
                         <input type="file" class="file-input" name="medicamentos" id="medicamentos" />
@@ -126,24 +126,24 @@
 
         function verDatos(clicked) {
             if (this.id == 'datos-pacientes') {
-                window.location.replace("http://34.69.253.122:5000/datos-pacientes");
+                window.location.replace("http://localhost:5000/datos-pacientes");
             }
 
             if (this.id == 'datos-doctores') {
-                window.location.replace("http://34.69.253.122:5000/datos-doctores");
+                window.location.replace("http://localhost:5000/datos-doctores");
             }
 
             if (this.id == 'datos-enfermeros') {
-                window.location.replace("http://34.69.253.122:5000/datos-enfermeras");
+                window.location.replace("http://localhost:5000/datos-enfermeras");
             }
 
             if (this.id == 'datos-medicamentos') {
-                window.location.replace("http://34.69.253.122:5000/datos-medicamentos");
+                window.location.replace("http://localhost:5000/datos-medicamentos");
             }
         }
 
         function reporteVendidos() {
-            fetch('http://34.69.253.122:5000/reportes', {
+            fetch('http://localhost:5000/reportes', {
                 method: 'POST',
                 headers: headers,
                 body: `{
@@ -193,7 +193,7 @@
         }
 
         function reporteCitas() {
-            fetch('http://34.69.253.122:5000/reportes', {
+            fetch('http://localhost:5000/reportes', {
                 method: 'POST',
                 headers: headers,
                 body: `{
@@ -243,7 +243,7 @@
         }
 
         function reporteEnfermedades() {
-            fetch('http://34.69.253.122:5000/reportes', {
+            fetch('http://localhost:5000/reportes', {
                 method: 'POST',
                 headers: headers,
                 body: `{

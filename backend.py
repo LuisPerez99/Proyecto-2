@@ -496,6 +496,7 @@ def solicitar_cita():
                     return jsonify(datos_pacientes[i]['citas'])
                 else:
                     data['id'] = len(citas)
+                    datos_pacientes[i]['citas'] = []
                     datos_pacientes[i]['citas'].append(data)
                     citas.append(data)
                             
