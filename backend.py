@@ -482,7 +482,7 @@ def solicitar_cita():
 
         for i in range(len(datos_pacientes)):
             if data['nombre de usuario'] == datos_pacientes[i]['nombre de usuario']:
-                if "citas" not in datos_pacientes[i]:
+                if "citas" in datos_pacientes[i]:
                     for j in range(len(datos_pacientes[i]['citas'])):
                         if datos_pacientes[i]['citas'][j]['estado'] == 'pendiente' or datos_pacientes[i]['citas'][j]['estado'] == 'aceptada':
                             return jsonify('cita pendiente/aceptada')
