@@ -493,7 +493,15 @@ def solicitar_cita():
                             
                             print("Citas del paciente: "+str(datos_pacientes[i]['citas']))
                             print("Citas en el sistema: "+str(citas))
-                            return jsonify(datos_pacientes[i]['citas'])
+                    return jsonify(datos_pacientes[i]['citas'])
+                else:
+                    data['id'] = len(citas)
+                    datos_pacientes[i]['citas'].append(data)
+                    citas.append(data)
+                            
+                    print("Citas del paciente: "+str(datos_pacientes[i]['citas']))
+                    print("Citas en el sistema: "+str(citas))
+                    return jsonify(datos_pacientes[i]['citas'])
 
     if request.method == 'GET':
         return render_template('solicitar cita.html')
